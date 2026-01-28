@@ -32,7 +32,8 @@ export default function TheNaturalOnesWebsite() {
         boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.4)' : 'none'
       }}>
         <div style={styles.navLogo} onClick={() => scrollToSection('home')}>
-          <D20Icon size={40} />
+          {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
+          <Logo size={40} />
           <span style={styles.navLogoText}>The Natural Ones</span>
         </div>
         
@@ -66,7 +67,8 @@ export default function TheNaturalOnesWebsite() {
       <section id="home" style={styles.hero}>
         <div style={styles.heroContent}>
           <div style={styles.heroD20Container}>
-            <D20Icon size={120} animated />
+            {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
+            <Logo size={120} />
           </div>
           <h1 style={styles.heroTitle}>The Natural Ones</h1>
           <p style={styles.heroSubtitle}>Amateur Theatre with a Critical Hit</p>
@@ -116,6 +118,8 @@ export default function TheNaturalOnesWebsite() {
               </p>
             </div>
             <div style={styles.aboutCard}>
+              {/* TO ADD GROUP PHOTO: Place group-photo.jpg in public/images/ folder */}
+              <GroupPhoto />
               <div style={styles.statBlock}>
                 <h3 style={styles.statBlockTitle}>The Natural Ones</h3>
                 <div style={styles.statBlockSubtitle}>Amateur Theatre Group</div>
@@ -148,20 +152,8 @@ export default function TheNaturalOnesWebsite() {
           <SectionHeader title="The Show" subtitle="Our Quest Begins" />
           <div style={styles.showContent}>
             <div style={styles.showPoster}>
-              <div style={styles.posterFrame}>
-                <div style={styles.posterInner}>
-                  <h3 style={styles.posterTitle}>Tabletop Role-Playing Game:</h3>
-                  <h3 style={styles.posterSubtitle}>The Musical!</h3>
-                  <div style={styles.posterDivider}></div>
-                  <p style={styles.posterCredits}>Written by James A. Coleman</p>
-                  <p style={styles.posterCredits}>Music by Richard Baker</p>
-                  <div style={styles.posterIcons}>
-                    <span style={styles.posterIcon}>🎲</span>
-                    <span style={styles.posterIcon}>🎭</span>
-                    <span style={styles.posterIcon}>🎵</span>
-                  </div>
-                </div>
-              </div>
+              {/* TO ADD POSTER: Place poster.jpg in public/images/ folder */}
+              <ShowPoster />
             </div>
             <div style={styles.showDetails}>
               <p style={styles.paragraph}>
@@ -218,16 +210,22 @@ export default function TheNaturalOnesWebsite() {
             Our fellowship of talented performers bring the world of tabletop gaming to life.
           </p>
           <div style={styles.castGrid}>
+            {/*
+              TO ADD CAST PHOTOS:
+              1. Add photos to public/images/cast/ folder
+              2. Name them: member1.jpg, member2.jpg, etc.
+              3. Update the 'photo' field below with the filename
+            */}
             {[
-              { name: 'The Bard', role: 'Musical Director', icon: '🎵' },
-              { name: 'The Paladin', role: 'Lead Performer', icon: '⚔️' },
-              { name: 'The Rogue', role: 'Ensemble', icon: '🗡️' },
-              { name: 'The Wizard', role: 'Technical Director', icon: '✨' },
-              { name: 'The Ranger', role: 'Stage Manager', icon: '🏹' },
-              { name: 'The Cleric', role: 'Producer', icon: '🛡️' },
+              { name: 'The Bard', role: 'Musical Director', icon: '🎵', photo: 'member1.jpg' },
+              { name: 'The Paladin', role: 'Lead Performer', icon: '⚔️', photo: 'member2.jpg' },
+              { name: 'The Rogue', role: 'Ensemble', icon: '🗡️', photo: 'member3.jpg' },
+              { name: 'The Wizard', role: 'Technical Director', icon: '✨', photo: 'member4.jpg' },
+              { name: 'The Ranger', role: 'Stage Manager', icon: '🏹', photo: 'member5.jpg' },
+              { name: 'The Cleric', role: 'Producer', icon: '🛡️', photo: 'member6.jpg' },
             ].map((member, index) => (
               <div key={index} style={styles.castCard}>
-                <div style={styles.castIcon}>{member.icon}</div>
+                <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
                 <h3 style={styles.castName}>{member.name}</h3>
                 <p style={styles.castRole}>{member.role}</p>
               </div>
@@ -346,7 +344,7 @@ export default function TheNaturalOnesWebsite() {
       <footer style={styles.footer}>
         <div style={styles.footerContent}>
           <div style={styles.footerLogo}>
-            <D20Icon size={50} />
+            <Logo size={50} />
             <span style={styles.footerLogoText}>The Natural Ones</span>
           </div>
           <p style={styles.footerTagline}>Amateur Theatre with a Critical Hit</p>
@@ -416,6 +414,95 @@ function D20Icon({ size = 60, animated = false }) {
         1
       </text>
     </svg>
+  );
+}
+
+// Group Photo Component - shows group-photo.jpg if available
+function GroupPhoto() {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return null; // Don't show anything if no photo
+  }
+
+  return (
+    <img
+      src="/images/group-photo.jpg"
+      alt="The Natural Ones Theatre Group"
+      style={styles.groupPhoto}
+      onError={() => setHasError(true)}
+    />
+  );
+}
+
+// Show Poster Component - shows poster.jpg if available, falls back to text version
+function ShowPoster() {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return (
+      <div style={styles.posterFrame}>
+        <div style={styles.posterInner}>
+          <h3 style={styles.posterTitle}>Tabletop Role-Playing Game:</h3>
+          <h3 style={styles.posterSubtitle}>The Musical!</h3>
+          <div style={styles.posterDivider}></div>
+          <p style={styles.posterCredits}>Written by James A. Coleman</p>
+          <p style={styles.posterCredits}>Music by Richard Baker</p>
+          <div style={styles.posterIcons}>
+            <span style={styles.posterIcon}>🎲</span>
+            <span style={styles.posterIcon}>🎭</span>
+            <span style={styles.posterIcon}>🎵</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={styles.posterFrame}>
+      <img
+        src="/images/poster.jpg"
+        alt="Tabletop Role-Playing Game: The Musical!"
+        style={styles.posterImage}
+        onError={() => setHasError(true)}
+      />
+    </div>
+  );
+}
+
+// Cast Photo Component - shows photo if available, falls back to icon
+function CastPhoto({ src, fallbackIcon, name }) {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return <div style={styles.castIcon}>{fallbackIcon}</div>;
+  }
+
+  return (
+    <img
+      src={src}
+      alt={name}
+      style={styles.castPhoto}
+      onError={() => setHasError(true)}
+    />
+  );
+}
+
+// Logo Component - shows logo.png if available, falls back to D20Icon
+function Logo({ size = 40 }) {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return <D20Icon size={size} />;
+  }
+
+  return (
+    <img
+      src="/images/logo.png"
+      alt="The Natural Ones Logo"
+      style={{ height: size, width: 'auto' }}
+      onError={() => setHasError(true)}
+    />
   );
 }
 
@@ -735,6 +822,12 @@ const styles = {
     position: 'sticky',
     top: '100px',
   },
+  groupPhoto: {
+    width: '100%',
+    height: 'auto',
+    marginBottom: '24px',
+    border: '4px solid #c9a227',
+  },
   statBlock: {
     backgroundColor: '#2d1810',
     color: '#e8dcc4',
@@ -791,6 +884,11 @@ const styles = {
     background: 'linear-gradient(135deg, #c9a227, #8b6914)',
     padding: '8px',
     boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
+  },
+  posterImage: {
+    width: '100%',
+    height: 'auto',
+    display: 'block',
   },
   posterInner: {
     background: 'linear-gradient(180deg, #2d1810, #1a0f08)',
@@ -897,6 +995,14 @@ const styles = {
   },
   castIcon: {
     fontSize: '48px',
+    marginBottom: '16px',
+  },
+  castPhoto: {
+    width: '100px',
+    height: '100px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    border: '3px solid #c9a227',
     marginBottom: '16px',
   },
   castName: {
