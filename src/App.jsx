@@ -606,13 +606,13 @@ const styles = {
   
   // Hero
   hero: {
-    minHeight: '100vh',
+    minHeight: '115vh',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    padding: '40px 20px',
+    padding: '40px 20px 100px 20px',
     background: `
       radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
       linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
