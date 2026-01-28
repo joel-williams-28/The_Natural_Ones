@@ -68,7 +68,7 @@ export default function TheNaturalOnesWebsite() {
         <div style={styles.heroContent}>
           <div style={styles.heroD20Container}>
             {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
-            <Logo size={120} />
+            <Logo size={240} />
           </div>
           <h1 style={styles.heroTitle}>The Natural Ones</h1>
           <p style={styles.heroSubtitle}>Amateur Theatre with a Critical Hit</p>
@@ -715,7 +715,7 @@ const styles = {
   },
   heroScroll: {
     position: 'absolute',
-    bottom: '40px',
+    bottom: '20px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
