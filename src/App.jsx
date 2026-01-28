@@ -95,9 +95,6 @@ export default function TheNaturalOnesWebsite() {
         </div>
       </section>
 
-      {/* Hero to About Transition */}
-      <div style={styles.heroToSectionFade}></div>
-
       {/* About Section */}
       <section id="about" style={styles.section}>
         <div style={styles.sectionInner}>
@@ -734,11 +731,6 @@ const styles = {
     fontSize: '24px',
     color: '#c9a227',
     animation: 'bounce 2s infinite',
-  },
-  heroToSectionFade: {
-    height: '150px',
-    background: 'linear-gradient(180deg, #1a0f08 0%, #2d1810 30%, #f5ede0 100%)',
-    marginTop: '-1px',
   },
 
   // Sections
