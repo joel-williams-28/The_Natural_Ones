@@ -68,7 +68,7 @@ export default function TheNaturalOnesWebsite() {
         <div style={styles.heroContent}>
           <div style={styles.heroD20Container}>
             {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
-            <Logo size={240} />
+            <Logo size={180} />
           </div>
           <h1 style={styles.heroTitle}>The Natural Ones</h1>
           <p style={styles.heroSubtitle}>Amateur Theatre with a Critical Hit</p>
@@ -606,7 +606,7 @@ const styles = {
   
   // Hero
   hero: {
-    minHeight: '115vh',
+    minHeight: '107vh',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -662,7 +662,7 @@ const styles = {
     fontSize: '16px',
   },
   heroShowTitle: {
-    fontFamily: "'Cinzel', serif",
+    fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
     fontSize: 'clamp(20px, 4vw, 32px)',
     fontWeight: 'normal',
     color: '#e8dcc4',
