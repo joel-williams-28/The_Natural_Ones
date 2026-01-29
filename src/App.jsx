@@ -6,11 +6,17 @@ export default function TheNaturalOnesWebsite() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [kickstarterData, setKickstarterData] = useState({
-    pledged: 260,
-    goal: 3000,
-    daysRemaining: 37,
-    percentFunded: 8.7
+    pledged: null,
+    goal: null,
+    daysRemaining: null,
+    backers: null,
+    percentFunded: null,
+    isLive: null,
+    isSuccessful: null,
+    state: 'loading'
   });
+  const [kickstarterLoading, setKickstarterLoading] = useState(true);
+  const [kickstarterError, setKickstarterError] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,25 +29,42 @@ export default function TheNaturalOnesWebsite() {
   // Fetch Kickstarter data
   useEffect(() => {
     const fetchKickstarterData = async () => {
+      setKickstarterLoading(true);
+      setKickstarterError(false);
+
       try {
         const response = await fetch('/.netlify/functions/kickstarter');
         if (response.ok) {
           const data = await response.json();
-          if (data.pledged !== null && data.goal !== null) {
-            setKickstarterData({
-              pledged: data.pledged,
-              goal: data.goal,
-              daysRemaining: data.daysRemaining,
-              percentFunded: data.percentFunded || ((data.pledged / data.goal) * 100)
-            });
+          if (data.error) {
+            setKickstarterError(true);
           }
+          setKickstarterData({
+            pledged: data.pledged,
+            goal: data.goal,
+            daysRemaining: data.daysRemaining,
+            backers: data.backers,
+            percentFunded: data.percentFunded || (data.pledged && data.goal ? ((data.pledged / data.goal) * 100) : null),
+            isLive: data.isLive,
+            isSuccessful: data.isSuccessful,
+            state: data.state || 'unknown'
+          });
+        } else {
+          setKickstarterError(true);
         }
       } catch (error) {
         console.error('Failed to fetch Kickstarter data:', error);
+        setKickstarterError(true);
+      } finally {
+        setKickstarterLoading(false);
       }
     };
 
     fetchKickstarterData();
+
+    // Refresh data every 5 minutes while page is open
+    const interval = setInterval(fetchKickstarterData, 5 * 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
   const scrollToSection = (sectionId) => {
@@ -297,21 +320,54 @@ export default function TheNaturalOnesWebsite() {
             
             <div style={styles.fundingProgress}>
               <h3 style={styles.fundingTitle}>Funding Progress</h3>
-              <div style={styles.progressBar}>
-                <div style={{...styles.progressFill, width: `${Math.min(kickstarterData.percentFunded, 100)}%`}}></div>
-              </div>
-              <div style={styles.progressStats}>
-                <span>£{kickstarterData.pledged.toLocaleString()} raised</span>
-                <span>Goal: £{kickstarterData.goal.toLocaleString()}</span>
-              </div>
-              <p style={styles.fundingDays}>{kickstarterData.daysRemaining} days remaining</p>
+              {kickstarterLoading ? (
+                <div style={styles.loadingContainer}>
+                  <div style={styles.loadingSpinner}></div>
+                  <p style={styles.loadingText}>Loading campaign data...</p>
+                </div>
+              ) : kickstarterError || kickstarterData.pledged === null ? (
+                <div style={styles.errorContainer}>
+                  <p style={styles.errorText}>Visit Kickstarter to see our progress!</p>
+                </div>
+              ) : (
+                <>
+                  {kickstarterData.isSuccessful && (
+                    <div style={styles.successBanner}>
+                      🎉 Campaign Successfully Funded! 🎉
+                    </div>
+                  )}
+                  <div style={styles.progressBar}>
+                    <div style={{...styles.progressFill, width: `${Math.min(kickstarterData.percentFunded || 0, 100)}%`}}></div>
+                  </div>
+                  <div style={styles.progressStats}>
+                    <span>£{kickstarterData.pledged?.toLocaleString() || '0'} raised</span>
+                    <span>Goal: £{kickstarterData.goal?.toLocaleString() || '0'}</span>
+                  </div>
+                  <p style={styles.fundingPercent}>
+                    {kickstarterData.percentFunded?.toFixed(1) || 0}% funded
+                  </p>
+                  {kickstarterData.backers !== null && (
+                    <p style={styles.backersCount}>
+                      {kickstarterData.backers?.toLocaleString() || '0'} backers
+                    </p>
+                  )}
+                  {kickstarterData.isLive && kickstarterData.daysRemaining !== null && (
+                    <p style={styles.fundingDays}>
+                      {kickstarterData.daysRemaining} {kickstarterData.daysRemaining === 1 ? 'day' : 'days'} remaining
+                    </p>
+                  )}
+                  {!kickstarterData.isLive && kickstarterData.state !== 'loading' && (
+                    <p style={styles.campaignEnded}>Campaign has ended</p>
+                  )}
+                </>
+              )}
               <a
                 href="https://www.kickstarter.com/projects/1310830097/tabletop-role-playing-game-the-musical-at-the-fringe"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={styles.kickstarterButton}
               >
-                Back Us on Kickstarter
+                {kickstarterData.isLive ? 'Back Us on Kickstarter' : 'View on Kickstarter'}
               </a>
             </div>
           </div>
@@ -1140,7 +1196,60 @@ const styles = {
     fontSize: '14px',
     color: '#c9a227',
     fontWeight: 'bold',
-    margin: '0 0 24px 0',
+    margin: '0 0 8px 0',
+  },
+  fundingPercent: {
+    fontSize: '18px',
+    color: '#3d6b1e',
+    fontWeight: 'bold',
+    margin: '8px 0',
+  },
+  backersCount: {
+    fontSize: '14px',
+    color: '#a08060',
+    margin: '0 0 8px 0',
+  },
+  campaignEnded: {
+    fontSize: '14px',
+    color: '#a08060',
+    fontStyle: 'italic',
+    margin: '0 0 16px 0',
+  },
+  loadingContainer: {
+    padding: '24px',
+    textAlign: 'center',
+  },
+  loadingSpinner: {
+    width: '32px',
+    height: '32px',
+    border: '3px solid rgba(201, 162, 39, 0.3)',
+    borderTopColor: '#c9a227',
+    borderRadius: '50%',
+    margin: '0 auto 16px',
+    animation: 'spin 1s linear infinite',
+  },
+  loadingText: {
+    fontSize: '14px',
+    color: '#a08060',
+  },
+  errorContainer: {
+    padding: '24px',
+    textAlign: 'center',
+  },
+  errorText: {
+    fontSize: '14px',
+    color: '#a08060',
+    marginBottom: '16px',
+  },
+  successBanner: {
+    backgroundColor: 'rgba(61, 107, 30, 0.2)',
+    border: '2px solid #3d6b1e',
+    color: '#3d6b1e',
+    padding: '12px 16px',
+    borderRadius: '4px',
+    marginBottom: '16px',
+    fontWeight: 'bold',
+    fontSize: '16px',
   },
   kickstarterButton: {
     display: 'inline-block',
@@ -1294,6 +1403,11 @@ styleSheet.textContent = `
     0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
     40% { transform: translateY(-10px); }
     60% { transform: translateY(-5px); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
   
   * {
