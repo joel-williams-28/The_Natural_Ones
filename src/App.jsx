@@ -5,6 +5,12 @@ export default function TheNaturalOnesWebsite() {
   const [activeSection, setActiveSection] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [kickstarterData, setKickstarterData] = useState({
+    pledged: 260,
+    goal: 3000,
+    daysRemaining: 37,
+    percentFunded: 8.7
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,6 +18,30 @@ export default function TheNaturalOnesWebsite() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Fetch Kickstarter data
+  useEffect(() => {
+    const fetchKickstarterData = async () => {
+      try {
+        const response = await fetch('/.netlify/functions/kickstarter');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.pledged !== null && data.goal !== null) {
+            setKickstarterData({
+              pledged: data.pledged,
+              goal: data.goal,
+              daysRemaining: data.daysRemaining,
+              percentFunded: data.percentFunded || ((data.pledged / data.goal) * 100)
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch Kickstarter data:', error);
+      }
+    };
+
+    fetchKickstarterData();
   }, []);
 
   const scrollToSection = (sectionId) => {
@@ -268,14 +298,14 @@ export default function TheNaturalOnesWebsite() {
             <div style={styles.fundingProgress}>
               <h3 style={styles.fundingTitle}>Funding Progress</h3>
               <div style={styles.progressBar}>
-                <div style={styles.progressFill}></div>
+                <div style={{...styles.progressFill, width: `${Math.min(kickstarterData.percentFunded, 100)}%`}}></div>
               </div>
               <div style={styles.progressStats}>
-                <span>£260 raised</span>
-                <span>Goal: £3,000</span>
+                <span>£{kickstarterData.pledged.toLocaleString()} raised</span>
+                <span>Goal: £{kickstarterData.goal.toLocaleString()}</span>
               </div>
-              <p style={styles.fundingDays}>37 days remaining</p>
-              <a 
+              <p style={styles.fundingDays}>{kickstarterData.daysRemaining} days remaining</p>
+              <a
                 href="https://www.kickstarter.com/projects/1310830097/tabletop-role-playing-game-the-musical-at-the-fringe"
                 target="_blank"
                 rel="noopener noreferrer"
