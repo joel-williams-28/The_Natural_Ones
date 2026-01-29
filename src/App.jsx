@@ -5,6 +5,12 @@ export default function TheNaturalOnesWebsite() {
   const [activeSection, setActiveSection] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [kickstarterData, setKickstarterData] = useState({
+    pledged: 260,
+    goal: 3000,
+    daysRemaining: 37,
+    percentFunded: 8.7
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,6 +18,30 @@ export default function TheNaturalOnesWebsite() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Fetch Kickstarter data
+  useEffect(() => {
+    const fetchKickstarterData = async () => {
+      try {
+        const response = await fetch('/.netlify/functions/kickstarter');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.pledged !== null && data.goal !== null) {
+            setKickstarterData({
+              pledged: data.pledged,
+              goal: data.goal,
+              daysRemaining: data.daysRemaining,
+              percentFunded: data.percentFunded || ((data.pledged / data.goal) * 100)
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch Kickstarter data:', error);
+      }
+    };
+
+    fetchKickstarterData();
   }, []);
 
   const scrollToSection = (sectionId) => {
@@ -68,7 +98,7 @@ export default function TheNaturalOnesWebsite() {
         <div style={styles.heroContent}>
           <div style={styles.heroD20Container}>
             {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
-            <Logo size={120} />
+            <Logo size={180} />
           </div>
           <h1 style={styles.heroTitle}>The Natural Ones</h1>
           <p style={styles.heroSubtitle}>Amateur Theatre with a Critical Hit</p>
@@ -268,14 +298,14 @@ export default function TheNaturalOnesWebsite() {
             <div style={styles.fundingProgress}>
               <h3 style={styles.fundingTitle}>Funding Progress</h3>
               <div style={styles.progressBar}>
-                <div style={styles.progressFill}></div>
+                <div style={{...styles.progressFill, width: `${Math.min(kickstarterData.percentFunded, 100)}%`}}></div>
               </div>
               <div style={styles.progressStats}>
-                <span>£260 raised</span>
-                <span>Goal: £3,000</span>
+                <span>£{kickstarterData.pledged.toLocaleString()} raised</span>
+                <span>Goal: £{kickstarterData.goal.toLocaleString()}</span>
               </div>
-              <p style={styles.fundingDays}>37 days remaining</p>
-              <a 
+              <p style={styles.fundingDays}>{kickstarterData.daysRemaining} days remaining</p>
+              <a
                 href="https://www.kickstarter.com/projects/1310830097/tabletop-role-playing-game-the-musical-at-the-fringe"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -606,13 +636,13 @@ const styles = {
   
   // Hero
   hero: {
-    minHeight: '100vh',
+    minHeight: '107vh',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    padding: '40px 20px',
+    padding: '40px 20px 100px 20px',
     background: `
       radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
       linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
@@ -662,7 +692,7 @@ const styles = {
     fontSize: '16px',
   },
   heroShowTitle: {
-    fontFamily: "'Cinzel', serif",
+    fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
     fontSize: 'clamp(20px, 4vw, 32px)',
     fontWeight: 'normal',
     color: '#e8dcc4',
@@ -715,7 +745,7 @@ const styles = {
   },
   heroScroll: {
     position: 'absolute',
-    bottom: '40px',
+    bottom: '20px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -732,7 +762,7 @@ const styles = {
     color: '#c9a227',
     animation: 'bounce 2s infinite',
   },
-  
+
   // Sections
   section: {
     padding: '100px 20px',
