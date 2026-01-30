@@ -1,42 +1,48 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// Show data for the carousel
+// Show data for the carousel - Three distinct shows
 const showsData = [
   {
     id: 1,
     title: "Tabletop Role-Playing Game: The Musical!",
     poster: "/images/poster.jpg",
+    hasRealPoster: true,
     venue: "Alma Tavern & Theatre",
     address: "18-20 Alma Vale Road, Clifton, Bristol, BS8 2HY",
     date: "Sunday 18th January 2026",
     doors: "17:30",
     runtime: "Approx. 1 hour",
     ticketUrl: "https://tickettailor.com/events/almatheatrecompany",
-    description: "A comedy adventure where the dice decide the ending!"
+    description: "A comedy adventure where the dice decide the ending!",
+    tagline: "Where the dice decide the ending"
   },
   {
     id: 2,
-    title: "Tabletop Role-Playing Game: The Musical!",
-    poster: "/images/poster.jpg",
-    venue: "Edinburgh Fringe Festival",
-    address: "Edinburgh, Scotland",
-    date: "August 2026",
+    title: "The Dungeon Master's Lament",
+    poster: null,
+    hasRealPoster: false,
+    venue: "TBA",
+    address: "Bristol Area",
+    date: "Coming 2026",
     doors: "TBA",
-    runtime: "Approx. 1 hour",
+    runtime: "TBA",
     ticketUrl: "#",
-    description: "Our Edinburgh Fringe debut - help us get there!"
+    description: "A tale of one DM's struggle against the chaos of their party.",
+    tagline: "One DM. Five players. Infinite chaos."
   },
   {
     id: 3,
-    title: "Tabletop Role-Playing Game: The Musical!",
-    poster: "/images/poster.jpg",
-    venue: "More Shows Coming Soon",
-    address: "Bristol and Beyond",
-    date: "To Be Announced",
+    title: "Critical Failure: A Love Story",
+    poster: null,
+    hasRealPoster: false,
+    venue: "TBA",
+    address: "Bristol Area",
+    date: "Coming 2027",
     doors: "TBA",
-    runtime: "Approx. 1 hour",
+    runtime: "TBA",
     ticketUrl: "#",
-    description: "Stay tuned for more performances!"
+    description: "When two adventurers keep rolling natural ones, fate has other plans.",
+    tagline: "Sometimes failure is just the beginning"
   }
 ];
 
@@ -559,22 +565,43 @@ function ShowCarousel({ shows }) {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
+  const [hasDragged, setHasDragged] = useState(false);
   const carouselRef = useRef(null);
 
-  const handlePrev = () => {
-    if (flippedIndex !== null) return;
-    setCurrentIndex((prev) => (prev === 0 ? shows.length - 1 : prev - 1));
+  // Navigate to previous poster
+  const handlePrev = (keepFlipped = false) => {
+    const newIndex = currentIndex === 0 ? shows.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+    if (keepFlipped && flippedIndex !== null) {
+      setFlippedIndex(newIndex);
+      setInfoVisible(true);
+    }
   };
 
-  const handleNext = () => {
-    if (flippedIndex !== null) return;
-    setCurrentIndex((prev) => (prev === shows.length - 1 ? 0 : prev + 1));
+  // Navigate to next poster
+  const handleNext = (keepFlipped = false) => {
+    const newIndex = currentIndex === shows.length - 1 ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+    if (keepFlipped && flippedIndex !== null) {
+      setFlippedIndex(newIndex);
+      setInfoVisible(true);
+    }
   };
 
   const handlePosterClick = (index) => {
+    // Don't trigger click if we just finished dragging
+    if (hasDragged) {
+      setHasDragged(false);
+      return;
+    }
+
     if (index !== currentIndex) {
-      // Navigate to that poster first
+      // Navigate to that poster, keeping flip state if flipped
       setCurrentIndex(index);
+      if (flippedIndex !== null) {
+        setFlippedIndex(index);
+        setInfoVisible(true);
+      }
       return;
     }
 
@@ -591,16 +618,20 @@ function ShowCarousel({ shows }) {
 
   // Mouse/touch drag handling
   const handleDragStart = (e) => {
-    if (flippedIndex !== null) return;
     setIsDragging(true);
+    setHasDragged(false);
     setStartX(e.type === 'touchstart' ? e.touches[0].clientX : e.clientX);
+    e.preventDefault();
   };
 
   const handleDragMove = (e) => {
-    if (!isDragging || flippedIndex !== null) return;
+    if (!isDragging) return;
     const currentX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
     const diff = currentX - startX;
     setDragOffset(diff);
+    if (Math.abs(diff) > 10) {
+      setHasDragged(true);
+    }
   };
 
   const handleDragEnd = () => {
@@ -608,10 +639,11 @@ function ShowCarousel({ shows }) {
     setIsDragging(false);
 
     if (Math.abs(dragOffset) > 50) {
+      const isFlipped = flippedIndex !== null;
       if (dragOffset > 0) {
-        handlePrev();
+        handlePrev(isFlipped);
       } else {
-        handleNext();
+        handleNext(isFlipped);
       }
     }
     setDragOffset(0);
@@ -623,10 +655,11 @@ function ShowCarousel({ shows }) {
       diff > shows.length / 2 ? diff - shows.length :
       diff < -shows.length / 2 ? diff + shows.length : diff;
 
-    const baseTranslateX = normalizedDiff * 320;
-    const translateX = baseTranslateX + (isDragging ? dragOffset * 0.3 : 0);
-    const scale = normalizedDiff === 0 ? 1 : 0.75;
-    const opacity = normalizedDiff === 0 ? 1 : 0.3;
+    // Bigger center poster with more spacing
+    const baseTranslateX = normalizedDiff * 380;
+    const translateX = baseTranslateX + (isDragging ? dragOffset * 0.5 : 0);
+    const scale = normalizedDiff === 0 ? 1 : 0.65;
+    const opacity = normalizedDiff === 0 ? 1 : 0.25;
     const zIndex = normalizedDiff === 0 ? 10 : 5 - Math.abs(normalizedDiff);
 
     return {
@@ -637,13 +670,15 @@ function ShowCarousel({ shows }) {
     };
   };
 
+  // Display index for info (use flippedIndex when flipped, otherwise currentIndex)
+  const displayIndex = flippedIndex !== null ? flippedIndex : currentIndex;
+
   return (
     <div style={styles.carouselContainer}>
       {/* Navigation arrows */}
       <button
         style={{...styles.carouselArrow, ...styles.carouselArrowLeft}}
-        onClick={handlePrev}
-        disabled={flippedIndex !== null}
+        onClick={() => handlePrev(flippedIndex !== null)}
       >
         &#10094;
       </button>
@@ -674,7 +709,7 @@ function ShowCarousel({ shows }) {
             }}>
               {/* Front of card - Poster */}
               <div style={styles.flipCardFront}>
-                <PosterCard poster={show.poster} title={show.title} />
+                <PosterCard show={show} />
               </div>
 
               {/* Back of card - Scroll with info */}
@@ -697,17 +732,16 @@ function ShowCarousel({ shows }) {
 
       <button
         style={{...styles.carouselArrow, ...styles.carouselArrowRight}}
-        onClick={handleNext}
-        disabled={flippedIndex !== null}
+        onClick={() => handleNext(flippedIndex !== null)}
       >
         &#10095;
       </button>
 
-      {/* Info box that pops in when flipped */}
+      {/* Info box that pops in when flipped - centered below poster */}
       <div style={{
         ...styles.infoPopup,
         opacity: infoVisible && flippedIndex !== null ? 1 : 0,
-        transform: infoVisible && flippedIndex !== null ? 'translateX(0) scale(1)' : 'translateX(-30px) scale(0.9)',
+        transform: infoVisible && flippedIndex !== null ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
         pointerEvents: infoVisible && flippedIndex !== null ? 'auto' : 'none',
       }}>
         {flippedIndex !== null && shows[flippedIndex] && (
@@ -772,8 +806,12 @@ function ShowCarousel({ shows }) {
               backgroundColor: index === currentIndex ? '#c9a227' : 'rgba(201, 162, 39, 0.3)',
             }}
             onClick={() => {
-              if (flippedIndex !== null) return;
+              const isFlipped = flippedIndex !== null;
               setCurrentIndex(index);
+              if (isFlipped) {
+                setFlippedIndex(index);
+                setInfoVisible(true);
+              }
             }}
           />
         ))}
@@ -782,29 +820,32 @@ function ShowCarousel({ shows }) {
   );
 }
 
-// Poster Card for carousel
-function PosterCard({ poster, title }) {
+// Poster Card for carousel - handles real posters and placeholders
+function PosterCard({ show }) {
   const [hasError, setHasError] = useState(false);
 
-  if (hasError) {
+  // If no real poster or error loading, show placeholder
+  if (!show.hasRealPoster || hasError) {
     return (
       <div style={styles.posterCardFallback}>
-        <h3 style={styles.posterCardTitle}>Tabletop Role-Playing Game:</h3>
-        <h3 style={styles.posterCardSubtitle}>The Musical!</h3>
+        <div style={styles.placeholderIcon}>🎭</div>
+        <h3 style={styles.posterCardTitle}>{show.title}</h3>
         <div style={styles.posterCardDivider}></div>
+        <p style={styles.placeholderTagline}>{show.tagline}</p>
         <div style={styles.posterCardIcons}>
           <span>🎲</span>
-          <span>🎭</span>
+          <span>⚔️</span>
           <span>🎵</span>
         </div>
+        <p style={styles.placeholderStatus}>{show.date}</p>
       </div>
     );
   }
 
   return (
     <img
-      src={poster}
-      alt={title}
+      src={show.poster}
+      alt={show.title}
       style={styles.posterCardImage}
       onError={() => setHasError(true)}
     />
@@ -1318,17 +1359,19 @@ const styles = {
   carouselContainer: {
     position: 'relative',
     width: '100%',
-    minHeight: '550px',
+    minHeight: '750px',
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: '20px',
     perspective: '1200px',
     overflow: 'visible',
   },
   carouselTrack: {
     position: 'relative',
-    width: '300px',
-    height: '450px',
+    width: '360px',
+    height: '540px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1337,8 +1380,8 @@ const styles = {
   },
   carouselSlide: {
     position: 'absolute',
-    width: '300px',
-    height: '450px',
+    width: '360px',
+    height: '540px',
     cursor: 'pointer',
     transformStyle: 'preserve-3d',
   },
@@ -1379,19 +1422,22 @@ const styles = {
   posterCardFallback: {
     width: '100%',
     height: '100%',
-    background: 'linear-gradient(180deg, #2d1810, #1a0f08)',
+    background: 'linear-gradient(180deg, #2d1810 0%, #1a0f08 60%, #0d0705 100%)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '24px',
+    padding: '30px',
     textAlign: 'center',
+    border: '2px solid rgba(201, 162, 39, 0.3)',
+    boxSizing: 'border-box',
   },
   posterCardTitle: {
-    fontFamily: "'Cinzel', serif",
-    fontSize: '16px',
-    color: '#e8dcc4',
-    margin: '0 0 4px 0',
+    fontFamily: "'Cinzel Decorative', serif",
+    fontSize: '18px',
+    color: '#c9a227',
+    margin: '0 0 8px 0',
+    lineHeight: 1.3,
   },
   posterCardSubtitle: {
     fontFamily: "'Cinzel Decorative', serif",
@@ -1410,6 +1456,26 @@ const styles = {
     display: 'flex',
     gap: '12px',
     fontSize: '24px',
+    marginTop: '8px',
+  },
+  placeholderIcon: {
+    fontSize: '48px',
+    marginBottom: '16px',
+  },
+  placeholderTagline: {
+    fontSize: '13px',
+    color: '#a08060',
+    margin: '0 0 16px 0',
+    fontStyle: 'italic',
+    lineHeight: 1.4,
+  },
+  placeholderStatus: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '12px',
+    color: '#c9a227',
+    marginTop: '16px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
   },
   scrollReveal: {
     width: '100%',
@@ -1469,8 +1535,7 @@ const styles = {
   },
   carouselArrow: {
     position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
+    top: '270px',
     width: '50px',
     height: '50px',
     background: 'linear-gradient(135deg, #c9a227, #8b6914)',
@@ -1487,14 +1552,14 @@ const styles = {
     boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
   },
   carouselArrowLeft: {
-    left: '10px',
+    left: '50px',
   },
   carouselArrowRight: {
-    right: '10px',
+    right: '50px',
   },
   carouselDots: {
     position: 'absolute',
-    bottom: '10px',
+    bottom: '150px',
     left: '50%',
     transform: 'translateX(-50%)',
     display: 'flex',
@@ -1510,10 +1575,11 @@ const styles = {
   },
   infoPopup: {
     position: 'absolute',
-    right: '-320px',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    width: '280px',
+    bottom: '20px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: '340px',
+    maxWidth: '90%',
     backgroundColor: '#2d1810',
     border: '3px solid #c9a227',
     borderRadius: '8px',
