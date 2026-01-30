@@ -561,10 +561,14 @@ function ShowCarousel({ shows }) {
   const [dragOffset, setDragOffset] = useState(0);
   const [hasDragged, setHasDragged] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [animatedOffset, setAnimatedOffset] = useState(0); // Smooth animation offset
   const carouselRef = useRef(null);
   const containerRef = useRef(null);
   const animationRef = useRef(null);
+
+  // Use ref for animated offset to ensure synchronous updates with index changes
+  const offsetRef = useRef(0);
+  const [renderTrigger, setRenderTrigger] = useState(0);
+  const forceRender = () => setRenderTrigger(n => n + 1);
 
   // Keyboard navigation with arrow keys
   useEffect(() => {
@@ -616,25 +620,25 @@ function ShowCarousel({ shows }) {
       const easeOut = 1 - Math.pow(1 - progress, 3);
       const currentOffset = fromOffset + (toOffset - fromOffset) * easeOut;
 
-      setAnimatedOffset(currentOffset);
+      // Update ref and trigger re-render
+      offsetRef.current = currentOffset;
+      forceRender();
 
       if (progress < 1) {
         animationRef.current = requestAnimationFrame(animate);
       } else {
         // Animation complete
-        // IMPORTANT: Update the index FIRST while still at final offset position,
-        // then reset offset on next frame to prevent flicker
+        // CRITICAL: Set offset to 0 SYNCHRONOUSLY before changing index
+        // This ensures no flicker because when React renders with new index,
+        // the offset is already 0
+        offsetRef.current = 0;
+        setIsAnimating(false);
         if (onComplete) onComplete();
-
-        // Reset offset after index has been updated
-        requestAnimationFrame(() => {
-          setAnimatedOffset(0);
-          setIsAnimating(false);
-        });
       }
     };
 
     setIsAnimating(true);
+    offsetRef.current = fromOffset;
     animationRef.current = requestAnimationFrame(animate);
   };
 
@@ -730,9 +734,8 @@ function ShowCarousel({ shows }) {
     const threshold = 100; // Distance needed to trigger navigation
     const isFlipped = flippedIndex !== null;
 
-    // IMPORTANT: Set animatedOffset to current drag position BEFORE clearing drag state
-    // This prevents a flash where both offsets are 0
-    setAnimatedOffset(currentDragOffset);
+    // Transfer drag offset to animation offset ref before clearing drag state
+    offsetRef.current = currentDragOffset;
     setDragOffset(0);
     setIsDragging(false);
 
@@ -757,15 +760,15 @@ function ShowCarousel({ shows }) {
       animateCarousel(currentDragOffset, 0);
     } else {
       // Didn't drag enough, just reset
-      setAnimatedOffset(0);
+      offsetRef.current = 0;
     }
   };
 
   // Get style for a specific visual position (-1 = left, 0 = center, 1 = right)
   // Creates smooth 3D carousel effect with continuous position interpolation
   const getPositionStyleForSlot = (slot, actualIndex) => {
-    // Combined offset from drag and animation
-    const totalOffset = isDragging ? dragOffset : animatedOffset;
+    // Combined offset from drag and animation (ref for animation, state for drag)
+    const totalOffset = isDragging ? dragOffset : offsetRef.current;
 
     // Calculate continuous position based on slot and offset
     // Normalize offset to a fraction of spacing (-1 to 1 range)
