@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// Show data for the carousel - Three distinct shows
+// Show data for the carousel - Two shows
 // Images: Place poster01.jpg, scroll01.jpg, poster02.jpg, scroll02.jpg, etc. in public/images/
 const showsData = [
   {
@@ -34,22 +34,6 @@ const showsData = [
     ticketUrl: "#",
     description: "A tale of one DM's struggle against the chaos of their party.",
     tagline: "One DM. Five players. Infinite chaos."
-  },
-  {
-    id: 3,
-    title: "Critical Failure: A Love Story",
-    poster: "/images/poster03.jpg",
-    hasRealPoster: false,  // Set to true when you add poster03.jpg
-    scrollImage: "/images/scroll03.jpg",
-    hasScrollImage: false, // Set to true when you add scroll03.jpg
-    venue: "TBA",
-    address: "Bristol Area",
-    date: "Coming 2027",
-    doors: "TBA",
-    runtime: "TBA",
-    ticketUrl: "#",
-    description: "When two adventurers keep rolling natural ones, fate has other plans.",
-    tagline: "Sometimes failure is just the beginning"
   }
 ];
 
@@ -574,6 +558,37 @@ function ShowCarousel({ shows }) {
   const [dragOffset, setDragOffset] = useState(0);
   const [hasDragged, setHasDragged] = useState(false);
   const carouselRef = useRef(null);
+  const containerRef = useRef(null);
+
+  // Keyboard navigation with arrow keys
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        handlePrev(flippedIndex !== null);
+      } else if (e.key === 'ArrowRight') {
+        handleNext(flippedIndex !== null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, flippedIndex, shows.length]);
+
+  // Click outside to close flipped view
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (flippedIndex === null) return;
+
+      // Check if click is outside the carousel container
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setInfoVisible(false);
+        setTimeout(() => setFlippedIndex(null), 100);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [flippedIndex]);
 
   // Navigate to previous poster
   const handlePrev = (keepFlipped = false) => {
@@ -663,7 +678,7 @@ function ShowCarousel({ shows }) {
       diff < -shows.length / 2 ? diff + shows.length : diff;
 
     // Bigger center poster with more spacing
-    const baseTranslateX = normalizedDiff * 440;
+    const baseTranslateX = normalizedDiff * 520;
     const translateX = baseTranslateX + (isDragging ? dragOffset * 0.5 : 0);
     const scale = normalizedDiff === 0 ? 1 : 0.65;
     const opacity = normalizedDiff === 0 ? 1 : 0.25;
@@ -681,7 +696,7 @@ function ShowCarousel({ shows }) {
   const displayIndex = flippedIndex !== null ? flippedIndex : currentIndex;
 
   return (
-    <div style={styles.carouselContainer}>
+    <div ref={containerRef} style={styles.carouselContainer}>
       {/* Navigation arrows */}
       <button
         style={{...styles.carouselArrow, ...styles.carouselArrowLeft}}
@@ -1393,7 +1408,7 @@ const styles = {
   carouselContainer: {
     position: 'relative',
     width: '100%',
-    minHeight: '720px',
+    minHeight: '850px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1403,8 +1418,8 @@ const styles = {
   },
   carouselTrack: {
     position: 'relative',
-    width: '420px',
-    height: '630px',
+    width: '500px',
+    height: '750px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1413,8 +1428,8 @@ const styles = {
   },
   carouselSlide: {
     position: 'absolute',
-    width: '420px',
-    height: '630px',
+    width: '500px',
+    height: '750px',
     cursor: 'pointer',
     transformStyle: 'preserve-3d',
   },
