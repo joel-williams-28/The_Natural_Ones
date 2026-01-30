@@ -62,11 +62,19 @@ export async function handler(event, context) {
         // The response structure varies - check for nested 'project' or direct properties
         const project = projectData.project || projectData;
 
-        pledged = project.pledged || project.usd_pledged;
-        goal = project.goal;
+        // Log the response structure for debugging
+        console.log('Kickstarter API response keys:', Object.keys(project));
+
+        pledged = project.pledged || project.usd_pledged || 0;
+        goal = project.goal || 0;
         endDate = project.deadline;
         backers = project.backers_count;
         state = project.state;
+
+        // Capture percent_funded directly from API if available
+        if (project.percent_funded !== undefined) {
+          percentFunded = project.percent_funded;
+        }
 
         // Handle currency conversion if needed (Kickstarter sometimes returns in USD)
         if (project.currency && project.currency !== 'GBP' && project.fx_rate) {
@@ -78,6 +86,8 @@ export async function handler(event, context) {
         if (project.converted_pledged_amount) {
           pledged = project.converted_pledged_amount;
         }
+
+        console.log('Extracted data:', { pledged, goal, percentFunded, backers, state });
       }
     }
   } catch (e) {
@@ -93,11 +103,18 @@ export async function handler(event, context) {
         const statsData = await statsResponse.json();
 
         if (statsData && statsData.project) {
-          pledged = statsData.project.pledged;
-          goal = statsData.project.goal;
+          pledged = statsData.project.pledged || 0;
+          goal = statsData.project.goal || 0;
           backers = statsData.project.backers_count;
           endDate = statsData.project.deadline;
           state = statsData.project.state;
+
+          // Capture percent_funded from stats endpoint
+          if (statsData.project.percent_funded !== undefined) {
+            percentFunded = statsData.project.percent_funded;
+          }
+
+          console.log('Stats endpoint data:', { pledged, goal, percentFunded, backers, state });
         }
       }
     } catch (e) {
@@ -142,9 +159,10 @@ export async function handler(event, context) {
     daysRemaining = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
   }
 
-  // Calculate percentage
-  if (pledged !== null && goal !== null && goal > 0) {
+  // Calculate percentage if not already provided by API
+  if (percentFunded === null && pledged !== null && goal !== null && goal > 0) {
     percentFunded = (pledged / goal) * 100;
+    console.log('Calculated percentFunded:', percentFunded);
   }
 
   // Determine campaign status
