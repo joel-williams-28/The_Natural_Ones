@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 
 // Show data for the carousel - Two shows
 // Images: Place poster01.jpg, scroll01.jpg, poster02.jpg, scroll02.jpg, etc. in public/images/
+// Show data for the carousel - Three distinct shows
+// Images: Place poster01.jpg, scroll01.png, poster02.jpg, scroll02.png, etc. in public/images/
 const showsData = [
   {
     id: 1,
@@ -9,6 +11,7 @@ const showsData = [
     poster: "/images/poster01.jpg",
     hasRealPoster: true,
     scrollImage: "/images/Scroll01.png",
+    scrollImage: "/images/scroll01.png",
     hasScrollImage: true,
     venue: "Alma Tavern & Theatre",
     address: "18-20 Alma Vale Road, Clifton, Bristol, BS8 2HY",
