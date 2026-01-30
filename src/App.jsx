@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // Show data for the carousel - Three distinct shows
-// Images: Place poster01.jpg, scroll01.jpg, poster02.jpg, scroll02.jpg, etc. in public/images/
+// Images: Place poster01.jpg, scroll01.png, poster02.jpg, scroll02.png, etc. in public/images/
 const showsData = [
   {
     id: 1,
     title: "Tabletop Role-Playing Game: The Musical!",
     poster: "/images/poster01.jpg",
     hasRealPoster: true,
-    scrollImage: "/images/scroll01.jpg",
+    scrollImage: "/images/scroll01.png",
     hasScrollImage: true,
     venue: "Alma Tavern & Theatre",
     address: "18-20 Alma Vale Road, Clifton, Bristol, BS8 2HY",
