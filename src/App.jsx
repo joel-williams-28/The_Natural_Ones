@@ -671,25 +671,35 @@ function ShowCarousel({ shows }) {
     setDragOffset(0);
   };
 
-  const getPositionStyle = (index) => {
-    const diff = index - currentIndex;
-    const normalizedDiff = diff === 0 ? 0 :
-      diff > shows.length / 2 ? diff - shows.length :
-      diff < -shows.length / 2 ? diff + shows.length : diff;
-
-    // Bigger center poster with more spacing
-    const baseTranslateX = normalizedDiff * 520;
+  // Get style for a specific visual position (-1 = left, 0 = center, 1 = right)
+  const getPositionStyleForSlot = (slot, actualIndex) => {
+    const baseTranslateX = slot * 520;
     const translateX = baseTranslateX + (isDragging ? dragOffset * 0.5 : 0);
-    const scale = normalizedDiff === 0 ? 1 : 0.65;
-    const opacity = normalizedDiff === 0 ? 1 : 0.25;
-    const zIndex = normalizedDiff === 0 ? 10 : 5 - Math.abs(normalizedDiff);
+    const scale = slot === 0 ? 1 : 0.65;
+    const opacity = slot === 0 ? 1 : 0.25;
+    const zIndex = slot === 0 ? 10 : 5;
 
     return {
       transform: `translateX(${translateX}px) scale(${scale})`,
-      opacity: flippedIndex !== null && flippedIndex !== index ? 0.1 : opacity,
+      opacity: flippedIndex !== null && flippedIndex !== actualIndex ? 0.1 : opacity,
       zIndex,
       transition: isDragging ? 'none' : 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
     };
+  };
+
+  // Generate items to render: center + left ghost + right ghost
+  const getItemsToRender = () => {
+    const items = [];
+    const otherIndex = currentIndex === 0 ? 1 : 0;
+
+    // Left side (the "other" poster)
+    items.push({ show: shows[otherIndex], actualIndex: otherIndex, slot: -1, key: `left-${otherIndex}` });
+    // Center (current poster)
+    items.push({ show: shows[currentIndex], actualIndex: currentIndex, slot: 0, key: `center-${currentIndex}` });
+    // Right side (the "other" poster)
+    items.push({ show: shows[otherIndex], actualIndex: otherIndex, slot: 1, key: `right-${otherIndex}` });
+
+    return items;
   };
 
   // Display index for info (use flippedIndex when flipped, otherwise currentIndex)
@@ -716,36 +726,36 @@ function ShowCarousel({ shows }) {
         onTouchMove={handleDragMove}
         onTouchEnd={handleDragEnd}
       >
-        {shows.map((show, index) => (
+        {getItemsToRender().map((item) => (
           <div
-            key={show.id}
+            key={item.key}
             style={{
               ...styles.carouselSlide,
-              ...getPositionStyle(index),
+              ...getPositionStyleForSlot(item.slot, item.actualIndex),
             }}
-            onClick={() => handlePosterClick(index)}
+            onClick={() => handlePosterClick(item.actualIndex)}
           >
             <div style={{
               ...styles.flipCard,
-              transform: flippedIndex === index ? 'rotateY(180deg)' : 'rotateY(0deg)',
+              transform: flippedIndex === item.actualIndex ? 'rotateY(180deg)' : 'rotateY(0deg)',
             }}>
               {/* Front of card - Poster */}
               <div style={styles.flipCardFront}>
-                <PosterCard show={show} />
+                <PosterCard show={item.show} />
               </div>
 
               {/* Back of card - Scroll image or generated scroll */}
               <div style={styles.flipCardBack}>
-                {show.hasScrollImage ? (
-                  <ScrollImage src={show.scrollImage} />
+                {item.show.hasScrollImage ? (
+                  <ScrollImage src={item.show.scrollImage} />
                 ) : (
                   <div style={styles.scrollReveal}>
                     <div style={styles.scrollRevealTop}></div>
                     <div style={styles.scrollRevealBody}>
-                      <h3 style={styles.scrollRevealTitle}>{show.title}</h3>
-                      <p style={styles.scrollRevealDesc}>{show.description}</p>
+                      <h3 style={styles.scrollRevealTitle}>{item.show.title}</h3>
+                      <p style={styles.scrollRevealDesc}>{item.show.description}</p>
                       <div style={styles.scrollDivider}></div>
-                      <p style={styles.scrollRevealVenue}>{show.venue}</p>
+                      <p style={styles.scrollRevealVenue}>{item.show.venue}</p>
                     </div>
                     <div style={styles.scrollRevealBottom}></div>
                   </div>
