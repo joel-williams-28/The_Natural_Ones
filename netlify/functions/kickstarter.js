@@ -4,6 +4,10 @@
 const KICKSTARTER_API_URL = 'https://www.kickstarter.com/projects/1310830097/tabletop-role-playing-game-the-musical-at-the-fringe/stats.json?v=1';
 const KICKSTARTER_PROJECT_URL = 'https://www.kickstarter.com/projects/1310830097/tabletop-role-playing-game-the-musical-at-the-fringe.json';
 
+// Known campaign details (fallback when API doesn't provide them)
+const CAMPAIGN_GOAL = 3000; // £3,000 goal
+const CAMPAIGN_DEADLINE = 1740826740; // Campaign end date (Unix timestamp)
+
 // Fetch with timeout
 async function fetchWithTimeout(url, options, timeoutMs = 10000) {
   const controller = new AbortController();
@@ -111,11 +115,13 @@ export async function handler(event, context) {
           // Parse pledged as float (API returns string like "350.0")
           pledged = parseFloat(proj.pledged) || 0;
 
-          // Goal might be in different fields
-          goal = parseFloat(proj.goal) || parseFloat(proj.static_usd_rate) || 0;
+          // Stats endpoint doesn't include goal, use fallback
+          goal = parseFloat(proj.goal) || CAMPAIGN_GOAL;
 
           backers = parseInt(proj.backers_count, 10) || 0;
-          endDate = proj.deadline;
+
+          // Stats endpoint doesn't include deadline, use fallback
+          endDate = proj.deadline || CAMPAIGN_DEADLINE;
           state = proj.state;
 
           // Capture percent_funded from stats endpoint
