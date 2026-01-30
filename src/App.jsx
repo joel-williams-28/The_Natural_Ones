@@ -656,7 +656,7 @@ function ShowCarousel({ shows }) {
       diff < -shows.length / 2 ? diff + shows.length : diff;
 
     // Bigger center poster with more spacing
-    const baseTranslateX = normalizedDiff * 380;
+    const baseTranslateX = normalizedDiff * 440;
     const translateX = baseTranslateX + (isDragging ? dragOffset * 0.5 : 0);
     const scale = normalizedDiff === 0 ? 1 : 0.65;
     const opacity = normalizedDiff === 0 ? 1 : 0.25;
@@ -737,11 +737,11 @@ function ShowCarousel({ shows }) {
         &#10095;
       </button>
 
-      {/* Info box that pops in when flipped - centered below poster */}
+      {/* Info box that pops in when flipped - to the right of poster */}
       <div style={{
         ...styles.infoPopup,
         opacity: infoVisible && flippedIndex !== null ? 1 : 0,
-        transform: infoVisible && flippedIndex !== null ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
+        transform: infoVisible && flippedIndex !== null ? 'translateY(-50%) scale(1)' : 'translateY(-50%) translateX(30px) scale(0.95)',
         pointerEvents: infoVisible && flippedIndex !== null ? 'auto' : 'none',
       }}>
         {flippedIndex !== null && shows[flippedIndex] && (
@@ -1359,19 +1359,17 @@ const styles = {
   carouselContainer: {
     position: 'relative',
     width: '100%',
-    minHeight: '750px',
+    minHeight: '700px',
     display: 'flex',
-    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: '20px',
+    justifyContent: 'center',
     perspective: '1200px',
     overflow: 'visible',
   },
   carouselTrack: {
     position: 'relative',
-    width: '360px',
-    height: '540px',
+    width: '420px',
+    height: '630px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1380,8 +1378,8 @@ const styles = {
   },
   carouselSlide: {
     position: 'absolute',
-    width: '360px',
-    height: '540px',
+    width: '420px',
+    height: '630px',
     cursor: 'pointer',
     transformStyle: 'preserve-3d',
   },
@@ -1535,7 +1533,8 @@ const styles = {
   },
   carouselArrow: {
     position: 'absolute',
-    top: '270px',
+    top: '50%',
+    transform: 'translateY(-50%)',
     width: '50px',
     height: '50px',
     background: 'linear-gradient(135deg, #c9a227, #8b6914)',
@@ -1552,14 +1551,14 @@ const styles = {
     boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
   },
   carouselArrowLeft: {
-    left: '50px',
+    left: '20px',
   },
   carouselArrowRight: {
-    right: '50px',
+    right: '20px',
   },
   carouselDots: {
     position: 'absolute',
-    bottom: '150px',
+    bottom: '20px',
     left: '50%',
     transform: 'translateX(-50%)',
     display: 'flex',
@@ -1575,11 +1574,10 @@ const styles = {
   },
   infoPopup: {
     position: 'absolute',
-    bottom: '20px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '340px',
-    maxWidth: '90%',
+    top: '50%',
+    right: '40px',
+    transform: 'translateY(-50%)',
+    width: '300px',
     backgroundColor: '#2d1810',
     border: '3px solid #c9a227',
     borderRadius: '8px',
