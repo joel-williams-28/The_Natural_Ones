@@ -621,10 +621,16 @@ function ShowCarousel({ shows }) {
       if (progress < 1) {
         animationRef.current = requestAnimationFrame(animate);
       } else {
-        // Animation complete - reset offset and update index
-        setAnimatedOffset(0);
-        setIsAnimating(false);
+        // Animation complete
+        // IMPORTANT: Update the index FIRST while still at final offset position,
+        // then reset offset on next frame to prevent flicker
         if (onComplete) onComplete();
+
+        // Reset offset after index has been updated
+        requestAnimationFrame(() => {
+          setAnimatedOffset(0);
+          setIsAnimating(false);
+        });
       }
     };
 
@@ -719,13 +725,16 @@ function ShowCarousel({ shows }) {
 
   const handleDragEnd = () => {
     if (!isDragging) return;
-    setIsDragging(false);
 
     const currentDragOffset = dragOffset;
-    setDragOffset(0);
-
     const threshold = 100; // Distance needed to trigger navigation
     const isFlipped = flippedIndex !== null;
+
+    // IMPORTANT: Set animatedOffset to current drag position BEFORE clearing drag state
+    // This prevents a flash where both offsets are 0
+    setAnimatedOffset(currentDragOffset);
+    setDragOffset(0);
+    setIsDragging(false);
 
     if (Math.abs(currentDragOffset) > threshold) {
       // Navigate - animate from current drag position to full spacing
@@ -746,6 +755,9 @@ function ShowCarousel({ shows }) {
     } else if (Math.abs(currentDragOffset) > 5) {
       // Snap back to center with animation (only if we moved a bit)
       animateCarousel(currentDragOffset, 0);
+    } else {
+      // Didn't drag enough, just reset
+      setAnimatedOffset(0);
     }
   };
 
