@@ -1552,10 +1552,10 @@ const styles = {
     boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
   },
   carouselArrowLeft: {
-    left: '5px',
+    left: '-80px',
   },
   carouselArrowRight: {
-    right: '5px',
+    right: '-80px',
   },
   carouselDots: {
     position: 'absolute',
