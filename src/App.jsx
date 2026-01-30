@@ -560,10 +560,11 @@ function ShowCarousel({ shows }) {
   const [startX, setStartX] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [hasDragged, setHasDragged] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [transitionDirection, setTransitionDirection] = useState(null); // 'left' or 'right'
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [animatedOffset, setAnimatedOffset] = useState(0); // Smooth animation offset
   const carouselRef = useRef(null);
   const containerRef = useRef(null);
+  const animationRef = useRef(null);
 
   // Keyboard navigation with arrow keys
   useEffect(() => {
@@ -595,52 +596,69 @@ function ShowCarousel({ shows }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [flippedIndex]);
 
-  // Navigate to previous poster with flip animation
-  const handlePrev = (keepFlipped = false) => {
-    if (isTransitioning) return;
+  // Animate carousel rotation smoothly
+  const animateToPosition = (targetOffset, onComplete) => {
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+    }
 
-    setIsTransitioning(true);
-    setTransitionDirection('right'); // Flip right to go to previous
+    const startOffset = animatedOffset;
+    const startTime = performance.now();
+    const duration = 400; // Animation duration in ms
 
-    // Change index mid-transition for seamless flip effect
-    setTimeout(() => {
-      const newIndex = currentIndex === 0 ? shows.length - 1 : currentIndex - 1;
-      setCurrentIndex(newIndex);
-      if (keepFlipped && flippedIndex !== null) {
-        setFlippedIndex(newIndex);
-        setInfoVisible(true);
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Ease out cubic for smooth deceleration
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const currentOffset = startOffset + (targetOffset - startOffset) * easeOut;
+
+      setAnimatedOffset(currentOffset);
+
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate);
+      } else {
+        setAnimatedOffset(0);
+        setIsAnimating(false);
+        if (onComplete) onComplete();
       }
-    }, 300);
+    };
 
-    // End transition
-    setTimeout(() => {
-      setIsTransitioning(false);
-      setTransitionDirection(null);
-    }, 600);
+    setIsAnimating(true);
+    animationRef.current = requestAnimationFrame(animate);
   };
 
-  // Navigate to next poster with flip animation
-  const handleNext = (keepFlipped = false) => {
-    if (isTransitioning) return;
+  // Navigate to previous poster with smooth carousel rotation
+  const handlePrev = (keepFlipped = false) => {
+    if (isAnimating) return;
 
-    setIsTransitioning(true);
-    setTransitionDirection('left'); // Flip left to go to next
+    const newIndex = currentIndex === 0 ? shows.length - 1 : currentIndex - 1;
 
-    // Change index mid-transition for seamless flip effect
-    setTimeout(() => {
-      const newIndex = currentIndex === shows.length - 1 ? 0 : currentIndex + 1;
+    // Animate from current position, rotating right (positive offset)
+    animateToPosition(340, () => {
       setCurrentIndex(newIndex);
       if (keepFlipped && flippedIndex !== null) {
         setFlippedIndex(newIndex);
         setInfoVisible(true);
       }
-    }, 300);
+    });
+  };
 
-    // End transition
-    setTimeout(() => {
-      setIsTransitioning(false);
-      setTransitionDirection(null);
-    }, 600);
+  // Navigate to next poster with smooth carousel rotation
+  const handleNext = (keepFlipped = false) => {
+    if (isAnimating) return;
+
+    const newIndex = currentIndex === shows.length - 1 ? 0 : currentIndex + 1;
+
+    // Animate from current position, rotating left (negative offset)
+    animateToPosition(-340, () => {
+      setCurrentIndex(newIndex);
+      if (keepFlipped && flippedIndex !== null) {
+        setFlippedIndex(newIndex);
+        setInfoVisible(true);
+      }
+    });
   };
 
   const handlePosterClick = (index) => {
@@ -673,6 +691,7 @@ function ShowCarousel({ shows }) {
 
   // Mouse/touch drag handling
   const handleDragStart = (e) => {
+    if (isAnimating) return;
     setIsDragging(true);
     setHasDragged(false);
     setStartX(e.type === 'touchstart' ? e.touches[0].clientX : e.clientX);
@@ -693,41 +712,74 @@ function ShowCarousel({ shows }) {
     if (!isDragging) return;
     setIsDragging(false);
 
-    if (Math.abs(dragOffset) > 50) {
-      const isFlipped = flippedIndex !== null;
-      if (dragOffset > 0) {
-        handlePrev(isFlipped);
-      } else {
-        handleNext(isFlipped);
-      }
+    const threshold = 100; // Distance needed to trigger navigation
+    const isFlipped = flippedIndex !== null;
+
+    if (Math.abs(dragOffset) > threshold) {
+      // Navigate with smooth animation from current drag position
+      const newIndex = dragOffset > 0
+        ? (currentIndex === 0 ? shows.length - 1 : currentIndex - 1)
+        : (currentIndex === shows.length - 1 ? 0 : currentIndex + 1);
+
+      // Start animation from current drag position
+      setAnimatedOffset(dragOffset);
+      setDragOffset(0);
+
+      // Animate to final position
+      const targetOffset = dragOffset > 0 ? 340 : -340;
+      animateToPosition(targetOffset, () => {
+        setCurrentIndex(newIndex);
+        if (isFlipped && flippedIndex !== null) {
+          setFlippedIndex(newIndex);
+          setInfoVisible(true);
+        }
+      });
+    } else {
+      // Snap back to center with animation
+      setAnimatedOffset(dragOffset);
+      setDragOffset(0);
+      animateToPosition(0);
     }
-    setDragOffset(0);
   };
 
   // Get style for a specific visual position (-1 = left, 0 = center, 1 = right)
+  // Creates smooth 3D carousel effect with continuous position interpolation
   const getPositionStyleForSlot = (slot, actualIndex) => {
-    // Position side posters to peek from behind center with page-flip effect
-    // Increased spacing (340px) for more separation between posters
-    const baseTranslateX = slot * 340;
-    const translateX = baseTranslateX + (isDragging ? dragOffset * 0.5 : 0);
-    const scale = slot === 0 ? 1 : 0.7;
-    const opacity = slot === 0 ? 1 : 0.3;
-    const zIndex = slot === 0 ? 10 : 5;
+    // Spacing between poster positions
+    const spacing = 340;
 
-    // Page-flip rotation: side posters angle away like book pages
-    let rotateY = slot === 0 ? 0 : slot * -45;
+    // Combined offset from drag and animation
+    const totalOffset = isDragging ? dragOffset : animatedOffset;
 
-    // Add flip animation during transitions for the center poster
-    if (isTransitioning && slot === 0) {
-      // Spin 180 degrees in the direction of navigation
-      rotateY = transitionDirection === 'left' ? -180 : 180;
-    }
+    // Calculate continuous position based on slot and offset
+    // Normalize offset to a fraction of spacing (-1 to 1 range)
+    const offsetFraction = totalOffset / spacing;
+
+    // Effective position for this slot (continuous value)
+    const effectivePosition = slot - offsetFraction;
+
+    // Calculate translateX based on effective position
+    const translateX = effectivePosition * spacing;
+
+    // Calculate scale: 1 at center (position 0), smaller towards edges
+    const distanceFromCenter = Math.abs(effectivePosition);
+    const scale = Math.max(0.6, 1 - distanceFromCenter * 0.3);
+
+    // Calculate opacity: full at center, faded towards edges
+    const baseOpacity = Math.max(0.2, 1 - distanceFromCenter * 0.7);
+    const opacity = flippedIndex !== null && flippedIndex !== actualIndex ? 0.1 : baseOpacity;
+
+    // Z-index: higher for center, lower for edges
+    const zIndex = Math.round(10 - distanceFromCenter * 5);
+
+    // 3D rotation for carousel depth effect (posters angle away from center)
+    const rotateY = effectivePosition * -25;
 
     return {
       transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
-      opacity: flippedIndex !== null && flippedIndex !== actualIndex ? 0.1 : opacity,
-      zIndex,
-      transition: isDragging ? 'none' : 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+      opacity,
+      zIndex: Math.max(1, zIndex),
+      transition: 'none', // We handle animation manually
     };
   };
 
@@ -1483,8 +1535,6 @@ const styles = {
     height: '750px',
     cursor: 'pointer',
     transformStyle: 'preserve-3d',
-    backfaceVisibility: 'hidden',
-    WebkitBackfaceVisibility: 'hidden',
   },
   flipCard: {
     position: 'relative',
