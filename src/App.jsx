@@ -242,7 +242,7 @@ export default function TheNaturalOnesWebsite() {
       {/* Show Section */}
       <section id="show" style={styles.sectionAlt}>
         <div style={styles.sectionInner}>
-          <SectionHeader title="The Show" subtitle="Our Quest Begins" />
+          <SectionHeader title="The Shows" subtitle="Our Quest Begins" />
           <p style={styles.centeredText}>
             Click on a poster to reveal performance details
           </p>
@@ -676,7 +676,8 @@ function ShowCarousel({ shows }) {
 
   // Get style for a specific visual position (-1 = left, 0 = center, 1 = right)
   const getPositionStyleForSlot = (slot, actualIndex) => {
-    const baseTranslateX = slot * 520;
+    // Position side posters to peek from behind center (reduced offset so they're partially hidden)
+    const baseTranslateX = slot * 220;
     const translateX = baseTranslateX + (isDragging ? dragOffset * 0.5 : 0);
     const scale = slot === 0 ? 1 : 0.65;
     const opacity = slot === 0 ? 1 : 0.25;
@@ -690,19 +691,16 @@ function ShowCarousel({ shows }) {
     };
   };
 
-  // Generate items to render: center + left ghost + right ghost
+  // Generate items to render: always render both shows at fixed slots for smooth animation
   const getItemsToRender = () => {
-    const items = [];
     const otherIndex = currentIndex === 0 ? 1 : 0;
 
-    // Left side (the "other" poster)
-    items.push({ show: shows[otherIndex], actualIndex: otherIndex, slot: -1, key: `left-${otherIndex}` });
-    // Center (current poster)
-    items.push({ show: shows[currentIndex], actualIndex: currentIndex, slot: 0, key: `center-${currentIndex}` });
-    // Right side (the "other" poster)
-    items.push({ show: shows[otherIndex], actualIndex: otherIndex, slot: 1, key: `right-${otherIndex}` });
-
-    return items;
+    // Always render in order: left, center, right with stable keys for animation
+    return [
+      { show: shows[otherIndex], actualIndex: otherIndex, slot: -1, key: 'slot-left' },
+      { show: shows[currentIndex], actualIndex: currentIndex, slot: 0, key: 'slot-center' },
+      { show: shows[otherIndex], actualIndex: otherIndex, slot: 1, key: 'slot-right' },
+    ];
   };
 
   // Display index for info (use flippedIndex when flipped, otherwise currentIndex)
