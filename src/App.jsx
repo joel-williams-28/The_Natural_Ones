@@ -1,4 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+// Show data for the carousel - Three distinct shows
+// Images: Place poster01.jpg, scroll01.jpg, poster02.jpg, scroll02.jpg, etc. in public/images/
+const showsData = [
+  {
+    id: 1,
+    title: "Tabletop Role-Playing Game: The Musical!",
+    poster: "/images/poster01.jpg",
+    hasRealPoster: true,
+    scrollImage: "/images/scroll01.jpg",
+    hasScrollImage: true,
+    venue: "Alma Tavern & Theatre",
+    address: "18-20 Alma Vale Road, Clifton, Bristol, BS8 2HY",
+    date: "Sunday 18th January 2026",
+    doors: "17:30",
+    runtime: "Approx. 1 hour",
+    ticketUrl: "https://tickettailor.com/events/almatheatrecompany",
+    description: "A comedy adventure where the dice decide the ending!",
+    tagline: "Where the dice decide the ending"
+  },
+  {
+    id: 2,
+    title: "The Dungeon Master's Lament",
+    poster: "/images/poster02.jpg",
+    hasRealPoster: false,  // Set to true when you add poster02.jpg
+    scrollImage: "/images/scroll02.jpg",
+    hasScrollImage: false, // Set to true when you add scroll02.jpg
+    venue: "TBA",
+    address: "Bristol Area",
+    date: "Coming 2026",
+    doors: "TBA",
+    runtime: "TBA",
+    ticketUrl: "#",
+    description: "A tale of one DM's struggle against the chaos of their party.",
+    tagline: "One DM. Five players. Infinite chaos."
+  },
+  {
+    id: 3,
+    title: "Critical Failure: A Love Story",
+    poster: "/images/poster03.jpg",
+    hasRealPoster: false,  // Set to true when you add poster03.jpg
+    scrollImage: "/images/scroll03.jpg",
+    hasScrollImage: false, // Set to true when you add scroll03.jpg
+    venue: "TBA",
+    address: "Bristol Area",
+    date: "Coming 2027",
+    doors: "TBA",
+    runtime: "TBA",
+    ticketUrl: "#",
+    description: "When two adventurers keep rolling natural ones, fate has other plans.",
+    tagline: "Sometimes failure is just the beginning"
+  }
+];
 
 // Fantasy tabletop-inspired website for The Natural Ones Theatre Group
 export default function TheNaturalOnesWebsite() {
@@ -203,55 +256,10 @@ export default function TheNaturalOnesWebsite() {
       <section id="show" style={styles.sectionAlt}>
         <div style={styles.sectionInner}>
           <SectionHeader title="The Show" subtitle="Our Quest Begins" />
-          <div style={styles.showContent}>
-            <div style={styles.showPoster}>
-              {/* TO ADD POSTER: Place poster.jpg in public/images/ folder */}
-              <ShowPoster />
-            </div>
-            <div style={styles.showDetails}>
-              <p style={styles.paragraph}>
-                <span style={styles.dropCap}>E</span>ver wondered what happens when the fate of a musical 
-                lies in the roll of a dice? Join us for a comedy adventure where anything can happen, 
-                and frequently does!
-              </p>
-              <p style={styles.paragraph}>
-                Follow a party of adventurers as they navigate dungeons, dragons, and the chaos of 
-                improvisational storytelling. With original songs, memorable characters, and an ending 
-                that changes every night, this is theatrical entertainment with replayability!
-              </p>
-              
-              <div style={styles.showInfo}>
-                <div style={styles.infoCard}>
-                  <span style={styles.infoIcon}>📍</span>
-                  <div>
-                    <strong style={styles.infoLabel}>Venue</strong>
-                    <p style={styles.infoText}>Alma Tavern & Theatre</p>
-                    <p style={styles.infoSmall}>18-20 Alma Vale Road, Clifton, Bristol, BS8 2HY</p>
-                  </div>
-                </div>
-                <div style={styles.infoCard}>
-                  <span style={styles.infoIcon}>🗓️</span>
-                  <div>
-                    <strong style={styles.infoLabel}>Next Performance</strong>
-                    <p style={styles.infoText}>Sunday 18th January 2026</p>
-                    <p style={styles.infoSmall}>Doors: 17:30 | Runtime: Approx. 1 hour</p>
-                  </div>
-                </div>
-                <div style={styles.infoCard}>
-                  <span style={styles.infoIcon}>🎫</span>
-                  <div>
-                    <strong style={styles.infoLabel}>Tickets</strong>
-                    <a href="https://tickettailor.com/events/almatheatrecompany" 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       style={styles.ticketLink}>
-                      Book Now →
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p style={styles.centeredText}>
+            Click on a poster to reveal performance details
+          </p>
+          <ShowCarousel shows={showsData} />
         </div>
       </section>
 
@@ -556,6 +564,328 @@ function ShowPoster() {
   );
 }
 
+// Show Carousel Component with flip animation
+function ShowCarousel({ shows }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [flippedIndex, setFlippedIndex] = useState(null);
+  const [infoVisible, setInfoVisible] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [hasDragged, setHasDragged] = useState(false);
+  const carouselRef = useRef(null);
+
+  // Navigate to previous poster
+  const handlePrev = (keepFlipped = false) => {
+    const newIndex = currentIndex === 0 ? shows.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+    if (keepFlipped && flippedIndex !== null) {
+      setFlippedIndex(newIndex);
+      setInfoVisible(true);
+    }
+  };
+
+  // Navigate to next poster
+  const handleNext = (keepFlipped = false) => {
+    const newIndex = currentIndex === shows.length - 1 ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+    if (keepFlipped && flippedIndex !== null) {
+      setFlippedIndex(newIndex);
+      setInfoVisible(true);
+    }
+  };
+
+  const handlePosterClick = (index) => {
+    // Don't trigger click if we just finished dragging
+    if (hasDragged) {
+      setHasDragged(false);
+      return;
+    }
+
+    if (index !== currentIndex) {
+      // Navigate to that poster, keeping flip state if flipped
+      setCurrentIndex(index);
+      if (flippedIndex !== null) {
+        setFlippedIndex(index);
+        setInfoVisible(true);
+      }
+      return;
+    }
+
+    if (flippedIndex === index) {
+      // Unflip
+      setInfoVisible(false);
+      setTimeout(() => setFlippedIndex(null), 100);
+    } else {
+      // Flip
+      setFlippedIndex(index);
+      setTimeout(() => setInfoVisible(true), 400);
+    }
+  };
+
+  // Mouse/touch drag handling
+  const handleDragStart = (e) => {
+    setIsDragging(true);
+    setHasDragged(false);
+    setStartX(e.type === 'touchstart' ? e.touches[0].clientX : e.clientX);
+    e.preventDefault();
+  };
+
+  const handleDragMove = (e) => {
+    if (!isDragging) return;
+    const currentX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    const diff = currentX - startX;
+    setDragOffset(diff);
+    if (Math.abs(diff) > 10) {
+      setHasDragged(true);
+    }
+  };
+
+  const handleDragEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+
+    if (Math.abs(dragOffset) > 50) {
+      const isFlipped = flippedIndex !== null;
+      if (dragOffset > 0) {
+        handlePrev(isFlipped);
+      } else {
+        handleNext(isFlipped);
+      }
+    }
+    setDragOffset(0);
+  };
+
+  const getPositionStyle = (index) => {
+    const diff = index - currentIndex;
+    const normalizedDiff = diff === 0 ? 0 :
+      diff > shows.length / 2 ? diff - shows.length :
+      diff < -shows.length / 2 ? diff + shows.length : diff;
+
+    // Bigger center poster with more spacing
+    const baseTranslateX = normalizedDiff * 440;
+    const translateX = baseTranslateX + (isDragging ? dragOffset * 0.5 : 0);
+    const scale = normalizedDiff === 0 ? 1 : 0.65;
+    const opacity = normalizedDiff === 0 ? 1 : 0.25;
+    const zIndex = normalizedDiff === 0 ? 10 : 5 - Math.abs(normalizedDiff);
+
+    return {
+      transform: `translateX(${translateX}px) scale(${scale})`,
+      opacity: flippedIndex !== null && flippedIndex !== index ? 0.1 : opacity,
+      zIndex,
+      transition: isDragging ? 'none' : 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+    };
+  };
+
+  // Display index for info (use flippedIndex when flipped, otherwise currentIndex)
+  const displayIndex = flippedIndex !== null ? flippedIndex : currentIndex;
+
+  return (
+    <div style={styles.carouselContainer}>
+      {/* Navigation arrows */}
+      <button
+        style={{...styles.carouselArrow, ...styles.carouselArrowLeft}}
+        onClick={() => handlePrev(flippedIndex !== null)}
+      >
+        &#10094;
+      </button>
+
+      <div
+        ref={carouselRef}
+        style={styles.carouselTrack}
+        onMouseDown={handleDragStart}
+        onMouseMove={handleDragMove}
+        onMouseUp={handleDragEnd}
+        onMouseLeave={handleDragEnd}
+        onTouchStart={handleDragStart}
+        onTouchMove={handleDragMove}
+        onTouchEnd={handleDragEnd}
+      >
+        {shows.map((show, index) => (
+          <div
+            key={show.id}
+            style={{
+              ...styles.carouselSlide,
+              ...getPositionStyle(index),
+            }}
+            onClick={() => handlePosterClick(index)}
+          >
+            <div style={{
+              ...styles.flipCard,
+              transform: flippedIndex === index ? 'rotateY(180deg)' : 'rotateY(0deg)',
+            }}>
+              {/* Front of card - Poster */}
+              <div style={styles.flipCardFront}>
+                <PosterCard show={show} />
+              </div>
+
+              {/* Back of card - Scroll image or generated scroll */}
+              <div style={styles.flipCardBack}>
+                {show.hasScrollImage ? (
+                  <ScrollImage src={show.scrollImage} />
+                ) : (
+                  <div style={styles.scrollReveal}>
+                    <div style={styles.scrollRevealTop}></div>
+                    <div style={styles.scrollRevealBody}>
+                      <h3 style={styles.scrollRevealTitle}>{show.title}</h3>
+                      <p style={styles.scrollRevealDesc}>{show.description}</p>
+                      <div style={styles.scrollDivider}></div>
+                      <p style={styles.scrollRevealVenue}>{show.venue}</p>
+                    </div>
+                    <div style={styles.scrollRevealBottom}></div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <button
+        style={{...styles.carouselArrow, ...styles.carouselArrowRight}}
+        onClick={() => handleNext(flippedIndex !== null)}
+      >
+        &#10095;
+      </button>
+
+      {/* Info box that pops in when flipped - to the right of poster */}
+      <div style={{
+        ...styles.infoPopup,
+        opacity: infoVisible && flippedIndex !== null ? 1 : 0,
+        transform: infoVisible && flippedIndex !== null ? 'translateY(-50%) scale(1)' : 'translateY(-50%) translateX(30px) scale(0.95)',
+        pointerEvents: infoVisible && flippedIndex !== null ? 'auto' : 'none',
+      }}>
+        {flippedIndex !== null && shows[flippedIndex] && (
+          <>
+            <div style={styles.infoPopupHeader}>
+              <span style={styles.infoPopupIcon}>📜</span>
+              <h4 style={styles.infoPopupTitle}>Performance Details</h4>
+            </div>
+            <div style={styles.infoPopupContent}>
+              <div style={styles.infoPopupItem}>
+                <span style={styles.infoPopupItemIcon}>📍</span>
+                <div>
+                  <strong style={styles.infoPopupLabel}>Venue</strong>
+                  <p style={styles.infoPopupText}>{shows[flippedIndex].venue}</p>
+                  <p style={styles.infoPopupSmall}>{shows[flippedIndex].address}</p>
+                </div>
+              </div>
+              <div style={styles.infoPopupItem}>
+                <span style={styles.infoPopupItemIcon}>🗓️</span>
+                <div>
+                  <strong style={styles.infoPopupLabel}>Next Performance</strong>
+                  <p style={styles.infoPopupText}>{shows[flippedIndex].date}</p>
+                  <p style={styles.infoPopupSmall}>Doors: {shows[flippedIndex].doors} | Runtime: {shows[flippedIndex].runtime}</p>
+                </div>
+              </div>
+              <div style={styles.infoPopupItem}>
+                <span style={styles.infoPopupItemIcon}>🎫</span>
+                <div>
+                  <strong style={styles.infoPopupLabel}>Tickets</strong>
+                  {shows[flippedIndex].ticketUrl !== '#' ? (
+                    <a
+                      href={shows[flippedIndex].ticketUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={styles.infoPopupLink}
+                    >
+                      Book Now →
+                    </a>
+                  ) : (
+                    <p style={styles.infoPopupText}>Coming Soon</p>
+                  )}
+                </div>
+              </div>
+            </div>
+            <button
+              style={styles.closeInfoButton}
+              onClick={() => handlePosterClick(flippedIndex)}
+            >
+              Close
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Carousel dots indicator */}
+      <div style={styles.carouselDots}>
+        {shows.map((_, index) => (
+          <button
+            key={index}
+            style={{
+              ...styles.carouselDot,
+              backgroundColor: index === currentIndex ? '#c9a227' : 'rgba(201, 162, 39, 0.3)',
+            }}
+            onClick={() => {
+              const isFlipped = flippedIndex !== null;
+              setCurrentIndex(index);
+              if (isFlipped) {
+                setFlippedIndex(index);
+                setInfoVisible(true);
+              }
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Poster Card for carousel - handles real posters and placeholders
+function PosterCard({ show }) {
+  const [hasError, setHasError] = useState(false);
+
+  // If no real poster or error loading, show placeholder
+  if (!show.hasRealPoster || hasError) {
+    return (
+      <div style={styles.posterCardFallback}>
+        <div style={styles.placeholderIcon}>🎭</div>
+        <h3 style={styles.posterCardTitle}>{show.title}</h3>
+        <div style={styles.posterCardDivider}></div>
+        <p style={styles.placeholderTagline}>{show.tagline}</p>
+        <div style={styles.posterCardIcons}>
+          <span>🎲</span>
+          <span>⚔️</span>
+          <span>🎵</span>
+        </div>
+        <p style={styles.placeholderStatus}>{show.date}</p>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={show.poster}
+      alt={show.title}
+      style={styles.posterCardImage}
+      onError={() => setHasError(true)}
+    />
+  );
+}
+
+// Scroll Image component for the back of flipped posters
+function ScrollImage({ src }) {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    // Fallback to a simple styled scroll if image fails to load
+    return (
+      <div style={styles.scrollImageFallback}>
+        <p style={styles.scrollImageFallbackText}>📜</p>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt="Performance scroll"
+      style={styles.scrollImage}
+      onError={() => setHasError(true)}
+    />
+  );
+}
+
 // Cast Photo Component - shows photo if available, falls back to icon
 function CastPhoto({ src, fallbackIcon, name }) {
   const [hasError, setHasError] = useState(false);
@@ -849,7 +1179,7 @@ const styles = {
   // Section Header
   sectionHeader: {
     textAlign: 'center',
-    marginBottom: '60px',
+    marginBottom: '20px',
   },
   headerSubtitle: {
     fontFamily: "'Cinzel', serif",
@@ -1058,13 +1388,344 @@ const styles = {
     textDecoration: 'none',
     fontWeight: 'bold',
   },
-  
+
+  // Show Carousel Styles
+  carouselContainer: {
+    position: 'relative',
+    width: '100%',
+    minHeight: '720px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    perspective: '1200px',
+    overflow: 'visible',
+    paddingBottom: '40px',
+  },
+  carouselTrack: {
+    position: 'relative',
+    width: '420px',
+    height: '630px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'grab',
+    userSelect: 'none',
+  },
+  carouselSlide: {
+    position: 'absolute',
+    width: '420px',
+    height: '630px',
+    cursor: 'pointer',
+    transformStyle: 'preserve-3d',
+  },
+  flipCard: {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    transformStyle: 'preserve-3d',
+    transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+  },
+  flipCardFront: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backfaceVisibility: 'hidden',
+    WebkitBackfaceVisibility: 'hidden',
+    background: 'linear-gradient(135deg, #c9a227, #8b6914)',
+    padding: '6px',
+    boxShadow: '0 15px 50px rgba(0,0,0,0.4)',
+    borderRadius: '4px',
+  },
+  flipCardBack: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backfaceVisibility: 'hidden',
+    WebkitBackfaceVisibility: 'hidden',
+    transform: 'rotateY(180deg)',
+    borderRadius: '4px',
+  },
+  posterCardImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    display: 'block',
+    borderRadius: '2px',
+  },
+  posterCardFallback: {
+    width: '100%',
+    height: '100%',
+    background: 'linear-gradient(180deg, #2d1810 0%, #1a0f08 60%, #0d0705 100%)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '30px',
+    textAlign: 'center',
+    border: '2px solid rgba(201, 162, 39, 0.3)',
+    boxSizing: 'border-box',
+  },
+  posterCardTitle: {
+    fontFamily: "'Cinzel Decorative', serif",
+    fontSize: '18px',
+    color: '#c9a227',
+    margin: '0 0 8px 0',
+    lineHeight: 1.3,
+  },
+  posterCardSubtitle: {
+    fontFamily: "'Cinzel Decorative', serif",
+    fontSize: '20px',
+    color: '#3d6b1e',
+    margin: '0',
+    textShadow: '1px 1px 0 #1a3009',
+  },
+  posterCardDivider: {
+    width: '60%',
+    height: '1px',
+    background: 'linear-gradient(90deg, transparent, #c9a227, transparent)',
+    margin: '16px 0',
+  },
+  posterCardIcons: {
+    display: 'flex',
+    gap: '12px',
+    fontSize: '24px',
+    marginTop: '8px',
+  },
+  placeholderIcon: {
+    fontSize: '48px',
+    marginBottom: '16px',
+  },
+  placeholderTagline: {
+    fontSize: '13px',
+    color: '#a08060',
+    margin: '0 0 16px 0',
+    fontStyle: 'italic',
+    lineHeight: 1.4,
+  },
+  placeholderStatus: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '12px',
+    color: '#c9a227',
+    marginTop: '16px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+  },
+  scrollImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    display: 'block',
+    borderRadius: '4px',
+  },
+  scrollImageFallback: {
+    width: '100%',
+    height: '100%',
+    background: 'linear-gradient(180deg, #f5ede0 0%, #e8dcc4 50%, #f5ede0 100%)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '4px',
+  },
+  scrollImageFallbackText: {
+    fontSize: '120px',
+  },
+  scrollReveal: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  scrollRevealTop: {
+    height: '24px',
+    background: 'linear-gradient(180deg, #a08060, #c9a227)',
+    borderRadius: '4px 4px 0 0',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+  },
+  scrollRevealBody: {
+    flex: 1,
+    background: 'linear-gradient(180deg, #f5ede0 0%, #e8dcc4 50%, #f5ede0 100%)',
+    padding: '24px 20px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    boxShadow: 'inset 0 0 30px rgba(139, 105, 20, 0.1)',
+  },
+  scrollRevealBottom: {
+    height: '24px',
+    background: 'linear-gradient(0deg, #a08060, #c9a227)',
+    borderRadius: '0 0 4px 4px',
+    boxShadow: '0 -2px 8px rgba(0,0,0,0.3)',
+  },
+  scrollRevealTitle: {
+    fontFamily: "'Cinzel Decorative', serif",
+    fontSize: '16px',
+    color: '#2d1810',
+    margin: '0 0 12px 0',
+    lineHeight: 1.3,
+  },
+  scrollRevealDesc: {
+    fontSize: '14px',
+    color: '#6b5b4a',
+    margin: '0 0 16px 0',
+    fontStyle: 'italic',
+    lineHeight: 1.5,
+  },
+  scrollDivider: {
+    width: '50%',
+    height: '2px',
+    background: 'linear-gradient(90deg, transparent, #c9a227, transparent)',
+    margin: '8px 0 16px 0',
+  },
+  scrollRevealVenue: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '14px',
+    color: '#3d6b1e',
+    margin: '0',
+    fontWeight: 'bold',
+  },
+  carouselArrow: {
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    width: '50px',
+    height: '50px',
+    background: 'linear-gradient(135deg, #c9a227, #8b6914)',
+    border: 'none',
+    borderRadius: '50%',
+    color: '#2d1810',
+    fontSize: '20px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    zIndex: 20,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+  },
+  carouselArrowLeft: {
+    left: '-80px',
+  },
+  carouselArrowRight: {
+    right: '-80px',
+  },
+  carouselDots: {
+    position: 'absolute',
+    bottom: '-30px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    display: 'flex',
+    gap: '12px',
+  },
+  carouselDot: {
+    width: '12px',
+    height: '12px',
+    borderRadius: '50%',
+    border: '2px solid #c9a227',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+  infoPopup: {
+    position: 'absolute',
+    top: '50%',
+    right: '20px',
+    transform: 'translateY(-50%)',
+    width: '280px',
+    backgroundColor: '#2d1810',
+    border: '3px solid #c9a227',
+    borderRadius: '8px',
+    padding: '0',
+    boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+    zIndex: 25,
+    overflow: 'hidden',
+  },
+  infoPopupHeader: {
+    background: 'linear-gradient(135deg, #c9a227, #8b6914)',
+    padding: '16px 20px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  infoPopupIcon: {
+    fontSize: '24px',
+  },
+  infoPopupTitle: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '14px',
+    color: '#2d1810',
+    margin: '0',
+    letterSpacing: '1px',
+    textTransform: 'uppercase',
+  },
+  infoPopupContent: {
+    padding: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+  },
+  infoPopupItem: {
+    display: 'flex',
+    gap: '12px',
+    alignItems: 'flex-start',
+  },
+  infoPopupItemIcon: {
+    fontSize: '20px',
+    flexShrink: 0,
+  },
+  infoPopupLabel: {
+    display: 'block',
+    fontSize: '10px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+    color: '#c9a227',
+    marginBottom: '4px',
+  },
+  infoPopupText: {
+    fontSize: '14px',
+    color: '#e8dcc4',
+    margin: '0',
+    fontWeight: 'bold',
+  },
+  infoPopupSmall: {
+    fontSize: '11px',
+    color: '#a08060',
+    margin: '4px 0 0 0',
+  },
+  infoPopupLink: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '14px',
+    color: '#3d6b1e',
+    textDecoration: 'none',
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(61, 107, 30, 0.2)',
+    padding: '8px 12px',
+    display: 'inline-block',
+    marginTop: '4px',
+    transition: 'all 0.3s ease',
+  },
+  closeInfoButton: {
+    width: '100%',
+    padding: '12px',
+    fontFamily: "'Cinzel', serif",
+    fontSize: '12px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+    backgroundColor: 'rgba(201, 162, 39, 0.1)',
+    border: 'none',
+    borderTop: '1px solid rgba(201, 162, 39, 0.3)',
+    color: '#c9a227',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+
   // Cast Section
   centeredText: {
     textAlign: 'center',
     fontSize: '18px',
     maxWidth: '600px',
-    margin: '0 auto 48px auto',
+    margin: '0 auto 15px auto',
     color: '#6b5b4a',
   },
   castGrid: {
@@ -1431,6 +2092,40 @@ styleSheet.textContent = `
     .aboutGrid, .showContent, .supportContent, .contactContent {
       grid-template-columns: 1fr !important;
     }
+  }
+
+  /* Carousel responsive styles */
+  @media (max-width: 768px) {
+    .carousel-info-popup {
+      position: fixed !important;
+      left: 50% !important;
+      right: auto !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 90vw !important;
+      max-width: 320px !important;
+    }
+  }
+
+  /* Carousel arrow hover effect */
+  .carousel-arrow:hover:not(:disabled) {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(201, 162, 39, 0.4);
+  }
+
+  .carousel-arrow:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Flip card perspective fix */
+  .flip-card-container {
+    perspective: 1200px;
+  }
+
+  /* Grabbing cursor when dragging */
+  .carousel-track:active {
+    cursor: grabbing;
   }
 `;
 document.head.appendChild(styleSheet);
