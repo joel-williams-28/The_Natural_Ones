@@ -1145,7 +1145,7 @@ const styles = {
   // Section Header
   sectionHeader: {
     textAlign: 'center',
-    marginBottom: '60px',
+    marginBottom: '20px',
   },
   headerSubtitle: {
     fontFamily: "'Cinzel', serif",
@@ -1359,12 +1359,13 @@ const styles = {
   carouselContainer: {
     position: 'relative',
     width: '100%',
-    minHeight: '700px',
+    minHeight: '720px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     perspective: '1200px',
     overflow: 'visible',
+    paddingBottom: '40px',
   },
   carouselTrack: {
     position: 'relative',
@@ -1551,14 +1552,14 @@ const styles = {
     boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
   },
   carouselArrowLeft: {
-    left: '20px',
+    left: '5px',
   },
   carouselArrowRight: {
-    right: '20px',
+    right: '5px',
   },
   carouselDots: {
     position: 'absolute',
-    bottom: '20px',
+    bottom: '-30px',
     left: '50%',
     transform: 'translateX(-50%)',
     display: 'flex',
@@ -1575,9 +1576,9 @@ const styles = {
   infoPopup: {
     position: 'absolute',
     top: '50%',
-    right: '40px',
+    right: '20px',
     transform: 'translateY(-50%)',
-    width: '300px',
+    width: '280px',
     backgroundColor: '#2d1810',
     border: '3px solid #c9a227',
     borderRadius: '8px',
@@ -1671,7 +1672,7 @@ const styles = {
     textAlign: 'center',
     fontSize: '18px',
     maxWidth: '600px',
-    margin: '0 auto 48px auto',
+    margin: '0 auto 15px auto',
     color: '#6b5b4a',
   },
   castGrid: {
