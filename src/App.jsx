@@ -798,7 +798,8 @@ function ShowCarousel({ shows }) {
       transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
       opacity,
       zIndex: Math.max(1, zIndex),
-      transition: 'none', // We handle animation manually
+      // Only transition opacity (for smooth fade when flipping), not transform (handled manually)
+      transition: 'opacity 0.4s ease-out',
     };
   };
 
