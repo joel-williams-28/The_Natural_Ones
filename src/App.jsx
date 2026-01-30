@@ -560,6 +560,8 @@ function ShowCarousel({ shows }) {
   const [startX, setStartX] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [hasDragged, setHasDragged] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [transitionDirection, setTransitionDirection] = useState(null); // 'left' or 'right'
   const carouselRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -593,24 +595,52 @@ function ShowCarousel({ shows }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [flippedIndex]);
 
-  // Navigate to previous poster
+  // Navigate to previous poster with flip animation
   const handlePrev = (keepFlipped = false) => {
-    const newIndex = currentIndex === 0 ? shows.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-    if (keepFlipped && flippedIndex !== null) {
-      setFlippedIndex(newIndex);
-      setInfoVisible(true);
-    }
+    if (isTransitioning) return;
+
+    setIsTransitioning(true);
+    setTransitionDirection('right'); // Flip right to go to previous
+
+    // Change index mid-transition for seamless flip effect
+    setTimeout(() => {
+      const newIndex = currentIndex === 0 ? shows.length - 1 : currentIndex - 1;
+      setCurrentIndex(newIndex);
+      if (keepFlipped && flippedIndex !== null) {
+        setFlippedIndex(newIndex);
+        setInfoVisible(true);
+      }
+    }, 300);
+
+    // End transition
+    setTimeout(() => {
+      setIsTransitioning(false);
+      setTransitionDirection(null);
+    }, 600);
   };
 
-  // Navigate to next poster
+  // Navigate to next poster with flip animation
   const handleNext = (keepFlipped = false) => {
-    const newIndex = currentIndex === shows.length - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-    if (keepFlipped && flippedIndex !== null) {
-      setFlippedIndex(newIndex);
-      setInfoVisible(true);
-    }
+    if (isTransitioning) return;
+
+    setIsTransitioning(true);
+    setTransitionDirection('left'); // Flip left to go to next
+
+    // Change index mid-transition for seamless flip effect
+    setTimeout(() => {
+      const newIndex = currentIndex === shows.length - 1 ? 0 : currentIndex + 1;
+      setCurrentIndex(newIndex);
+      if (keepFlipped && flippedIndex !== null) {
+        setFlippedIndex(newIndex);
+        setInfoVisible(true);
+      }
+    }, 300);
+
+    // End transition
+    setTimeout(() => {
+      setIsTransitioning(false);
+      setTransitionDirection(null);
+    }, 600);
   };
 
   const handlePosterClick = (index) => {
@@ -677,14 +707,21 @@ function ShowCarousel({ shows }) {
   // Get style for a specific visual position (-1 = left, 0 = center, 1 = right)
   const getPositionStyleForSlot = (slot, actualIndex) => {
     // Position side posters to peek from behind center with page-flip effect
-    const baseTranslateX = slot * 280;
+    // Increased spacing (340px) for more separation between posters
+    const baseTranslateX = slot * 340;
     const translateX = baseTranslateX + (isDragging ? dragOffset * 0.5 : 0);
     const scale = slot === 0 ? 1 : 0.7;
     const opacity = slot === 0 ? 1 : 0.3;
     const zIndex = slot === 0 ? 10 : 5;
 
     // Page-flip rotation: side posters angle away like book pages
-    const rotateY = slot === 0 ? 0 : slot * -45;
+    let rotateY = slot === 0 ? 0 : slot * -45;
+
+    // Add flip animation during transitions for the center poster
+    if (isTransitioning && slot === 0) {
+      // Spin 180 degrees in the direction of navigation
+      rotateY = transitionDirection === 'left' ? -180 : 180;
+    }
 
     return {
       transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
@@ -1446,6 +1483,8 @@ const styles = {
     height: '750px',
     cursor: 'pointer',
     transformStyle: 'preserve-3d',
+    backfaceVisibility: 'hidden',
+    WebkitBackfaceVisibility: 'hidden',
   },
   flipCard: {
     position: 'relative',
