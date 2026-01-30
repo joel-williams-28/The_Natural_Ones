@@ -676,18 +676,21 @@ function ShowCarousel({ shows }) {
 
   // Get style for a specific visual position (-1 = left, 0 = center, 1 = right)
   const getPositionStyleForSlot = (slot, actualIndex) => {
-    // Position side posters to peek from behind center (reduced offset so they're partially hidden)
-    const baseTranslateX = slot * 220;
+    // Position side posters to peek from behind center with page-flip effect
+    const baseTranslateX = slot * 280;
     const translateX = baseTranslateX + (isDragging ? dragOffset * 0.5 : 0);
-    const scale = slot === 0 ? 1 : 0.65;
-    const opacity = slot === 0 ? 1 : 0.25;
+    const scale = slot === 0 ? 1 : 0.7;
+    const opacity = slot === 0 ? 1 : 0.3;
     const zIndex = slot === 0 ? 10 : 5;
 
+    // Page-flip rotation: side posters angle away like book pages
+    const rotateY = slot === 0 ? 0 : slot * -45;
+
     return {
-      transform: `translateX(${translateX}px) scale(${scale})`,
+      transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
       opacity: flippedIndex !== null && flippedIndex !== actualIndex ? 0.1 : opacity,
       zIndex,
-      transition: isDragging ? 'none' : 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+      transition: isDragging ? 'none' : 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
     };
   };
 
