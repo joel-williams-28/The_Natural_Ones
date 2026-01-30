@@ -102,16 +102,25 @@ export async function handler(event, context) {
       if (statsResponse.ok) {
         const statsData = await statsResponse.json();
 
+        // Log full response to see structure
+        console.log('Stats API full response:', JSON.stringify(statsData, null, 2));
+
         if (statsData && statsData.project) {
-          pledged = statsData.project.pledged || 0;
-          goal = statsData.project.goal || 0;
-          backers = statsData.project.backers_count;
-          endDate = statsData.project.deadline;
-          state = statsData.project.state;
+          const proj = statsData.project;
+
+          // Parse pledged as float (API returns string like "350.0")
+          pledged = parseFloat(proj.pledged) || 0;
+
+          // Goal might be in different fields
+          goal = parseFloat(proj.goal) || parseFloat(proj.static_usd_rate) || 0;
+
+          backers = parseInt(proj.backers_count, 10) || 0;
+          endDate = proj.deadline;
+          state = proj.state;
 
           // Capture percent_funded from stats endpoint
-          if (statsData.project.percent_funded !== undefined) {
-            percentFunded = statsData.project.percent_funded;
+          if (proj.percent_funded !== undefined) {
+            percentFunded = parseFloat(proj.percent_funded);
           }
 
           console.log('Stats endpoint data:', { pledged, goal, percentFunded, backers, state });
