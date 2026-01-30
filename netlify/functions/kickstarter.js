@@ -6,7 +6,7 @@ const KICKSTARTER_PROJECT_URL = 'https://www.kickstarter.com/projects/1310830097
 
 // Known campaign details (fallback when API doesn't provide them)
 const CAMPAIGN_GOAL = 3000; // £3,000 goal
-const CAMPAIGN_DEADLINE = 1740826740; // Campaign end date (Unix timestamp)
+const CAMPAIGN_DEADLINE = 1772956800; // March 7, 2026 - Campaign end date (Unix timestamp)
 
 // Fetch with timeout
 async function fetchWithTimeout(url, options, timeoutMs = 10000) {
