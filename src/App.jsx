@@ -7,6 +7,8 @@ const showsData = [
     title: "Tabletop Role-Playing Game: The Musical!",
     poster: "/images/poster.jpg",
     hasRealPoster: true,
+    scrollImage: "/images/scroll.jpg",
+    hasScrollImage: true,
     venue: "Alma Tavern & Theatre",
     address: "18-20 Alma Vale Road, Clifton, Bristol, BS8 2HY",
     date: "Sunday 18th January 2026",
@@ -21,6 +23,8 @@ const showsData = [
     title: "The Dungeon Master's Lament",
     poster: null,
     hasRealPoster: false,
+    scrollImage: null,
+    hasScrollImage: false,
     venue: "TBA",
     address: "Bristol Area",
     date: "Coming 2026",
@@ -35,6 +39,8 @@ const showsData = [
     title: "Critical Failure: A Love Story",
     poster: null,
     hasRealPoster: false,
+    scrollImage: null,
+    hasScrollImage: false,
     venue: "TBA",
     address: "Bristol Area",
     date: "Coming 2027",
@@ -712,18 +718,22 @@ function ShowCarousel({ shows }) {
                 <PosterCard show={show} />
               </div>
 
-              {/* Back of card - Scroll with info */}
+              {/* Back of card - Scroll image or generated scroll */}
               <div style={styles.flipCardBack}>
-                <div style={styles.scrollReveal}>
-                  <div style={styles.scrollRevealTop}></div>
-                  <div style={styles.scrollRevealBody}>
-                    <h3 style={styles.scrollRevealTitle}>{show.title}</h3>
-                    <p style={styles.scrollRevealDesc}>{show.description}</p>
-                    <div style={styles.scrollDivider}></div>
-                    <p style={styles.scrollRevealVenue}>{show.venue}</p>
+                {show.hasScrollImage ? (
+                  <ScrollImage src={show.scrollImage} />
+                ) : (
+                  <div style={styles.scrollReveal}>
+                    <div style={styles.scrollRevealTop}></div>
+                    <div style={styles.scrollRevealBody}>
+                      <h3 style={styles.scrollRevealTitle}>{show.title}</h3>
+                      <p style={styles.scrollRevealDesc}>{show.description}</p>
+                      <div style={styles.scrollDivider}></div>
+                      <p style={styles.scrollRevealVenue}>{show.venue}</p>
+                    </div>
+                    <div style={styles.scrollRevealBottom}></div>
                   </div>
-                  <div style={styles.scrollRevealBottom}></div>
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -847,6 +857,29 @@ function PosterCard({ show }) {
       src={show.poster}
       alt={show.title}
       style={styles.posterCardImage}
+      onError={() => setHasError(true)}
+    />
+  );
+}
+
+// Scroll Image component for the back of flipped posters
+function ScrollImage({ src }) {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    // Fallback to a simple styled scroll if image fails to load
+    return (
+      <div style={styles.scrollImageFallback}>
+        <p style={styles.scrollImageFallbackText}>📜</p>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt="Performance scroll"
+      style={styles.scrollImage}
       onError={() => setHasError(true)}
     />
   );
@@ -1475,6 +1508,25 @@ const styles = {
     marginTop: '16px',
     letterSpacing: '2px',
     textTransform: 'uppercase',
+  },
+  scrollImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    display: 'block',
+    borderRadius: '4px',
+  },
+  scrollImageFallback: {
+    width: '100%',
+    height: '100%',
+    background: 'linear-gradient(180deg, #f5ede0 0%, #e8dcc4 50%, #f5ede0 100%)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '4px',
+  },
+  scrollImageFallbackText: {
+    fontSize: '120px',
   },
   scrollReveal: {
     width: '100%',
