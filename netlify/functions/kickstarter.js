@@ -1,18 +1,8 @@
 // Netlify serverless function to fetch Kickstarter campaign data
-const KICKSTARTER_URL = 'https://www.kickstarter.com/projects/1310830097/tabletop-role-playing-game-the-musical-at-the-fringe';
+// Using Kickstarter's JSON API endpoint which is more reliable than HTML scraping
 
-// Helper to decode HTML entities
-function decodeHtmlEntities(str) {
-  return str
-    .replace(/&quot;/g, '"')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&#39;/g, "'")
-    .replace(/&#x27;/g, "'")
-    .replace(/&#x2F;/g, '/')
-    .replace(/&apos;/g, "'");
-}
+const KICKSTARTER_API_URL = 'https://www.kickstarter.com/projects/1310830097/tabletop-role-playing-game-the-musical-at-the-fringe/stats.json?v=1';
+const KICKSTARTER_PROJECT_URL = 'https://www.kickstarter.com/projects/1310830097/tabletop-role-playing-game-the-musical-at-the-fringe.json';
 
 // Fetch with timeout
 async function fetchWithTimeout(url, options, timeoutMs = 10000) {
@@ -46,201 +36,96 @@ export async function handler(event, context) {
     };
   }
 
+  const headers = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Accept': 'application/json, text/plain, */*',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Referer': 'https://www.kickstarter.com/',
+    'Origin': 'https://www.kickstarter.com'
+  };
+
+  let pledged = null;
+  let goal = null;
+  let endDate = null;
+  let backers = null;
+  let percentFunded = null;
+  let state = null;
+
   try {
-    const response = await fetchWithTimeout(KICKSTARTER_URL, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Connection': 'keep-alive',
-        'Upgrade-Insecure-Requests': '1',
-        'Cache-Control': 'max-age=0'
-      }
-    }, 15000);
+    // Method 1: Try the project JSON endpoint
+    const projectResponse = await fetchWithTimeout(KICKSTARTER_PROJECT_URL, { headers }, 15000);
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch Kickstarter page: ${response.status}`);
-    }
+    if (projectResponse.ok) {
+      const projectData = await projectResponse.json();
 
-    const html = await response.text();
+      if (projectData) {
+        // The response structure varies - check for nested 'project' or direct properties
+        const project = projectData.project || projectData;
 
-    let pledged = null;
-    let goal = null;
-    let endDate = null;
-    let backers = null;
-    let percentFunded = null;
-    let state = null;
+        // Log the response structure for debugging
+        console.log('Kickstarter API response keys:', Object.keys(project));
 
-    // Method 1: Extract from data-initial attribute (primary method)
-    const dataInitialMatch = html.match(/data-initial="([^"]+)"/);
-    if (dataInitialMatch) {
-      try {
-        const jsonStr = decodeHtmlEntities(dataInitialMatch[1]);
-        const data = JSON.parse(jsonStr);
+        pledged = project.pledged || project.usd_pledged || 0;
+        goal = project.goal || 0;
+        endDate = project.deadline;
+        backers = project.backers_count;
+        state = project.state;
 
-        if (data.project) {
-          pledged = data.project.pledged;
-          goal = data.project.goal;
-          endDate = data.project.deadlineAt;
-          backers = data.project.backersCount;
-          percentFunded = data.project.percentFunded;
-          state = data.project.state;
+        // Capture percent_funded directly from API if available
+        if (project.percent_funded !== undefined) {
+          percentFunded = project.percent_funded;
         }
-      } catch (e) {
-        console.error('Error parsing data-initial JSON:', e.message);
-      }
-    }
 
-    // Method 2: Extract from window.current_project or similar JS objects
-    if (pledged === null) {
-      const currentProjectMatch = html.match(/window\.current_project\s*=\s*"([^"]+)"/);
-      if (currentProjectMatch) {
-        try {
-          const jsonStr = decodeHtmlEntities(currentProjectMatch[1]);
-          const data = JSON.parse(jsonStr);
-          pledged = data.pledged || pledged;
-          goal = data.goal || goal;
-          endDate = data.deadline || data.deadlineAt || endDate;
-          backers = data.backers_count || data.backersCount || backers;
-          state = data.state || state;
-        } catch (e) {
-          console.error('Error parsing current_project JSON:', e.message);
+        // Handle currency conversion if needed (Kickstarter sometimes returns in USD)
+        if (project.currency && project.currency !== 'GBP' && project.fx_rate) {
+          // Convert if we have the rate
+          pledged = pledged * project.fx_rate;
         }
+
+        // Some responses have converted_pledged_amount
+        if (project.converted_pledged_amount) {
+          pledged = project.converted_pledged_amount;
+        }
+
+        console.log('Extracted data:', { pledged, goal, percentFunded, backers, state });
       }
     }
+  } catch (e) {
+    console.log('Project JSON fetch failed, trying stats endpoint:', e.message);
+  }
 
-    // Method 3: Extract from JSON-LD structured data
-    if (pledged === null) {
-      const jsonLdMatch = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
-      if (jsonLdMatch) {
-        try {
-          const jsonLd = JSON.parse(jsonLdMatch[1]);
-          // JSON-LD might contain funding info
-          if (jsonLd.funding) {
-            pledged = jsonLd.funding.amount || pledged;
-            goal = jsonLd.funding.goal || goal;
+  // Method 2: Try the stats endpoint if project endpoint failed
+  if (pledged === null) {
+    try {
+      const statsResponse = await fetchWithTimeout(KICKSTARTER_API_URL, { headers }, 15000);
+
+      if (statsResponse.ok) {
+        const statsData = await statsResponse.json();
+
+        if (statsData && statsData.project) {
+          pledged = statsData.project.pledged || 0;
+          goal = statsData.project.goal || 0;
+          backers = statsData.project.backers_count;
+          endDate = statsData.project.deadline;
+          state = statsData.project.state;
+
+          // Capture percent_funded from stats endpoint
+          if (statsData.project.percent_funded !== undefined) {
+            percentFunded = statsData.project.percent_funded;
           }
-        } catch (e) {
-          // JSON-LD parsing is optional
+
+          console.log('Stats endpoint data:', { pledged, goal, percentFunded, backers, state });
         }
       }
+    } catch (e) {
+      console.log('Stats endpoint fetch failed:', e.message);
     }
+  }
 
-    // Method 4: Fallback regex extraction from HTML content
-    if (pledged === null) {
-      // Match various Kickstarter formatting patterns
-      const pledgedPatterns = [
-        /class="[^"]*money[^"]*"[^>]*>£([\d,]+)/i,
-        /pledged[^£]*£([\d,]+)/i,
-        /"pledged":\s*([\d.]+)/i,
-        /data-pledged="([\d.]+)"/i,
-        /£([\d,]+)[^<]*pledged/i
-      ];
+  // If API calls failed, return error state
+  if (pledged === null) {
+    console.error('All Kickstarter API methods failed');
 
-      for (const pattern of pledgedPatterns) {
-        const match = html.match(pattern);
-        if (match) {
-          pledged = parseFloat(match[1].replace(/,/g, ''));
-          break;
-        }
-      }
-    }
-
-    if (goal === null) {
-      const goalPatterns = [
-        /goal[^£]*£([\d,]+)/i,
-        /"goal":\s*([\d.]+)/i,
-        /data-goal="([\d.]+)"/i,
-        /£([\d,]+)[^<]*goal/i,
-        /of\s*£([\d,]+)\s*goal/i
-      ];
-
-      for (const pattern of goalPatterns) {
-        const match = html.match(pattern);
-        if (match) {
-          goal = parseFloat(match[1].replace(/,/g, ''));
-          break;
-        }
-      }
-    }
-
-    if (backers === null) {
-      const backersPatterns = [
-        /"backersCount":\s*(\d+)/i,
-        /"backers_count":\s*(\d+)/i,
-        /data-backers="(\d+)"/i,
-        /([\d,]+)\s*backers?/i
-      ];
-
-      for (const pattern of backersPatterns) {
-        const match = html.match(pattern);
-        if (match) {
-          backers = parseInt(match[1].replace(/,/g, ''), 10);
-          break;
-        }
-      }
-    }
-
-    if (endDate === null) {
-      const deadlinePatterns = [
-        /"deadlineAt":\s*(\d+)/i,
-        /"deadline":\s*(\d+)/i,
-        /data-deadline="(\d+)"/i,
-        /data-end_time="(\d+)"/i
-      ];
-
-      for (const pattern of deadlinePatterns) {
-        const match = html.match(pattern);
-        if (match) {
-          endDate = parseInt(match[1], 10);
-          break;
-        }
-      }
-    }
-
-    // Calculate days remaining
-    let daysRemaining = null;
-    if (endDate) {
-      const end = new Date(endDate * 1000);
-      const now = new Date();
-      const diffTime = end - now;
-      daysRemaining = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
-    }
-
-    // Calculate percentage if we have the values but not the percentage
-    if (percentFunded === null && pledged !== null && goal !== null && goal > 0) {
-      percentFunded = (pledged / goal) * 100;
-    }
-
-    // Determine if campaign is live, ended, or successful
-    const isLive = state === 'live' || (daysRemaining !== null && daysRemaining > 0);
-    const isSuccessful = state === 'successful' || (percentFunded !== null && percentFunded >= 100);
-
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'public, max-age=300, stale-while-revalidate=600'
-      },
-      body: JSON.stringify({
-        pledged,
-        goal,
-        daysRemaining,
-        backers,
-        percentFunded: percentFunded !== null ? Math.round(percentFunded * 10) / 10 : null,
-        currency: 'GBP',
-        state: state || (isLive ? 'live' : (isSuccessful ? 'successful' : 'ended')),
-        isLive,
-        isSuccessful,
-        lastUpdated: new Date().toISOString()
-      })
-    };
-  } catch (error) {
-    console.error('Error fetching Kickstarter data:', error);
-
-    // Return cached/fallback data on error instead of failing completely
     return {
       statusCode: 200,
       headers: {
@@ -259,9 +144,49 @@ export async function handler(event, context) {
         isLive: null,
         isSuccessful: null,
         error: true,
-        errorMessage: error.message,
+        errorMessage: 'Unable to fetch Kickstarter data',
         lastUpdated: new Date().toISOString()
       })
     };
   }
+
+  // Calculate days remaining
+  let daysRemaining = null;
+  if (endDate) {
+    const end = new Date(endDate * 1000);
+    const now = new Date();
+    const diffTime = end - now;
+    daysRemaining = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+  }
+
+  // Calculate percentage if not already provided by API
+  if (percentFunded === null && pledged !== null && goal !== null && goal > 0) {
+    percentFunded = (pledged / goal) * 100;
+    console.log('Calculated percentFunded:', percentFunded);
+  }
+
+  // Determine campaign status
+  const isLive = state === 'live' || (daysRemaining !== null && daysRemaining > 0);
+  const isSuccessful = state === 'successful' || (percentFunded !== null && percentFunded >= 100);
+
+  return {
+    statusCode: 200,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Cache-Control': 'public, max-age=300, stale-while-revalidate=600'
+    },
+    body: JSON.stringify({
+      pledged: Math.round(pledged),
+      goal: Math.round(goal),
+      daysRemaining,
+      backers,
+      percentFunded: percentFunded !== null ? Math.round(percentFunded * 10) / 10 : null,
+      currency: 'GBP',
+      state: state || (isLive ? 'live' : (isSuccessful ? 'successful' : 'ended')),
+      isLive,
+      isSuccessful,
+      lastUpdated: new Date().toISOString()
+    })
+  };
 }
