@@ -8,7 +8,7 @@ const showsData = [
     title: "Tabletop Role-Playing Game: The Musical!",
     poster: "/images/poster01.jpg",
     hasRealPoster: true,
-    scrollImage: "/images/scroll01.jpg",
+    scrollImage: "/images/Scroll01.png",
     hasScrollImage: true,
     venue: "Alma Tavern & Theatre",
     address: "18-20 Alma Vale Road, Clifton, Bristol, BS8 2HY",
