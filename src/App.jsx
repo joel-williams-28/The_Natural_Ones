@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // Show data for the carousel - Three distinct shows
+// Images: Place poster01.jpg, scroll01.jpg, poster02.jpg, scroll02.jpg, etc. in public/images/
 const showsData = [
   {
     id: 1,
     title: "Tabletop Role-Playing Game: The Musical!",
-    poster: "/images/poster.jpg",
+    poster: "/images/poster01.jpg",
     hasRealPoster: true,
-    scrollImage: "/images/scroll.jpg",
+    scrollImage: "/images/scroll01.jpg",
     hasScrollImage: true,
     venue: "Alma Tavern & Theatre",
     address: "18-20 Alma Vale Road, Clifton, Bristol, BS8 2HY",
@@ -21,10 +22,10 @@ const showsData = [
   {
     id: 2,
     title: "The Dungeon Master's Lament",
-    poster: null,
-    hasRealPoster: false,
-    scrollImage: null,
-    hasScrollImage: false,
+    poster: "/images/poster02.jpg",
+    hasRealPoster: false,  // Set to true when you add poster02.jpg
+    scrollImage: "/images/scroll02.jpg",
+    hasScrollImage: false, // Set to true when you add scroll02.jpg
     venue: "TBA",
     address: "Bristol Area",
     date: "Coming 2026",
@@ -37,10 +38,10 @@ const showsData = [
   {
     id: 3,
     title: "Critical Failure: A Love Story",
-    poster: null,
-    hasRealPoster: false,
-    scrollImage: null,
-    hasScrollImage: false,
+    poster: "/images/poster03.jpg",
+    hasRealPoster: false,  // Set to true when you add poster03.jpg
+    scrollImage: "/images/scroll03.jpg",
+    hasScrollImage: false, // Set to true when you add scroll03.jpg
     venue: "TBA",
     address: "Bristol Area",
     date: "Coming 2027",
