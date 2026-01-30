@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+// Show data for the carousel - Two shows
+// Images: Place poster01.jpg, scroll01.jpg, poster02.jpg, scroll02.jpg, etc. in public/images/
 // Show data for the carousel - Three distinct shows
 // Images: Place poster01.jpg, scroll01.png, poster02.jpg, scroll02.png, etc. in public/images/
 const showsData = [
@@ -8,6 +10,7 @@ const showsData = [
     title: "Tabletop Role-Playing Game: The Musical!",
     poster: "/images/poster01.jpg",
     hasRealPoster: true,
+    scrollImage: "/images/Scroll01.png",
     scrollImage: "/images/scroll01.png",
     hasScrollImage: true,
     venue: "Alma Tavern & Theatre",
@@ -34,22 +37,6 @@ const showsData = [
     ticketUrl: "#",
     description: "A tale of one DM's struggle against the chaos of their party.",
     tagline: "One DM. Five players. Infinite chaos."
-  },
-  {
-    id: 3,
-    title: "Critical Failure: A Love Story",
-    poster: "/images/poster03.jpg",
-    hasRealPoster: false,  // Set to true when you add poster03.jpg
-    scrollImage: "/images/scroll03.jpg",
-    hasScrollImage: false, // Set to true when you add scroll03.jpg
-    venue: "TBA",
-    address: "Bristol Area",
-    date: "Coming 2027",
-    doors: "TBA",
-    runtime: "TBA",
-    ticketUrl: "#",
-    description: "When two adventurers keep rolling natural ones, fate has other plans.",
-    tagline: "Sometimes failure is just the beginning"
   }
 ];
 
@@ -574,6 +561,37 @@ function ShowCarousel({ shows }) {
   const [dragOffset, setDragOffset] = useState(0);
   const [hasDragged, setHasDragged] = useState(false);
   const carouselRef = useRef(null);
+  const containerRef = useRef(null);
+
+  // Keyboard navigation with arrow keys
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        handlePrev(flippedIndex !== null);
+      } else if (e.key === 'ArrowRight') {
+        handleNext(flippedIndex !== null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, flippedIndex, shows.length]);
+
+  // Click outside to close flipped view
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (flippedIndex === null) return;
+
+      // Check if click is outside the carousel container
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setInfoVisible(false);
+        setTimeout(() => setFlippedIndex(null), 100);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [flippedIndex]);
 
   // Navigate to previous poster
   const handlePrev = (keepFlipped = false) => {
@@ -656,32 +674,42 @@ function ShowCarousel({ shows }) {
     setDragOffset(0);
   };
 
-  const getPositionStyle = (index) => {
-    const diff = index - currentIndex;
-    const normalizedDiff = diff === 0 ? 0 :
-      diff > shows.length / 2 ? diff - shows.length :
-      diff < -shows.length / 2 ? diff + shows.length : diff;
-
-    // Bigger center poster with more spacing
-    const baseTranslateX = normalizedDiff * 440;
+  // Get style for a specific visual position (-1 = left, 0 = center, 1 = right)
+  const getPositionStyleForSlot = (slot, actualIndex) => {
+    const baseTranslateX = slot * 520;
     const translateX = baseTranslateX + (isDragging ? dragOffset * 0.5 : 0);
-    const scale = normalizedDiff === 0 ? 1 : 0.65;
-    const opacity = normalizedDiff === 0 ? 1 : 0.25;
-    const zIndex = normalizedDiff === 0 ? 10 : 5 - Math.abs(normalizedDiff);
+    const scale = slot === 0 ? 1 : 0.65;
+    const opacity = slot === 0 ? 1 : 0.25;
+    const zIndex = slot === 0 ? 10 : 5;
 
     return {
       transform: `translateX(${translateX}px) scale(${scale})`,
-      opacity: flippedIndex !== null && flippedIndex !== index ? 0.1 : opacity,
+      opacity: flippedIndex !== null && flippedIndex !== actualIndex ? 0.1 : opacity,
       zIndex,
       transition: isDragging ? 'none' : 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
     };
+  };
+
+  // Generate items to render: center + left ghost + right ghost
+  const getItemsToRender = () => {
+    const items = [];
+    const otherIndex = currentIndex === 0 ? 1 : 0;
+
+    // Left side (the "other" poster)
+    items.push({ show: shows[otherIndex], actualIndex: otherIndex, slot: -1, key: `left-${otherIndex}` });
+    // Center (current poster)
+    items.push({ show: shows[currentIndex], actualIndex: currentIndex, slot: 0, key: `center-${currentIndex}` });
+    // Right side (the "other" poster)
+    items.push({ show: shows[otherIndex], actualIndex: otherIndex, slot: 1, key: `right-${otherIndex}` });
+
+    return items;
   };
 
   // Display index for info (use flippedIndex when flipped, otherwise currentIndex)
   const displayIndex = flippedIndex !== null ? flippedIndex : currentIndex;
 
   return (
-    <div style={styles.carouselContainer}>
+    <div ref={containerRef} style={styles.carouselContainer}>
       {/* Navigation arrows */}
       <button
         style={{...styles.carouselArrow, ...styles.carouselArrowLeft}}
@@ -701,36 +729,36 @@ function ShowCarousel({ shows }) {
         onTouchMove={handleDragMove}
         onTouchEnd={handleDragEnd}
       >
-        {shows.map((show, index) => (
+        {getItemsToRender().map((item) => (
           <div
-            key={show.id}
+            key={item.key}
             style={{
               ...styles.carouselSlide,
-              ...getPositionStyle(index),
+              ...getPositionStyleForSlot(item.slot, item.actualIndex),
             }}
-            onClick={() => handlePosterClick(index)}
+            onClick={() => handlePosterClick(item.actualIndex)}
           >
             <div style={{
               ...styles.flipCard,
-              transform: flippedIndex === index ? 'rotateY(180deg)' : 'rotateY(0deg)',
+              transform: flippedIndex === item.actualIndex ? 'rotateY(180deg)' : 'rotateY(0deg)',
             }}>
               {/* Front of card - Poster */}
               <div style={styles.flipCardFront}>
-                <PosterCard show={show} />
+                <PosterCard show={item.show} />
               </div>
 
               {/* Back of card - Scroll image or generated scroll */}
               <div style={styles.flipCardBack}>
-                {show.hasScrollImage ? (
-                  <ScrollImage src={show.scrollImage} />
+                {item.show.hasScrollImage ? (
+                  <ScrollImage src={item.show.scrollImage} />
                 ) : (
                   <div style={styles.scrollReveal}>
                     <div style={styles.scrollRevealTop}></div>
                     <div style={styles.scrollRevealBody}>
-                      <h3 style={styles.scrollRevealTitle}>{show.title}</h3>
-                      <p style={styles.scrollRevealDesc}>{show.description}</p>
+                      <h3 style={styles.scrollRevealTitle}>{item.show.title}</h3>
+                      <p style={styles.scrollRevealDesc}>{item.show.description}</p>
                       <div style={styles.scrollDivider}></div>
-                      <p style={styles.scrollRevealVenue}>{show.venue}</p>
+                      <p style={styles.scrollRevealVenue}>{item.show.venue}</p>
                     </div>
                     <div style={styles.scrollRevealBottom}></div>
                   </div>
@@ -1393,7 +1421,7 @@ const styles = {
   carouselContainer: {
     position: 'relative',
     width: '100%',
-    minHeight: '720px',
+    minHeight: '850px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1403,8 +1431,8 @@ const styles = {
   },
   carouselTrack: {
     position: 'relative',
-    width: '420px',
-    height: '630px',
+    width: '500px',
+    height: '750px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1413,8 +1441,8 @@ const styles = {
   },
   carouselSlide: {
     position: 'absolute',
-    width: '420px',
-    height: '630px',
+    width: '500px',
+    height: '750px',
     cursor: 'pointer',
     transformStyle: 'preserve-3d',
   },
