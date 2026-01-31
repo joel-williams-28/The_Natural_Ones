@@ -181,10 +181,10 @@ export default function TheNaturalOnesWebsite() {
               Learn More
             </button>
           </div>
-        </div>
-        <div style={styles.heroScroll}>
-          <span style={styles.scrollText}>Scroll to adventure</span>
-          <div style={styles.scrollArrow}>↓</div>
+          <div style={styles.heroScroll}>
+            <span style={styles.scrollText}>Scroll to adventure</span>
+            <div style={styles.scrollArrow}>↓</div>
+          </div>
         </div>
       </section>
 
@@ -1169,13 +1169,13 @@ const styles = {
   
   // Hero
   hero: {
-    minHeight: '107vh',
+    minHeight: '90vh',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    padding: '40px 20px 100px 20px',
+    padding: '40px 20px 40px 20px',
     background: `
       radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
       linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
@@ -1277,8 +1277,7 @@ const styles = {
     transition: 'all 0.3s ease',
   },
   heroScroll: {
-    position: 'absolute',
-    bottom: '20px',
+    marginTop: '32px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
