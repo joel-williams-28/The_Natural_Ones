@@ -560,8 +560,15 @@ function ShowCarousel({ shows }) {
   const [startX, setStartX] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [hasDragged, setHasDragged] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const carouselRef = useRef(null);
   const containerRef = useRef(null);
+  const animationRef = useRef(null);
+
+  // Use ref for animated offset to ensure synchronous updates with index changes
+  const offsetRef = useRef(0);
+  const [renderTrigger, setRenderTrigger] = useState(0);
+  const forceRender = () => setRenderTrigger(n => n + 1);
 
   // Keyboard navigation with arrow keys
   useEffect(() => {
@@ -575,7 +582,7 @@ function ShowCarousel({ shows }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, flippedIndex, shows.length]);
+  });
 
   // Click outside to close flipped view
   useEffect(() => {
@@ -593,43 +600,110 @@ function ShowCarousel({ shows }) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [flippedIndex]);
 
-  // Navigate to previous poster
-  const handlePrev = (keepFlipped = false) => {
-    const newIndex = currentIndex === 0 ? shows.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-    if (keepFlipped && flippedIndex !== null) {
-      setFlippedIndex(newIndex);
-      setInfoVisible(true);
+  // Spacing between poster positions
+  const spacing = 340;
+
+  // Animate carousel rotation smoothly from a starting offset to a target offset
+  const animateCarousel = (fromOffset, toOffset, onComplete) => {
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
     }
+
+    const startTime = performance.now();
+    const duration = 400; // Animation duration in ms
+
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Ease out cubic for smooth deceleration
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const currentOffset = fromOffset + (toOffset - fromOffset) * easeOut;
+
+      // Update ref and trigger re-render
+      offsetRef.current = currentOffset;
+      forceRender();
+
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate);
+      } else {
+        // Animation complete
+        // CRITICAL: Set offset to 0 SYNCHRONOUSLY before changing index
+        // This ensures no flicker because when React renders with new index,
+        // the offset is already 0
+        offsetRef.current = 0;
+
+        // Update index first
+        if (onComplete) onComplete();
+
+        // Delay isAnimating reset to next frame to ensure index change
+        // has rendered before opacity transitions are re-enabled
+        requestAnimationFrame(() => {
+          setIsAnimating(false);
+        });
+      }
+    };
+
+    setIsAnimating(true);
+    offsetRef.current = fromOffset;
+    animationRef.current = requestAnimationFrame(animate);
   };
 
-  // Navigate to next poster
+  // Navigate to previous poster with smooth carousel rotation
+  const handlePrev = (keepFlipped = false) => {
+    if (isAnimating || isDragging) return;
+
+    const newIndex = currentIndex === 0 ? shows.length - 1 : currentIndex - 1;
+
+    // Animate from 0 to full spacing (rotating right)
+    animateCarousel(0, spacing, () => {
+      setCurrentIndex(newIndex);
+      if (keepFlipped && flippedIndex !== null) {
+        setFlippedIndex(newIndex);
+        setInfoVisible(true);
+      }
+    });
+  };
+
+  // Navigate to next poster with smooth carousel rotation
   const handleNext = (keepFlipped = false) => {
+    if (isAnimating || isDragging) return;
+
     const newIndex = currentIndex === shows.length - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-    if (keepFlipped && flippedIndex !== null) {
-      setFlippedIndex(newIndex);
-      setInfoVisible(true);
-    }
+
+    // Animate from 0 to negative spacing (rotating left)
+    animateCarousel(0, -spacing, () => {
+      setCurrentIndex(newIndex);
+      if (keepFlipped && flippedIndex !== null) {
+        setFlippedIndex(newIndex);
+        setInfoVisible(true);
+      }
+    });
   };
 
   const handlePosterClick = (index) => {
-    // Don't trigger click if we just finished dragging
+    // Don't trigger click if we just finished dragging or animating
     if (hasDragged) {
       setHasDragged(false);
       return;
     }
+    if (isAnimating) return;
 
     if (index !== currentIndex) {
-      // Navigate to that poster, keeping flip state if flipped
-      setCurrentIndex(index);
-      if (flippedIndex !== null) {
-        setFlippedIndex(index);
-        setInfoVisible(true);
+      // Clicked on a side poster - animate to it
+      // Determine if it's left (-1) or right (+1) of center
+      const isLeftPoster = index < currentIndex || (currentIndex === 0 && index === shows.length - 1);
+      const isRightPoster = !isLeftPoster;
+
+      if (isLeftPoster) {
+        handlePrev(flippedIndex !== null);
+      } else {
+        handleNext(flippedIndex !== null);
       }
       return;
     }
 
+    // Clicked on center poster - toggle flip
     if (flippedIndex === index) {
       // Unflip
       setInfoVisible(false);
@@ -643,6 +717,7 @@ function ShowCarousel({ shows }) {
 
   // Mouse/touch drag handling
   const handleDragStart = (e) => {
+    if (isAnimating) return;
     setIsDragging(true);
     setHasDragged(false);
     setStartX(e.type === 'touchstart' ? e.touches[0].clientX : e.clientX);
@@ -661,36 +736,79 @@ function ShowCarousel({ shows }) {
 
   const handleDragEnd = () => {
     if (!isDragging) return;
+
+    const currentDragOffset = dragOffset;
+    const threshold = 100; // Distance needed to trigger navigation
+    const isFlipped = flippedIndex !== null;
+
+    // Transfer drag offset to animation offset ref before clearing drag state
+    offsetRef.current = currentDragOffset;
+    setDragOffset(0);
     setIsDragging(false);
 
-    if (Math.abs(dragOffset) > 50) {
-      const isFlipped = flippedIndex !== null;
-      if (dragOffset > 0) {
-        handlePrev(isFlipped);
-      } else {
-        handleNext(isFlipped);
-      }
+    if (Math.abs(currentDragOffset) > threshold) {
+      // Navigate - animate from current drag position to full spacing
+      const newIndex = currentDragOffset > 0
+        ? (currentIndex === 0 ? shows.length - 1 : currentIndex - 1)
+        : (currentIndex === shows.length - 1 ? 0 : currentIndex + 1);
+
+      const targetOffset = currentDragOffset > 0 ? spacing : -spacing;
+
+      // Animate from where we dragged to the final position
+      animateCarousel(currentDragOffset, targetOffset, () => {
+        setCurrentIndex(newIndex);
+        if (isFlipped) {
+          setFlippedIndex(newIndex);
+          setInfoVisible(true);
+        }
+      });
+    } else if (Math.abs(currentDragOffset) > 5) {
+      // Snap back to center with animation (only if we moved a bit)
+      animateCarousel(currentDragOffset, 0);
+    } else {
+      // Didn't drag enough, just reset
+      offsetRef.current = 0;
     }
-    setDragOffset(0);
   };
 
   // Get style for a specific visual position (-1 = left, 0 = center, 1 = right)
+  // Creates smooth 3D carousel effect with continuous position interpolation
   const getPositionStyleForSlot = (slot, actualIndex) => {
-    // Position side posters to peek from behind center with page-flip effect
-    const baseTranslateX = slot * 280;
-    const translateX = baseTranslateX + (isDragging ? dragOffset * 0.5 : 0);
-    const scale = slot === 0 ? 1 : 0.7;
-    const opacity = slot === 0 ? 1 : 0.3;
-    const zIndex = slot === 0 ? 10 : 5;
+    // Combined offset from drag and animation (ref for animation, state for drag)
+    const totalOffset = isDragging ? dragOffset : offsetRef.current;
 
-    // Page-flip rotation: side posters angle away like book pages
-    const rotateY = slot === 0 ? 0 : slot * -45;
+    // Calculate continuous position based on slot and offset
+    // Normalize offset to a fraction of spacing (-1 to 1 range)
+    const offsetFraction = totalOffset / spacing;
+
+    // Effective position for this slot (continuous value)
+    const effectivePosition = slot - offsetFraction;
+
+    // Calculate translateX based on effective position
+    const translateX = effectivePosition * spacing;
+
+    // Calculate scale: 1 at center (position 0), smaller towards edges
+    const distanceFromCenter = Math.abs(effectivePosition);
+    const scale = Math.max(0.6, 1 - distanceFromCenter * 0.3);
+
+    // Calculate opacity: full at center, faded towards edges
+    const baseOpacity = Math.max(0.2, 1 - distanceFromCenter * 0.7);
+    const opacity = flippedIndex !== null && flippedIndex !== actualIndex ? 0.1 : baseOpacity;
+
+    // Z-index: higher for center, lower for edges
+    const zIndex = Math.round(10 - distanceFromCenter * 5);
+
+    // 3D rotation for carousel depth effect (posters angle away from center)
+    const rotateY = effectivePosition * -25;
+
+    // Only use opacity transition when not animating carousel (for flip fade effect)
+    const shouldTransitionOpacity = !isAnimating && !isDragging;
 
     return {
       transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
-      opacity: flippedIndex !== null && flippedIndex !== actualIndex ? 0.1 : opacity,
-      zIndex,
-      transition: isDragging ? 'none' : 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+      opacity,
+      zIndex: Math.max(1, zIndex),
+      transition: shouldTransitionOpacity ? 'opacity 0.4s ease-out' : 'none',
     };
   };
 
