@@ -181,7 +181,7 @@ export default function TheNaturalOnesWebsite() {
               Learn More
             </button>
           </div>
-          <div style={styles.heroScroll}>
+          <div style={styles.heroScroll} onClick={() => scrollToSection('about')}>
             <span style={styles.scrollText}>Scroll to adventure</span>
             <div style={styles.scrollArrow}>↓</div>
           </div>
@@ -1277,11 +1277,12 @@ const styles = {
     transition: 'all 0.3s ease',
   },
   heroScroll: {
-    marginTop: '32px',
+    marginTop: '48px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     gap: '8px',
+    cursor: 'pointer',
   },
   scrollText: {
     fontSize: '12px',
