@@ -582,7 +582,7 @@ function ShowCarousel({ shows }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, flippedIndex, shows.length]);
+  });
 
   // Click outside to close flipped view
   useEffect(() => {
