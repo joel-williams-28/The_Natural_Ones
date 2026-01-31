@@ -794,12 +794,14 @@ function ShowCarousel({ shows }) {
     // 3D rotation for carousel depth effect (posters angle away from center)
     const rotateY = effectivePosition * -25;
 
+    // Only use opacity transition when not animating carousel (for flip fade effect)
+    const shouldTransitionOpacity = !isAnimating && !isDragging;
+
     return {
       transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
       opacity,
       zIndex: Math.max(1, zIndex),
-      // Only transition opacity (for smooth fade when flipping), not transform (handled manually)
-      transition: 'opacity 0.4s ease-out',
+      transition: shouldTransitionOpacity ? 'opacity 0.4s ease-out' : 'none',
     };
   };
 
