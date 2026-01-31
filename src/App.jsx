@@ -172,9 +172,13 @@ export default function TheNaturalOnesWebsite() {
           </div>
           <h2 style={styles.heroShowTitle}>Tabletop Role-Playing Game:</h2>
           <h2 style={styles.heroShowSubtitle}>The Musical!</h2>
+          <div style={styles.heroDivider}>
+            <span style={styles.dividerLine}></span>
+            <span style={{...styles.dividerDot, color: '#c9a227'}}>&</span>
+            <span style={styles.dividerLine}></span>
+          </div>
           <h2 style={styles.heroShowTitle}>Mystery at Murderingham Manor...</h2>
           <h2 style={styles.heroShowSubtitle}>And More...</h2>
-          <p style={styles.heroTagline}>"A comedy musical where the dice decide the ending"</p>
           <div style={styles.heroButtons}>
             <button style={styles.primaryButton} onClick={() => scrollToSection('support')}>
               Support Our Kickstarter
