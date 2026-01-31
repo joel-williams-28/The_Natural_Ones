@@ -632,8 +632,15 @@ function ShowCarousel({ shows }) {
         // This ensures no flicker because when React renders with new index,
         // the offset is already 0
         offsetRef.current = 0;
-        setIsAnimating(false);
+
+        // Update index first
         if (onComplete) onComplete();
+
+        // Delay isAnimating reset to next frame to ensure index change
+        // has rendered before opacity transitions are re-enabled
+        requestAnimationFrame(() => {
+          setIsAnimating(false);
+        });
       }
     };
 
