@@ -172,7 +172,13 @@ export default function TheNaturalOnesWebsite() {
           </div>
           <h2 style={styles.heroShowTitle}>Tabletop Role-Playing Game:</h2>
           <h2 style={styles.heroShowSubtitle}>The Musical!</h2>
-          <p style={styles.heroTagline}>"A comedy musical where the dice decide the ending"</p>
+          <div style={styles.heroDivider}>
+            <span style={styles.dividerLine}></span>
+            <span style={{...styles.dividerDot, color: '#c9a227'}}>&</span>
+            <span style={styles.dividerLine}></span>
+          </div>
+          <h2 style={styles.heroShowTitle}>Mystery at Murderingham Manor...</h2>
+          <h2 style={styles.heroShowSubtitle}>And More...</h2>
           <div style={styles.heroButtons}>
             <button style={styles.primaryButton} onClick={() => scrollToSection('support')}>
               Support Our Kickstarter
@@ -181,10 +187,10 @@ export default function TheNaturalOnesWebsite() {
               Learn More
             </button>
           </div>
-        </div>
-        <div style={styles.heroScroll}>
-          <span style={styles.scrollText}>Scroll to adventure</span>
-          <div style={styles.scrollArrow}>↓</div>
+          <div style={styles.heroScroll} onClick={() => scrollToSection('about')}>
+            <span style={styles.scrollText}>Scroll to adventure</span>
+            <div style={styles.scrollArrow}>↓</div>
+          </div>
         </div>
       </section>
 
@@ -1169,13 +1175,13 @@ const styles = {
   
   // Hero
   hero: {
-    minHeight: '107vh',
+    minHeight: '90vh',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    padding: '40px 20px 100px 20px',
+    padding: '40px 20px 40px 20px',
     background: `
       radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
       linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
@@ -1277,12 +1283,12 @@ const styles = {
     transition: 'all 0.3s ease',
   },
   heroScroll: {
-    position: 'absolute',
-    bottom: '20px',
+    marginTop: '80px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     gap: '8px',
+    cursor: 'pointer',
   },
   scrollText: {
     fontSize: '12px',
