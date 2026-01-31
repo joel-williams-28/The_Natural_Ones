@@ -1277,7 +1277,7 @@ const styles = {
     transition: 'all 0.3s ease',
   },
   heroScroll: {
-    marginTop: '48px',
+    marginTop: '80px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
