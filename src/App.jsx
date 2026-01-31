@@ -791,15 +791,15 @@ function ShowCarousel({ shows }) {
     const distanceFromCenter = Math.abs(effectivePosition);
     const scale = Math.max(0.6, 1 - distanceFromCenter * 0.3);
 
-    // Calculate opacity: full at center, fades to 0 at edges
-    const baseOpacity = Math.max(0, 1 - distanceFromCenter);
+    // Calculate opacity: full at center, faded towards edges
+    const baseOpacity = Math.max(0.2, 1 - distanceFromCenter * 0.7);
     const opacity = flippedIndex !== null && flippedIndex !== actualIndex ? 0.1 : baseOpacity;
 
     // Z-index: higher for center, lower for edges
     const zIndex = Math.round(10 - distanceFromCenter * 5);
 
-    // 3D rotation for carousel depth effect - posters spin to almost flat (side view) at edges
-    const rotateY = effectivePosition * -85;
+    // 3D rotation for carousel depth effect (posters angle away from center)
+    const rotateY = effectivePosition * -25;
 
     // Only use opacity transition when not animating carousel (for flip fade effect)
     const shouldTransitionOpacity = !isAnimating && !isDragging;
