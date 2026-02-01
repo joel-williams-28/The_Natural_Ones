@@ -26,7 +26,7 @@ const showsData = [
     id: 2,
     title: "The Dungeon Master's Lament",
     poster: "/images/poster02.jpg",
-    hasRealPoster: true,  // Set to true when you add poster02.jpg
+    hasRealPoster: false,  // Set to true when you add poster02.jpg
     scrollImage: "/images/scroll02.jpg",
     hasScrollImage: false, // Set to true when you add scroll02.jpg
     venue: "TBA",
