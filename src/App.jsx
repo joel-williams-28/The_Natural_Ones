@@ -1557,7 +1557,7 @@ const styles = {
   carouselTrack: {
     position: 'relative',
     width: '500px',
-    height: '750px',
+    height: '666px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1567,7 +1567,7 @@ const styles = {
   carouselSlide: {
     position: 'absolute',
     width: '500px',
-    height: '750px',
+    height: '666px',
     cursor: 'pointer',
     transformStyle: 'preserve-3d',
   },
