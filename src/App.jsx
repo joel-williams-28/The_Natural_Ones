@@ -12,7 +12,6 @@ const showsData = [
     hasRealPoster: true,
     posterAspectRatio: 2976 / 4209,
     scrollImage: "/images/Scroll01.png",
-    scrollImage: "/images/scroll01.png",
     hasScrollImage: true,
     venue: "Alma Tavern & Theatre",
     address: "18-20 Alma Vale Road, Clifton, Bristol, BS8 2HY",
@@ -29,8 +28,8 @@ const showsData = [
     poster: "/images/poster02.jpg",
     hasRealPoster: true,
     posterAspectRatio: 1792 / 2400,
-    scrollImage: "/images/scroll02.jpg",
-    hasScrollImage: false, // Set to true when you add scroll02.jpg
+    scrollImage: "/images/Scroll02.png",
+    hasScrollImage: true,
     venue: "TBA",
     address: "Bristol Area",
     date: "Coming 2026",
@@ -1669,7 +1668,7 @@ const styles = {
   scrollImage: {
     width: '100%',
     height: '100%',
-    objectFit: 'cover',
+    objectFit: 'contain',
     display: 'block',
     borderRadius: '4px',
   },
