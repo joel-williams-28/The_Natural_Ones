@@ -32,7 +32,8 @@ const showsData = [
     hasScrollImage: true,
     venue: "Unicorn Theatre",
     address: "18 Thames Street, Abingdon-on-Thames, OX14 3HZ",
-    date: "Friday 20th February 2026\nSaturday 21st February 2026",
+    addressUrl: "https://www.google.co.uk/maps/place/Unicorn+Theatre/@51.6697211,-1.27998,18.5z/data=!4m6!3m5!1s0x4876b884ceab4109:0xc4267bf292c4aa58!8m2!3d51.6696807!4d-1.2789359!16s%2Fg%2F1ts2zs8m?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D",
+    date: "Friday 20 February 2026\nSaturday 21 February 2026",
     doors: "19:00",
     runtime: "Approx. 2hrs - incl. interval",
     ticketUrl: "https://www.ticketsource.co.uk/whats-on/abingdon/unicorn-theatre/mystery-at-murderingham-manor-and-more/e-kqamxo",
@@ -922,7 +923,11 @@ function ShowCarousel({ shows }) {
                 <div>
                   <strong style={styles.infoPopupLabel}>Venue</strong>
                   <p style={styles.infoPopupText}>{shows[flippedIndex].venue}</p>
-                  <p style={styles.infoPopupSmall}>{shows[flippedIndex].address}</p>
+                  {shows[flippedIndex].addressUrl ? (
+                    <a href={shows[flippedIndex].addressUrl} target="_blank" rel="noopener noreferrer" style={{...styles.infoPopupSmall, display: 'block'}}>{shows[flippedIndex].address}</a>
+                  ) : (
+                    <p style={styles.infoPopupSmall}>{shows[flippedIndex].address}</p>
+                  )}
                 </div>
               </div>
               <div style={styles.infoPopupItem}>
