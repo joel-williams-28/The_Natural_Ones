@@ -1555,7 +1555,7 @@ const styles = {
   carouselContainer: {
     position: 'relative',
     width: '100%',
-    minHeight: '850px',
+    minHeight: '1100px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1604,7 +1604,7 @@ const styles = {
     height: '100%',
     backfaceVisibility: 'hidden',
     WebkitBackfaceVisibility: 'hidden',
-    transform: 'rotateY(180deg)',
+    transform: 'rotateY(180deg) scale(1.5)',
     borderRadius: '4px',
   },
   posterCardImage: {
