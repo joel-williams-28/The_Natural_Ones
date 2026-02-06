@@ -30,12 +30,12 @@ const showsData = [
     posterAspectRatio: 1792 / 2400,
     scrollImage: "/images/Scroll02.png",
     hasScrollImage: true,
-    venue: "TBA",
-    address: "Bristol Area",
-    date: "Coming 2026",
-    doors: "TBA",
-    runtime: "TBA",
-    ticketUrl: "#",
+    venue: "Unicorn Theatre",
+    address: "18 Thames Street, Abingdon-on-Thames, OX14 3HZ",
+    date: "Friday 20th February 2026\nSaturday 21st February 2026",
+    doors: "19:00",
+    runtime: "Approx. 2hrs - incl. interval",
+    ticketUrl: "https://www.ticketsource.co.uk/whats-on/abingdon/unicorn-theatre/mystery-at-murderingham-manor-and-more/e-kqamxo",
     description: "A tale of one DM's struggle against the chaos of their party.",
     tagline: "One DM. Five players. Infinite chaos."
   }
@@ -929,7 +929,9 @@ function ShowCarousel({ shows }) {
                 <span style={styles.infoPopupItemIcon}>🗓️</span>
                 <div>
                   <strong style={styles.infoPopupLabel}>Next Performance</strong>
-                  <p style={styles.infoPopupText}>{shows[flippedIndex].date}</p>
+                  <p style={styles.infoPopupText}>{shows[flippedIndex].date.split('\n').map((line, i) => (
+                    <span key={i}>{i > 0 && <br />}{line}</span>
+                  ))}</p>
                   <p style={styles.infoPopupSmall}>Doors: {shows[flippedIndex].doors} | Runtime: {shows[flippedIndex].runtime}</p>
                 </div>
               </div>
