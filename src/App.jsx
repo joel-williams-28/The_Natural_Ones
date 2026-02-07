@@ -178,8 +178,8 @@ export default function TheNaturalOnesWebsite() {
             <span style={{...styles.dividerDot, color: '#c9a227'}}>&</span>
             <span style={styles.dividerLine}></span>
           </div>
-          <h2 style={styles.heroShowTitle}>Mystery at Murderingham Manor...</h2>
-          <h2 style={styles.heroShowSubtitle}>And More...</h2>
+          <h2 style={{...styles.heroShowTitle, fontFamily: "'Poiret One', sans-serif"}}>Mystery at Murderingham Manor...</h2>
+          <h2 style={{...styles.heroShowSubtitle, fontFamily: "'Caveat Brush', cursive"}}>And More...</h2>
           <div style={styles.heroButtons}>
             <button style={styles.primaryButton} onClick={() => scrollToSection('support')}>
               Support Our Kickstarter
@@ -2203,7 +2203,7 @@ const styles = {
 // Add CSS animation keyframes via style injection
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poiret+One&display=swap');
   
   @keyframes float {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
