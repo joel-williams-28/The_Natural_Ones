@@ -46,6 +46,7 @@ export default function TheNaturalOnesWebsite() {
   const [activeSection, setActiveSection] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [selectedMember, setSelectedMember] = useState(null);
   const [kickstarterData, setKickstarterData] = useState({
     pledged: null,
     goal: null,
@@ -65,6 +66,27 @@ export default function TheNaturalOnesWebsite() {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const sectionIds = ['home', 'about', 'show', 'cast', 'support', 'contact'];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-50% 0px -50% 0px' }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   // Fetch Kickstarter data
@@ -144,6 +166,7 @@ export default function TheNaturalOnesWebsite() {
           {['home', 'about', 'show', 'cast', 'support', 'contact'].map((item) => (
             <li key={item}>
               <button
+                className="nav-link-btn"
                 style={{
                   ...styles.navLink,
                   color: activeSection === item ? '#c9a227' : '#e8dcc4'
@@ -175,21 +198,20 @@ export default function TheNaturalOnesWebsite() {
           <h2 style={styles.heroShowSubtitle}>The Musical!</h2>
           <div style={styles.heroDivider}>
             <span style={styles.dividerLine}></span>
-            <span style={{...styles.dividerDot, color: '#c9a227'}}>&</span>
+            <span style={{...styles.dividerDot, color: '#c9a227', fontFamily: "'Vatican Light', serif", fontSize: '32px'}}>&</span>
             <span style={styles.dividerLine}></span>
           </div>
-          <h2 style={styles.heroShowTitle}>Mystery at Murderingham Manor...</h2>
-          <h2 style={styles.heroShowSubtitle}>And More...</h2>
-          <div style={styles.heroButtons}>
-            <button style={styles.primaryButton} onClick={() => scrollToSection('support')}>
-              Support Our Kickstarter
-            </button>
-            <button style={styles.secondaryButton} onClick={() => scrollToSection('show')}>
-              Learn More
-            </button>
+          <h2 style={{...styles.heroShowTitle, fontFamily: "'Poiret One', sans-serif"}}>Mystery at Murderingham Manor...</h2>
+          <h2 style={{...styles.heroShowSubtitle, fontFamily: "'Caveat Brush', cursive"}}>And More...</h2>
+          <div style={styles.heroDivider}>
+            <span style={styles.dividerLine}></span>
+            <span style={styles.dividerDot}>✦</span>
+            <span style={styles.dividerLine}></span>
           </div>
-          <div style={styles.heroScroll} onClick={() => scrollToSection('about')}>
-            <span style={styles.scrollText}>Scroll to adventure</span>
+          <div style={styles.heroButtons}>
+            <button style={styles.primaryButton} onClick={() => scrollToSection('about')}>
+              Scroll To Adventure
+            </button>
             <div style={styles.scrollArrow}>↓</div>
           </div>
         </div>
@@ -321,17 +343,17 @@ export default function TheNaturalOnesWebsite() {
               3. Update the 'photo' field below with the filename
             */}
             {[
-              { name: 'The Bard', role: 'Musical Director', icon: '🎵', photo: 'member1.jpg' },
-              { name: 'The Paladin', role: 'Lead Performer', icon: '⚔️', photo: 'member2.jpg' },
-              { name: 'The Rogue', role: 'Ensemble', icon: '🗡️', photo: 'member3.jpg' },
-              { name: 'The Wizard', role: 'Technical Director', icon: '✨', photo: 'member4.jpg' },
-              { name: 'The Ranger', role: 'Stage Manager', icon: '🏹', photo: 'member5.jpg' },
-              { name: 'The Cleric', role: 'Producer', icon: '🛡️', photo: 'member6.jpg' },
+              { name: 'Joel Williams', role: '', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.' },
+              { name: 'Sreya Rao', role: '', icon: '⚔️', photo: 'member2.jpg', bio: 'Bio coming soon.' },
+              { name: 'The Rogue', role: 'Ensemble', icon: '🗡️', photo: 'member3.jpg', bio: 'Bio coming soon.' },
+              { name: 'The Wizard', role: 'Technical Director', icon: '✨', photo: 'member4.jpg', bio: 'Bio coming soon.' },
+              { name: 'The Ranger', role: 'Stage Manager', icon: '🏹', photo: 'member5.jpg', bio: 'Bio coming soon.' },
+              { name: 'The Cleric', role: 'Producer', icon: '🛡️', photo: 'member6.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
-              <div key={index} style={styles.castCard}>
+              <div key={index} style={{...styles.castCard, cursor: 'pointer'}} onClick={() => setSelectedMember(member)}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
                 <h3 style={styles.castName}>{member.name}</h3>
-                <p style={styles.castRole}>{member.role}</p>
+                {member.role && <p style={styles.castRole}>{member.role}</p>}
               </div>
             ))}
           </div>
@@ -340,6 +362,30 @@ export default function TheNaturalOnesWebsite() {
           </p>
         </div>
       </section>
+
+      {/* Cast Member Modal */}
+      {selectedMember && (
+        <div style={styles.castModalOverlay} onClick={() => setSelectedMember(null)}>
+          <div style={styles.castModalContent} onClick={(e) => e.stopPropagation()}>
+            <button style={styles.castModalClose} onClick={() => setSelectedMember(null)}>✕</button>
+            <div style={styles.castModalLayout}>
+              <div style={styles.castModalPhotoWrap}>
+                <img
+                  className="cast-modal-photo"
+                  src={`/images/cast/${selectedMember.photo}`}
+                  alt={selectedMember.name}
+                  style={styles.castModalPhoto}
+                />
+              </div>
+              <div style={styles.castModalInfo}>
+                <h2 style={styles.castModalName}>{selectedMember.name}</h2>
+                {selectedMember.role && <p style={styles.castModalRole}>{selectedMember.role}</p>}
+                <p style={styles.castModalBio}>{selectedMember.bio}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Support Section */}
       <section id="support" style={styles.sectionHighlight}>
@@ -1225,6 +1271,7 @@ const styles = {
     margin: '0 0 8px 0',
     textShadow: '0 4px 20px rgba(201, 162, 39, 0.3)',
     letterSpacing: '4px',
+    whiteSpace: 'nowrap',
   },
   heroSubtitle: {
     fontFamily: "'Cinzel', serif",
@@ -1274,9 +1321,10 @@ const styles = {
   },
   heroButtons: {
     display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     gap: '16px',
     justifyContent: 'center',
-    flexWrap: 'wrap',
   },
   primaryButton: {
     fontFamily: "'Cinzel', serif",
@@ -1880,7 +1928,7 @@ const styles = {
   },
   castGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
     gap: '24px',
   },
   castCard: {
@@ -1889,17 +1937,19 @@ const styles = {
     backgroundColor: 'rgba(45, 24, 16, 0.05)',
     border: '1px solid rgba(201, 162, 39, 0.2)',
     transition: 'all 0.3s ease',
+    overflow: 'hidden',
   },
   castIcon: {
     fontSize: '48px',
     marginBottom: '16px',
   },
   castPhoto: {
-    width: '100px',
-    height: '100px',
+    width: '200px',
+    height: '250px',
+    maxWidth: '100%',
     borderRadius: '50%',
     objectFit: 'cover',
-    border: '3px solid #c9a227',
+    border: '3px solid #3d6b1e',
     marginBottom: '16px',
   },
   castName: {
@@ -1920,6 +1970,81 @@ const styles = {
     color: '#a08060',
     fontStyle: 'italic',
     marginTop: '40px',
+  },
+  castModalOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    zIndex: 1000,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    animation: 'fadeIn 0.3s ease',
+  },
+  castModalContent: {
+    position: 'relative',
+    width: '90vw',
+    maxWidth: '900px',
+    padding: '48px',
+    backgroundColor: '#1a0e08',
+    border: '2px solid #3d6b1e',
+    borderRadius: '12px',
+  },
+  castModalClose: {
+    position: 'absolute',
+    top: '16px',
+    right: '16px',
+    background: 'none',
+    border: 'none',
+    color: '#c9a227',
+    fontSize: '24px',
+    cursor: 'pointer',
+    padding: '4px 8px',
+    lineHeight: 1,
+  },
+  castModalLayout: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '48px',
+  },
+  castModalPhotoWrap: {
+    flexShrink: 0,
+  },
+  castModalPhoto: {
+    width: '300px',
+    height: '375px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    border: '3px solid #3d6b1e',
+    animation: 'spinToOval 1s ease-out forwards',
+    boxShadow: '0 0 40px rgba(61, 107, 30, 0.3), 0 0 80px rgba(61, 107, 30, 0.15)',
+  },
+  castModalInfo: {
+    flex: 1,
+  },
+  castModalName: {
+    fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
+    fontSize: '32px',
+    color: '#c9a227',
+    margin: '0 0 12px 0',
+    letterSpacing: '2px',
+  },
+  castModalRole: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '16px',
+    color: '#8b6914',
+    letterSpacing: '1px',
+    margin: '0 0 24px 0',
+  },
+  castModalBio: {
+    fontFamily: "'Crimson Text', serif",
+    fontSize: '18px',
+    color: '#e8dcc4',
+    lineHeight: 1.8,
+    margin: 0,
   },
   
   // Support Section
@@ -2203,7 +2328,7 @@ const styles = {
 // Add CSS animation keyframes via style injection
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poiret+One&display=swap');
   
   @keyframes float {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -2220,6 +2345,33 @@ styleSheet.textContent = `
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  @keyframes spinToOval {
+    0% {
+      transform: rotateY(0deg) scale(0.5);
+      opacity: 0;
+      border-radius: 50%;
+    }
+    60% {
+      transform: rotateY(540deg) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: rotateY(720deg) scale(1);
+      opacity: 1;
+      border-radius: 50%;
+    }
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .cast-modal-photo {
+    mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+  }
   
   * {
     box-sizing: border-box;
@@ -2232,6 +2384,12 @@ styleSheet.textContent = `
   button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(201, 162, 39, 0.3);
+  }
+
+  button.nav-link-btn:hover {
+    transform: none;
+    box-shadow: none;
+    text-shadow: 0 0 8px rgba(201, 162, 39, 0.6), 0 0 16px rgba(201, 162, 39, 0.3);
   }
   
   a:hover {
