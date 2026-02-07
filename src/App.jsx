@@ -11,7 +11,6 @@ const showsData = [
     poster: "/images/poster01.jpg",
     hasRealPoster: true,
     scrollImage: "/images/Scroll01.png",
-    scrollImage: "/images/scroll01.png",
     hasScrollImage: true,
     venue: "Alma Tavern & Theatre",
     address: "18-20 Alma Vale Road, Clifton, Bristol, BS8 2HY",
@@ -26,15 +25,17 @@ const showsData = [
     id: 2,
     title: "The Dungeon Master's Lament",
     poster: "/images/poster02.jpg",
-    hasRealPoster: false,  // Set to true when you add poster02.jpg
-    scrollImage: "/images/scroll02.jpg",
-    hasScrollImage: false, // Set to true when you add scroll02.jpg
-    venue: "TBA",
-    address: "Bristol Area",
-    date: "Coming 2026",
-    doors: "TBA",
-    runtime: "TBA",
-    ticketUrl: "#",
+    hasRealPoster: true,
+    cardWidth: 660,
+    scrollImage: "/images/Scroll02.png",
+    hasScrollImage: true,
+    venue: "Unicorn Theatre",
+    address: "18 Thames Street, Abingdon-on-Thames, OX14 3HZ",
+    addressUrl: "https://www.google.co.uk/maps/place/Unicorn+Theatre/@51.6697211,-1.27998,18.5z/data=!4m6!3m5!1s0x4876b884ceab4109:0xc4267bf292c4aa58!8m2!3d51.6696807!4d-1.2789359!16s%2Fg%2F1ts2zs8m?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D",
+    date: "Friday 20 February 2026\nSaturday 21 February 2026",
+    doors: "19:00",
+    runtime: "Approx. 2hrs - incl. interval",
+    ticketUrl: "https://www.ticketsource.co.uk/whats-on/abingdon/unicorn-theatre/mystery-at-murderingham-manor-and-more/e-kqamxo",
     description: "A tale of one DM's struggle against the chaos of their party.",
     tagline: "One DM. Five players. Infinite chaos."
   }
@@ -607,7 +608,7 @@ function ShowCarousel({ shows }) {
   }, [flippedIndex]);
 
   // Spacing between poster positions
-  const spacing = 340;
+  const spacing = 425;
 
   // Animate carousel rotation smoothly from a starting offset to a target offset
   const animateCarousel = (fromOffset, toOffset, onComplete) => {
@@ -687,7 +688,7 @@ function ShowCarousel({ shows }) {
     });
   };
 
-  const handlePosterClick = (index) => {
+  const handlePosterClick = (index, slot) => {
     // Don't trigger click if we just finished dragging or animating
     if (hasDragged) {
       setHasDragged(false);
@@ -696,12 +697,8 @@ function ShowCarousel({ shows }) {
     if (isAnimating) return;
 
     if (index !== currentIndex) {
-      // Clicked on a side poster - animate to it
-      // Determine if it's left (-1) or right (+1) of center
-      const isLeftPoster = index < currentIndex || (currentIndex === 0 && index === shows.length - 1);
-      const isRightPoster = !isLeftPoster;
-
-      if (isLeftPoster) {
+      // Clicked on a side poster - use visual slot to determine direction
+      if (slot < 0) {
         handlePrev(flippedIndex !== null);
       } else {
         handleNext(flippedIndex !== null);
@@ -733,7 +730,7 @@ function ShowCarousel({ shows }) {
   const handleDragMove = (e) => {
     if (!isDragging) return;
     const currentX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-    const diff = currentX - startX;
+    const diff = startX - currentX;
     setDragOffset(diff);
     if (Math.abs(diff) > 10) {
       setHasDragged(true);
@@ -835,14 +832,6 @@ function ShowCarousel({ shows }) {
 
   return (
     <div ref={containerRef} style={styles.carouselContainer}>
-      {/* Navigation arrows */}
-      <button
-        style={{...styles.carouselArrow, ...styles.carouselArrowLeft}}
-        onClick={() => handlePrev(flippedIndex !== null)}
-      >
-        &#10094;
-      </button>
-
       <div
         ref={carouselRef}
         style={styles.carouselTrack}
@@ -859,9 +848,10 @@ function ShowCarousel({ shows }) {
             key={item.key}
             style={{
               ...styles.carouselSlide,
+              ...(item.show.cardWidth ? { width: `${item.show.cardWidth}px` } : {}),
               ...getPositionStyleForSlot(item.slot, item.actualIndex),
             }}
-            onClick={() => handlePosterClick(item.actualIndex)}
+            onClick={() => handlePosterClick(item.actualIndex, item.slot)}
           >
             <div style={{
               ...styles.flipCard,
@@ -894,13 +884,6 @@ function ShowCarousel({ shows }) {
         ))}
       </div>
 
-      <button
-        style={{...styles.carouselArrow, ...styles.carouselArrowRight}}
-        onClick={() => handleNext(flippedIndex !== null)}
-      >
-        &#10095;
-      </button>
-
       {/* Info box that pops in when flipped - to the right of poster */}
       <div style={{
         ...styles.infoPopup,
@@ -920,14 +903,20 @@ function ShowCarousel({ shows }) {
                 <div>
                   <strong style={styles.infoPopupLabel}>Venue</strong>
                   <p style={styles.infoPopupText}>{shows[flippedIndex].venue}</p>
-                  <p style={styles.infoPopupSmall}>{shows[flippedIndex].address}</p>
+                  {shows[flippedIndex].addressUrl ? (
+                    <a href={shows[flippedIndex].addressUrl} target="_blank" rel="noopener noreferrer" style={{...styles.infoPopupSmall, display: 'block'}}>{shows[flippedIndex].address}</a>
+                  ) : (
+                    <p style={styles.infoPopupSmall}>{shows[flippedIndex].address}</p>
+                  )}
                 </div>
               </div>
               <div style={styles.infoPopupItem}>
                 <span style={styles.infoPopupItemIcon}>🗓️</span>
                 <div>
                   <strong style={styles.infoPopupLabel}>Next Performance</strong>
-                  <p style={styles.infoPopupText}>{shows[flippedIndex].date}</p>
+                  <p style={styles.infoPopupText}>{shows[flippedIndex].date.split('\n').map((line, i) => (
+                    <span key={i}>{i > 0 && <br />}{line}</span>
+                  ))}</p>
                   <p style={styles.infoPopupSmall}>Doors: {shows[flippedIndex].doors} | Runtime: {shows[flippedIndex].runtime}</p>
                 </div>
               </div>
@@ -960,26 +949,6 @@ function ShowCarousel({ shows }) {
         )}
       </div>
 
-      {/* Carousel dots indicator */}
-      <div style={styles.carouselDots}>
-        {shows.map((_, index) => (
-          <button
-            key={index}
-            style={{
-              ...styles.carouselDot,
-              backgroundColor: index === currentIndex ? '#c9a227' : 'rgba(201, 162, 39, 0.3)',
-            }}
-            onClick={() => {
-              const isFlipped = flippedIndex !== null;
-              setCurrentIndex(index);
-              if (isFlipped) {
-                setFlippedIndex(index);
-                setInfoVisible(true);
-              }
-            }}
-          />
-        ))}
-      </div>
     </div>
   );
 }
@@ -1546,7 +1515,7 @@ const styles = {
   carouselContainer: {
     position: 'relative',
     width: '100%',
-    minHeight: '850px',
+    minHeight: '950px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1556,8 +1525,8 @@ const styles = {
   },
   carouselTrack: {
     position: 'relative',
-    width: '500px',
-    height: '750px',
+    width: '625px',
+    height: '879px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1566,8 +1535,8 @@ const styles = {
   },
   carouselSlide: {
     position: 'absolute',
-    width: '500px',
-    height: '750px',
+    width: '625px',
+    height: '879px',
     cursor: 'pointer',
     transformStyle: 'preserve-3d',
   },
@@ -1595,7 +1564,7 @@ const styles = {
     height: '100%',
     backfaceVisibility: 'hidden',
     WebkitBackfaceVisibility: 'hidden',
-    transform: 'rotateY(180deg)',
+    transform: 'rotateY(180deg) scale(1.05)',
     borderRadius: '4px',
   },
   posterCardImage: {
@@ -1666,7 +1635,7 @@ const styles = {
   scrollImage: {
     width: '100%',
     height: '100%',
-    objectFit: 'cover',
+    objectFit: 'contain',
     display: 'block',
     borderRadius: '4px',
   },
@@ -1738,51 +1707,10 @@ const styles = {
     margin: '0',
     fontWeight: 'bold',
   },
-  carouselArrow: {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    width: '50px',
-    height: '50px',
-    background: 'linear-gradient(135deg, #c9a227, #8b6914)',
-    border: 'none',
-    borderRadius: '50%',
-    color: '#2d1810',
-    fontSize: '20px',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    zIndex: 20,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-  },
-  carouselArrowLeft: {
-    left: '-80px',
-  },
-  carouselArrowRight: {
-    right: '-80px',
-  },
-  carouselDots: {
-    position: 'absolute',
-    bottom: '-30px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    display: 'flex',
-    gap: '12px',
-  },
-  carouselDot: {
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
-    border: '2px solid #c9a227',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-  },
   infoPopup: {
     position: 'absolute',
     top: '50%',
-    right: '20px',
+    right: '-20px',
     transform: 'translateY(-50%)',
     width: '280px',
     backgroundColor: '#2d1810',
@@ -2258,17 +2186,6 @@ styleSheet.textContent = `
       width: 90vw !important;
       max-width: 320px !important;
     }
-  }
-
-  /* Carousel arrow hover effect */
-  .carousel-arrow:hover:not(:disabled) {
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 20px rgba(201, 162, 39, 0.4);
-  }
-
-  .carousel-arrow:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
   }
 
   /* Flip card perspective fix */
