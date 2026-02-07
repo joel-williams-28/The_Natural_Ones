@@ -1585,7 +1585,7 @@ const styles = {
     height: '100%',
     backfaceVisibility: 'hidden',
     WebkitBackfaceVisibility: 'hidden',
-    transform: 'rotateY(180deg)',
+    transform: 'rotateY(180deg) scale(1.05)',
     borderRadius: '4px',
   },
   posterCardImage: {
