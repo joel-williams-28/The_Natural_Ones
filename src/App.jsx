@@ -1746,7 +1746,7 @@ const styles = {
   infoPopup: {
     position: 'absolute',
     top: '50%',
-    right: '20px',
+    right: '10px',
     transform: 'translateY(-50%)',
     width: '280px',
     backgroundColor: '#2d1810',
