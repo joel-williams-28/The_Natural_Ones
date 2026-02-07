@@ -689,7 +689,7 @@ function ShowCarousel({ shows }) {
     });
   };
 
-  const handlePosterClick = (index) => {
+  const handlePosterClick = (index, slot) => {
     // Don't trigger click if we just finished dragging or animating
     if (hasDragged) {
       setHasDragged(false);
@@ -698,12 +698,8 @@ function ShowCarousel({ shows }) {
     if (isAnimating) return;
 
     if (index !== currentIndex) {
-      // Clicked on a side poster - animate to it
-      // Determine if it's left (-1) or right (+1) of center
-      const isLeftPoster = index < currentIndex || (currentIndex === 0 && index === shows.length - 1);
-      const isRightPoster = !isLeftPoster;
-
-      if (isLeftPoster) {
+      // Clicked on a side poster - use visual slot to determine direction
+      if (slot < 0) {
         handlePrev(flippedIndex !== null);
       } else {
         handleNext(flippedIndex !== null);
@@ -735,7 +731,7 @@ function ShowCarousel({ shows }) {
   const handleDragMove = (e) => {
     if (!isDragging) return;
     const currentX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-    const diff = currentX - startX;
+    const diff = startX - currentX;
     setDragOffset(diff);
     if (Math.abs(diff) > 10) {
       setHasDragged(true);
@@ -864,7 +860,7 @@ function ShowCarousel({ shows }) {
               height: item.show.posterAspectRatio ? `${Math.round(613 / item.show.posterAspectRatio + 12)}px` : styles.carouselSlide.height,
               ...getPositionStyleForSlot(item.slot, item.actualIndex),
             }}
-            onClick={() => handlePosterClick(item.actualIndex)}
+            onClick={() => handlePosterClick(item.actualIndex, item.slot)}
           >
             <div style={{
               ...styles.flipCard,
