@@ -186,12 +186,9 @@ export default function TheNaturalOnesWebsite() {
             <span style={styles.dividerLine}></span>
           </div>
           <div style={styles.heroButtons}>
-            <button style={styles.primaryButton} onClick={() => scrollToSection('support')}>
+            <button style={styles.primaryButton} onClick={() => scrollToSection('about')}>
               Scroll To Adventure
             </button>
-          </div>
-          <div style={styles.heroScroll} onClick={() => scrollToSection('about')}>
-            <span style={styles.scrollText}>Scroll to adventure</span>
             <div style={styles.scrollArrow}>↓</div>
           </div>
         </div>
