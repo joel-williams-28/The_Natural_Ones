@@ -342,8 +342,8 @@ export default function TheNaturalOnesWebsite() {
               3. Update the 'photo' field below with the filename
             */}
             {[
-              { name: 'The Bard', role: 'Musical Director', icon: '🎵', photo: 'member1.jpg' },
-              { name: 'The Paladin', role: 'Lead Performer', icon: '⚔️', photo: 'member2.jpg' },
+              { name: 'Joel Williams', role: '', icon: '🎵', photo: 'member1.jpg' },
+              { name: 'Sreya Rao', role: '', icon: '⚔️', photo: 'member2.jpg' },
               { name: 'The Rogue', role: 'Ensemble', icon: '🗡️', photo: 'member3.jpg' },
               { name: 'The Wizard', role: 'Technical Director', icon: '✨', photo: 'member4.jpg' },
               { name: 'The Ranger', role: 'Stage Manager', icon: '🏹', photo: 'member5.jpg' },
@@ -352,7 +352,7 @@ export default function TheNaturalOnesWebsite() {
               <div key={index} style={styles.castCard}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
                 <h3 style={styles.castName}>{member.name}</h3>
-                <p style={styles.castRole}>{member.role}</p>
+                {member.role && <p style={styles.castRole}>{member.role}</p>}
               </div>
             ))}
           </div>
@@ -1903,7 +1903,7 @@ const styles = {
   },
   castGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
     gap: '24px',
   },
   castCard: {
@@ -1912,6 +1912,7 @@ const styles = {
     backgroundColor: 'rgba(45, 24, 16, 0.05)',
     border: '1px solid rgba(201, 162, 39, 0.2)',
     transition: 'all 0.3s ease',
+    overflow: 'hidden',
   },
   castIcon: {
     fontSize: '48px',
@@ -1920,6 +1921,7 @@ const styles = {
   castPhoto: {
     width: '200px',
     height: '250px',
+    maxWidth: '100%',
     borderRadius: '50%',
     objectFit: 'cover',
     border: '3px solid #3d6b1e',
