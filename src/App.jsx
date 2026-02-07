@@ -220,7 +220,7 @@ export default function TheNaturalOnesWebsite() {
               <p style={styles.paragraph}>
                 <strong>The Natural Ones</strong> are an Oxfordshire-based performing arts group made up of a
                 brilliant selection of weirdos and nerds, who all happen to be brilliant singers and actors
-                too. Founded by <strong>James Coleman-Williams</strong>, we're dedicated to original comedy
+                too. Founded by <strong>James A. Coleman</strong>, we're dedicated to original comedy
                 theatre — the kind of shows where the scripts are new, the laughs are genuine, and the props
                 budget is optimistic at best.
               </p>
@@ -1337,8 +1337,9 @@ const styles = {
     color: '#e8dcc4',
   },
   sectionInner: {
-    maxWidth: '1100px',
+    maxWidth: '1400px',
     margin: '0 auto',
+    padding: '0 40px',
   },
   
   // Section Header
@@ -1378,8 +1379,8 @@ const styles = {
   // About Section
   aboutGrid: {
     display: 'grid',
-    gridTemplateColumns: '1fr 300px',
-    gap: '60px',
+    gridTemplateColumns: '1fr 260px',
+    gap: '48px',
     alignItems: 'start',
   },
   aboutText: {
@@ -1389,6 +1390,7 @@ const styles = {
     fontSize: '18px',
     marginBottom: '24px',
     lineHeight: 1.8,
+    textAlign: 'justify',
   },
   dropCap: {
     float: 'left',
