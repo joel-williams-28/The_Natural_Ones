@@ -10,7 +10,6 @@ const showsData = [
     title: "Tabletop Role-Playing Game: The Musical!",
     poster: "/images/poster01.jpg",
     hasRealPoster: true,
-    posterAspectRatio: 2976 / 4209,
     scrollImage: "/images/Scroll01.png",
     hasScrollImage: true,
     venue: "Alma Tavern & Theatre",
@@ -27,7 +26,6 @@ const showsData = [
     title: "The Dungeon Master's Lament",
     poster: "/images/poster02.jpg",
     hasRealPoster: true,
-    posterAspectRatio: 1792 / 2400,
     scrollImage: "/images/Scroll02.png",
     hasScrollImage: true,
     venue: "Unicorn Theatre",
@@ -849,7 +847,6 @@ function ShowCarousel({ shows }) {
             key={item.key}
             style={{
               ...styles.carouselSlide,
-              height: item.show.posterAspectRatio ? `${Math.round(613 / item.show.posterAspectRatio + 12)}px` : styles.carouselSlide.height,
               ...getPositionStyleForSlot(item.slot, item.actualIndex),
             }}
             onClick={() => handlePosterClick(item.actualIndex, item.slot)}
