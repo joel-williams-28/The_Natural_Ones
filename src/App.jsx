@@ -175,7 +175,7 @@ export default function TheNaturalOnesWebsite() {
           <h2 style={styles.heroShowSubtitle}>The Musical!</h2>
           <div style={styles.heroDivider}>
             <span style={styles.dividerLine}></span>
-            <span style={{...styles.dividerDot, color: '#c9a227', fontFamily: "'Vatican Light', serif", fontSize: '64px'}}>&</span>
+            <span style={{...styles.dividerDot, color: '#c9a227', fontFamily: "'Vatican Light', serif", fontSize: '32px'}}>&</span>
             <span style={styles.dividerLine}></span>
           </div>
           <h2 style={{...styles.heroShowTitle, fontFamily: "'Poiret One', sans-serif"}}>Mystery at Murderingham Manor...</h2>
@@ -1225,6 +1225,7 @@ const styles = {
     margin: '0 0 8px 0',
     textShadow: '0 4px 20px rgba(201, 162, 39, 0.3)',
     letterSpacing: '4px',
+    whiteSpace: 'nowrap',
   },
   heroSubtitle: {
     fontFamily: "'Cinzel', serif",
