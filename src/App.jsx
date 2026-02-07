@@ -1918,11 +1918,11 @@ const styles = {
     marginBottom: '16px',
   },
   castPhoto: {
-    width: '100px',
-    height: '100px',
+    width: '200px',
+    height: '250px',
     borderRadius: '50%',
     objectFit: 'cover',
-    border: '3px solid #c9a227',
+    border: '3px solid #3d6b1e',
     marginBottom: '16px',
   },
   castName: {
