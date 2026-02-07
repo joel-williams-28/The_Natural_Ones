@@ -201,7 +201,7 @@ export default function TheNaturalOnesWebsite() {
           <SectionHeader title="About Us" subtitle="We Rolled a One. We Kept Playing." />
           <div style={styles.aboutGrid}>
             <div style={styles.aboutText}>
-              <p style={styles.paragraph}>
+              <p style={{...styles.paragraph, marginBottom: '40px'}}>
                 <span style={styles.dropCap}>E</span>very great adventure starts somewhere. Ours started with
                 a name that didn't stick.
               </p>
@@ -211,7 +211,7 @@ export default function TheNaturalOnesWebsite() {
                 iterations (none of which we'll be sharing, for legal and dignity reasons), we landed
                 on <strong>The Natural Ones</strong>: a nod to the most feared roll in tabletop gaming, the
                 dreaded natural one on a D20. For the uninitiated, a natural one means total, catastrophic
-                failure. Your sword shatters — your spell backfires. You fall off the bridge you were standing
+                failure. Your sword shatters. Your spell backfires. You fall off the bridge you were standing
                 perfectly still on.
               </p>
               <p style={styles.paragraph}>
@@ -220,18 +220,17 @@ export default function TheNaturalOnesWebsite() {
               <p style={styles.paragraph}>
                 <strong>The Natural Ones</strong> are an Oxfordshire-based performing arts group made up of a
                 brilliant selection of weirdos and nerds, who all happen to be brilliant singers and actors
-                too. Founded by <strong>James A. Coleman</strong>, we're dedicated to original comedy
-                theatre — the kind of shows where the scripts are new, the laughs are genuine, and the props
-                budget is optimistic at best.
+                too. We're dedicated to original comedy theatre — the kind of shows where the scripts are new,
+                the laughs are genuine, and the props budget is optimistic at best.
               </p>
               <p style={styles.paragraph}>
-                <strong>James A. Coleman</strong> — scriptwriter, lyricist, director and producer — is both a
-                lifelong musical theatre obsessive and an irredeemable nerd, which really made this whole thing
-                an inevitability. After years of performing, crewing, writing and directing amateur productions
-                across the country, he discovered tabletop roleplaying games in his early 20s and immediately
-                thought: <span style={{fontStyle: 'italic'}}>this needs to be a musical.</span> Six years of
-                development later — which is either dedication or stubbornness, depending on who you
-                ask — <span style={{fontStyle: 'italic'}}>Roll, Play</span> was born.
+                Our founder, <strong>James A. Coleman</strong> — scriptwriter, lyricist, director and
+                producer — is both a lifelong musical theatre obsessive and an irredeemable nerd, which really
+                made this whole thing an inevitability. After years of performing, crewing, writing and directing
+                amateur productions across the country, he discovered tabletop role-playing games in his early
+                20s and immediately thought: <span style={{fontStyle: 'italic'}}>this needs to be a
+                musical.</span> Six years of development later — which is either dedication or stubbornness
+                depending on who you ask — <span style={{fontStyle: 'italic'}}>Roll, Play</span> was born.
               </p>
               <p style={styles.paragraph}>
                 The music comes from <strong>Richard Baker</strong>, an Olivier Award-nominated composer whose
@@ -252,9 +251,16 @@ export default function TheNaturalOnesWebsite() {
                 in 2026.
               </p>
               <p style={styles.paragraph}>
-                We're a group of fledgling artists with big ambitions, questionable judgment, and an unreasonable
+                We're a group of fledgling artists with big ambitions, questionable judgement, and an unreasonable
                 fondness for puns. If that sounds like your sort of thing, we'd love to have you along for the ride.
               </p>
+              <div style={styles.aboutDivider}></div>
+              <div
+                style={styles.meetCastLink}
+                onClick={() => scrollToSection('cast')}
+              >
+                <span style={{marginRight: '8px'}}>&#8594;</span> Meet the Creatives & Cast
+              </div>
             </div>
             <div style={styles.aboutCard}>
               {/* TO ADD GROUP PHOTO: Place group-photo.jpg in public/images/ folder */}
@@ -1105,7 +1111,7 @@ function SectionHeader({ title, subtitle, light = false }) {
 // Styles
 const styles = {
   container: {
-    fontFamily: "'Crimson Text', 'Georgia', serif",
+    fontFamily: "'Lora', 'Crimson Text', 'Georgia', serif",
     backgroundColor: '#1a0f08',
     color: '#e8dcc4',
     minHeight: '100vh',
@@ -1395,11 +1401,25 @@ const styles = {
   dropCap: {
     float: 'left',
     fontFamily: "'Cinzel Decorative', serif",
-    fontSize: '64px',
-    lineHeight: '48px',
+    fontSize: '88px',
+    lineHeight: '64px',
     paddingTop: '8px',
-    paddingRight: '12px',
+    paddingRight: '14px',
     color: '#3d6b1e',
+  },
+  aboutDivider: {
+    height: '1px',
+    background: 'linear-gradient(90deg, rgba(201, 162, 39, 0.4), rgba(201, 162, 39, 0.1))',
+    margin: '40px 0 28px 0',
+  },
+  meetCastLink: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '16px',
+    fontWeight: '600',
+    color: '#c9a227',
+    cursor: 'pointer',
+    letterSpacing: '1px',
+    transition: 'color 0.3s ease',
   },
   aboutCard: {
     position: 'sticky',
@@ -2179,7 +2199,7 @@ const styles = {
 // Add CSS animation keyframes via style injection
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
   
   @keyframes float {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
