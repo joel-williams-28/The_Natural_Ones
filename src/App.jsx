@@ -1426,7 +1426,8 @@ const styles = {
   aboutCard: {
     position: 'sticky',
     top: '100px',
-    marginTop: '12px',
+    marginTop: '150px',
+    transform: 'translateX(40px)',
   },
   groupPhoto: {
     width: '100%',
