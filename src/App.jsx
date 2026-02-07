@@ -219,7 +219,7 @@ export default function TheNaturalOnesWebsite() {
               </p>
               <p style={styles.paragraph}>
                 <strong>The Natural Ones</strong> are an Oxfordshire-based performing arts group made up of a
-                brilliant selection of weirdos and nerds, who all happen to be brilliant singers and actors
+                brilliant selection of weirdos who all happen to be brilliant singers and actors
                 too. We're dedicated to original comedy theatre — the kind of shows where the scripts are new,
                 the laughs are genuine, and the props budget is optimistic at best.
               </p>
@@ -244,7 +244,7 @@ export default function TheNaturalOnesWebsite() {
                 First assembled to perform <span style={{fontStyle: 'italic'}}>Roll, Play</span> in Abingdon in
                 2025, the group launched with a sold-out debut in January of that year before taking the show to
                 the Cheltenham Fringe Festival and performing extracts at MCM London Comic Con — where we had a
-                fantastic time and still managed to feel pretty nerdy despite the surroundings. We're currently
+                fantastic time and still managed to feel pretty out of place despite the surroundings. We're currently
                 preparing our newest comedy, <span style={{fontStyle: 'italic'}}>Mystery at Murderingham
                 Manor</span>, while also performing <span style={{fontStyle: 'italic'}}>Roll, Play</span> in
                 venues across the country and working towards our next great quest: the Edinburgh Fringe Festival
