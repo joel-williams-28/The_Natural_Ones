@@ -1385,8 +1385,8 @@ const styles = {
   // About Section
   aboutGrid: {
     display: 'grid',
-    gridTemplateColumns: '1fr 260px',
-    gap: '48px',
+    gridTemplateColumns: '1fr 320px',
+    gap: '36px',
     alignItems: 'start',
   },
   aboutText: {
@@ -1424,6 +1424,7 @@ const styles = {
   aboutCard: {
     position: 'sticky',
     top: '100px',
+    marginTop: '-4px',
   },
   groupPhoto: {
     width: '100%',
