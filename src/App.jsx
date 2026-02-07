@@ -187,10 +187,7 @@ export default function TheNaturalOnesWebsite() {
           </div>
           <div style={styles.heroButtons}>
             <button style={styles.primaryButton} onClick={() => scrollToSection('support')}>
-              Support Our Kickstarter
-            </button>
-            <button style={styles.secondaryButton} onClick={() => scrollToSection('show')}>
-              Learn More
+              Scroll To Adventure
             </button>
           </div>
           <div style={styles.heroScroll} onClick={() => scrollToSection('about')}>
