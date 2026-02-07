@@ -1555,7 +1555,7 @@ const styles = {
   carouselContainer: {
     position: 'relative',
     width: '100%',
-    minHeight: '1000px',
+    minHeight: '950px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1600,15 +1600,11 @@ const styles = {
   },
   flipCardBack: {
     position: 'absolute',
-    width: '500px',
-    height: '750px',
-    top: '50%',
-    left: '50%',
-    marginTop: '-375px',
-    marginLeft: '-250px',
+    width: '100%',
+    height: '100%',
     backfaceVisibility: 'hidden',
     WebkitBackfaceVisibility: 'hidden',
-    transform: 'rotateY(180deg) scale(1.125)',
+    transform: 'rotateY(180deg)',
     borderRadius: '4px',
   },
   posterCardImage: {
