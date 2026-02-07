@@ -46,6 +46,7 @@ export default function TheNaturalOnesWebsite() {
   const [activeSection, setActiveSection] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [selectedMember, setSelectedMember] = useState(null);
   const [kickstarterData, setKickstarterData] = useState({
     pledged: null,
     goal: null,
@@ -342,14 +343,14 @@ export default function TheNaturalOnesWebsite() {
               3. Update the 'photo' field below with the filename
             */}
             {[
-              { name: 'Joel Williams', role: '', icon: '🎵', photo: 'member1.jpg' },
-              { name: 'Sreya Rao', role: '', icon: '⚔️', photo: 'member2.jpg' },
-              { name: 'The Rogue', role: 'Ensemble', icon: '🗡️', photo: 'member3.jpg' },
-              { name: 'The Wizard', role: 'Technical Director', icon: '✨', photo: 'member4.jpg' },
-              { name: 'The Ranger', role: 'Stage Manager', icon: '🏹', photo: 'member5.jpg' },
-              { name: 'The Cleric', role: 'Producer', icon: '🛡️', photo: 'member6.jpg' },
+              { name: 'Joel Williams', role: '', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.' },
+              { name: 'Sreya Rao', role: '', icon: '⚔️', photo: 'member2.jpg', bio: 'Bio coming soon.' },
+              { name: 'The Rogue', role: 'Ensemble', icon: '🗡️', photo: 'member3.jpg', bio: 'Bio coming soon.' },
+              { name: 'The Wizard', role: 'Technical Director', icon: '✨', photo: 'member4.jpg', bio: 'Bio coming soon.' },
+              { name: 'The Ranger', role: 'Stage Manager', icon: '🏹', photo: 'member5.jpg', bio: 'Bio coming soon.' },
+              { name: 'The Cleric', role: 'Producer', icon: '🛡️', photo: 'member6.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
-              <div key={index} style={styles.castCard}>
+              <div key={index} style={{...styles.castCard, cursor: 'pointer'}} onClick={() => setSelectedMember(member)}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
                 <h3 style={styles.castName}>{member.name}</h3>
                 {member.role && <p style={styles.castRole}>{member.role}</p>}
@@ -361,6 +362,30 @@ export default function TheNaturalOnesWebsite() {
           </p>
         </div>
       </section>
+
+      {/* Cast Member Modal */}
+      {selectedMember && (
+        <div style={styles.castModalOverlay} onClick={() => setSelectedMember(null)}>
+          <div style={styles.castModalContent} onClick={(e) => e.stopPropagation()}>
+            <button style={styles.castModalClose} onClick={() => setSelectedMember(null)}>✕</button>
+            <div style={styles.castModalLayout}>
+              <div style={styles.castModalPhotoWrap}>
+                <img
+                  className="cast-modal-photo"
+                  src={`/images/cast/${selectedMember.photo}`}
+                  alt={selectedMember.name}
+                  style={styles.castModalPhoto}
+                />
+              </div>
+              <div style={styles.castModalInfo}>
+                <h2 style={styles.castModalName}>{selectedMember.name}</h2>
+                {selectedMember.role && <p style={styles.castModalRole}>{selectedMember.role}</p>}
+                <p style={styles.castModalBio}>{selectedMember.bio}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Support Section */}
       <section id="support" style={styles.sectionHighlight}>
@@ -1946,6 +1971,81 @@ const styles = {
     fontStyle: 'italic',
     marginTop: '40px',
   },
+  castModalOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    zIndex: 1000,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    animation: 'fadeIn 0.3s ease',
+  },
+  castModalContent: {
+    position: 'relative',
+    width: '90vw',
+    maxWidth: '900px',
+    padding: '48px',
+    backgroundColor: '#1a0e08',
+    border: '2px solid #3d6b1e',
+    borderRadius: '12px',
+  },
+  castModalClose: {
+    position: 'absolute',
+    top: '16px',
+    right: '16px',
+    background: 'none',
+    border: 'none',
+    color: '#c9a227',
+    fontSize: '24px',
+    cursor: 'pointer',
+    padding: '4px 8px',
+    lineHeight: 1,
+  },
+  castModalLayout: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '48px',
+  },
+  castModalPhotoWrap: {
+    flexShrink: 0,
+  },
+  castModalPhoto: {
+    width: '300px',
+    height: '375px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    border: '3px solid #3d6b1e',
+    animation: 'spinToOval 1s ease-out forwards',
+    boxShadow: '0 0 40px rgba(61, 107, 30, 0.3), 0 0 80px rgba(61, 107, 30, 0.15)',
+  },
+  castModalInfo: {
+    flex: 1,
+  },
+  castModalName: {
+    fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
+    fontSize: '32px',
+    color: '#c9a227',
+    margin: '0 0 12px 0',
+    letterSpacing: '2px',
+  },
+  castModalRole: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '16px',
+    color: '#8b6914',
+    letterSpacing: '1px',
+    margin: '0 0 24px 0',
+  },
+  castModalBio: {
+    fontFamily: "'Crimson Text', serif",
+    fontSize: '18px',
+    color: '#e8dcc4',
+    lineHeight: 1.8,
+    margin: 0,
+  },
   
   // Support Section
   supportContent: {
@@ -2244,6 +2344,33 @@ styleSheet.textContent = `
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+  @keyframes spinToOval {
+    0% {
+      transform: rotateY(0deg) scale(0.5);
+      opacity: 0;
+      border-radius: 50%;
+    }
+    60% {
+      transform: rotateY(540deg) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: rotateY(720deg) scale(1);
+      opacity: 1;
+      border-radius: 50%;
+    }
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .cast-modal-photo {
+    mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
   }
   
   * {
