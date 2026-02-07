@@ -144,6 +144,7 @@ export default function TheNaturalOnesWebsite() {
           {['home', 'about', 'show', 'cast', 'support', 'contact'].map((item) => (
             <li key={item}>
               <button
+                className="nav-link-btn"
                 style={{
                   ...styles.navLink,
                   color: activeSection === item ? '#c9a227' : '#e8dcc4'
@@ -2233,6 +2234,12 @@ styleSheet.textContent = `
   button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(201, 162, 39, 0.3);
+  }
+
+  button.nav-link-btn:hover {
+    transform: none;
+    box-shadow: none;
+    text-shadow: 0 0 8px rgba(201, 162, 39, 0.6), 0 0 16px rgba(201, 162, 39, 0.3);
   }
   
   a:hover {
