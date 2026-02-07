@@ -833,14 +833,6 @@ function ShowCarousel({ shows }) {
 
   return (
     <div ref={containerRef} style={styles.carouselContainer}>
-      {/* Navigation arrows */}
-      <button
-        style={{...styles.carouselArrow, ...styles.carouselArrowLeft}}
-        onClick={() => handlePrev(flippedIndex !== null)}
-      >
-        &#10094;
-      </button>
-
       <div
         ref={carouselRef}
         style={styles.carouselTrack}
@@ -892,13 +884,6 @@ function ShowCarousel({ shows }) {
           </div>
         ))}
       </div>
-
-      <button
-        style={{...styles.carouselArrow, ...styles.carouselArrowRight}}
-        onClick={() => handleNext(flippedIndex !== null)}
-      >
-        &#10095;
-      </button>
 
       {/* Info box that pops in when flipped - to the right of poster */}
       <div style={{
@@ -1743,31 +1728,6 @@ const styles = {
     margin: '0',
     fontWeight: 'bold',
   },
-  carouselArrow: {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    width: '50px',
-    height: '50px',
-    background: 'linear-gradient(135deg, #c9a227, #8b6914)',
-    border: 'none',
-    borderRadius: '50%',
-    color: '#2d1810',
-    fontSize: '20px',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    zIndex: 20,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-  },
-  carouselArrowLeft: {
-    left: '-80px',
-  },
-  carouselArrowRight: {
-    right: '-80px',
-  },
   carouselDots: {
     position: 'absolute',
     bottom: '-30px',
@@ -2263,17 +2223,6 @@ styleSheet.textContent = `
       width: 90vw !important;
       max-width: 320px !important;
     }
-  }
-
-  /* Carousel arrow hover effect */
-  .carousel-arrow:hover:not(:disabled) {
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 20px rgba(201, 162, 39, 0.4);
-  }
-
-  .carousel-arrow:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
   }
 
   /* Flip card perspective fix */
