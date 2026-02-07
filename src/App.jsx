@@ -949,26 +949,6 @@ function ShowCarousel({ shows }) {
         )}
       </div>
 
-      {/* Carousel dots indicator */}
-      <div style={styles.carouselDots}>
-        {shows.map((_, index) => (
-          <button
-            key={index}
-            style={{
-              ...styles.carouselDot,
-              backgroundColor: index === currentIndex ? '#c9a227' : 'rgba(201, 162, 39, 0.3)',
-            }}
-            onClick={() => {
-              const isFlipped = flippedIndex !== null;
-              setCurrentIndex(index);
-              if (isFlipped) {
-                setFlippedIndex(index);
-                setInfoVisible(true);
-              }
-            }}
-          />
-        ))}
-      </div>
     </div>
   );
 }
@@ -1726,22 +1706,6 @@ const styles = {
     color: '#3d6b1e',
     margin: '0',
     fontWeight: 'bold',
-  },
-  carouselDots: {
-    position: 'absolute',
-    bottom: '-30px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    display: 'flex',
-    gap: '12px',
-  },
-  carouselDot: {
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
-    border: '2px solid #c9a227',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
   },
   infoPopup: {
     position: 'absolute',
