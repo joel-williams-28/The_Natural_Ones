@@ -26,6 +26,7 @@ const showsData = [
     title: "The Dungeon Master's Lament",
     poster: "/images/poster02.jpg",
     hasRealPoster: true,
+    cardWidth: 660,
     scrollImage: "/images/Scroll02.png",
     hasScrollImage: true,
     venue: "Unicorn Theatre",
@@ -847,6 +848,7 @@ function ShowCarousel({ shows }) {
             key={item.key}
             style={{
               ...styles.carouselSlide,
+              ...(item.show.cardWidth ? { width: `${item.show.cardWidth}px` } : {}),
               ...getPositionStyleForSlot(item.slot, item.actualIndex),
             }}
             onClick={() => handlePosterClick(item.actualIndex, item.slot)}
