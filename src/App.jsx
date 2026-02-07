@@ -1274,9 +1274,10 @@ const styles = {
   },
   heroButtons: {
     display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     gap: '16px',
     justifyContent: 'center',
-    flexWrap: 'wrap',
   },
   primaryButton: {
     fontFamily: "'Cinzel', serif",
