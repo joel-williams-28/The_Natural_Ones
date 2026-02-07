@@ -198,46 +198,95 @@ export default function TheNaturalOnesWebsite() {
       {/* About Section */}
       <section id="about" style={styles.section}>
         <div style={styles.sectionInner}>
-          <SectionHeader title="About Us" subtitle="Roll for Initiative" />
+          <SectionHeader title="About Us" subtitle="We Rolled a One. We Kept Playing." />
           <div style={styles.aboutGrid}>
             <div style={styles.aboutText}>
-              <p style={styles.paragraph}>
-                <span style={styles.dropCap}>W</span>elcome, adventurers! The Natural Ones is a Bristol-based 
-                amateur theatre group united by our love of tabletop gaming and live performance. 
-                Like rolling a natural one on a D20, we embrace the unexpected, the chaotic, and 
-                the gloriously imperfect moments that make theatre magical.
+              <p style={{...styles.paragraph, marginBottom: '40px'}}>
+                <span style={styles.dropCap}>E</span>very great adventure starts somewhere. Ours started with
+                a name that didn't stick.
               </p>
               <p style={styles.paragraph}>
-                Founded by a fellowship of performers, musicians, and dungeon masters, we create 
-                original productions that blend the storytelling traditions of theatre with the 
-                improvisational spirit of tabletop role-playing games.
+                The Natural Ones began life as <span style={{fontStyle: 'italic'}}>A Box of Frogs</span> — which,
+                in hindsight, was less a name and more a description of our rehearsal process. After a few
+                iterations (none of which we'll be sharing, for legal and dignity reasons), we landed
+                on <strong>The Natural Ones</strong>: a nod to the most feared roll in tabletop gaming, the
+                dreaded natural one on a D20. For the uninitiated, a natural one means total, catastrophic
+                failure. Your sword shatters. Your spell backfires. You fall off the bridge you were standing
+                perfectly still on.
               </p>
               <p style={styles.paragraph}>
-                Our debut production takes us on an epic quest to the Edinburgh Fringe Festival 2026, 
-                and we need your help to get there!
+                We thought it suited us rather well.
               </p>
+              <p style={styles.paragraph}>
+                <strong>The Natural Ones</strong> are an Oxfordshire-based performing arts group made up of a
+                brilliant selection of weirdos who all happen to be brilliant singers and actors
+                too. We're dedicated to original comedy theatre — the kind of shows where the scripts are new,
+                the laughs are genuine, and the props budget is optimistic at best.
+              </p>
+              <p style={styles.paragraph}>
+                Our founder, <strong>James A. Coleman</strong> — scriptwriter, lyricist, director and
+                producer — is both a lifelong musical theatre obsessive and an irredeemable nerd, which really
+                made this whole thing an inevitability. After years of performing, crewing, writing and directing
+                amateur productions across the country, he discovered tabletop role-playing games in his early
+                20s and immediately thought: <span style={{fontStyle: 'italic'}}>this needs to be a
+                musical.</span> Six years of development later — which is either dedication or stubbornness
+                depending on who you ask — <span style={{fontStyle: 'italic'}}>Roll, Play</span> was born.
+              </p>
+              <p style={styles.paragraph}>
+                The music comes from <strong>Richard Baker</strong>, an Olivier Award-nominated composer whose
+                work includes <span style={{fontStyle: 'italic'}}>Peter Pan Goes Wrong</span> (West End, Broadway,
+                and BBC), <span style={{fontStyle: 'italic'}}>Hadestown</span>, and Mischief
+                Theatre's <span style={{fontStyle: 'italic'}}>Mischief Movie Night</span>. James has known Richard
+                for many years and, knowing he was both extraordinarily talented and unlikely to say no, asked
+                him to bring the show's mad songs and scenes to life.
+              </p>
+              <p style={styles.paragraph}>
+                First assembled to perform <span style={{fontStyle: 'italic'}}>Roll, Play</span> in Abingdon in
+                2025, the group launched with a sold-out debut in January of that year before taking the show to
+                the Cheltenham Fringe Festival and performing extracts at MCM London Comic Con — where we had a
+                fantastic time and still managed to feel pretty out of place despite the surroundings. We're currently
+                preparing our newest comedy, <span style={{fontStyle: 'italic'}}>Mystery at Murderingham
+                Manor</span>, while also performing <span style={{fontStyle: 'italic'}}>Roll, Play</span> in
+                venues across the country and working towards our next great quest: the Edinburgh Fringe Festival
+                in 2026.
+              </p>
+              <p style={styles.paragraph}>
+                We're a group of fledgling artists with big ambitions, questionable judgement, and an unreasonable
+                fondness for puns. If that sounds like your sort of thing, we'd love to have you along for the ride.
+              </p>
+              <div style={styles.aboutDivider}></div>
+              <div
+                style={styles.meetCastLink}
+                onClick={() => scrollToSection('cast')}
+              >
+                <span style={{marginRight: '8px'}}>&#8594;</span> Meet the Creatives & Cast
+              </div>
             </div>
             <div style={styles.aboutCard}>
               {/* TO ADD GROUP PHOTO: Place group-photo.jpg in public/images/ folder */}
               <GroupPhoto />
               <div style={styles.statBlock}>
                 <h3 style={styles.statBlockTitle}>The Natural Ones</h3>
-                <div style={styles.statBlockSubtitle}>Amateur Theatre Group</div>
+                <div style={styles.statBlockSubtitle}>Performing Arts Group</div>
                 <div style={styles.statDivider}></div>
                 <div style={styles.statRow}>
                   <span style={styles.statLabel}>Founded:</span>
-                  <span style={styles.statValue}>Bristol, UK</span>
+                  <span style={styles.statValue}>Oxfordshire, UK</span>
                 </div>
                 <div style={styles.statRow}>
                   <span style={styles.statLabel}>Class:</span>
-                  <span style={styles.statValue}>Bards & Performers</span>
+                  <span style={styles.statValue}>Bards & Nerds</span>
                 </div>
                 <div style={styles.statRow}>
                   <span style={styles.statLabel}>Alignment:</span>
-                  <span style={styles.statValue}>Chaotic Good</span>
+                  <span style={styles.statValue}>Chaotic Creative</span>
                 </div>
                 <div style={styles.statRow}>
-                  <span style={styles.statLabel}>Mission:</span>
+                  <span style={styles.statLabel}>Props Budget:</span>
+                  <span style={styles.statValue}>Optimistic</span>
+                </div>
+                <div style={styles.statRow}>
+                  <span style={styles.statLabel}>Quest:</span>
                   <span style={styles.statValue}>Edinburgh Fringe 2026</span>
                 </div>
               </div>
@@ -1062,7 +1111,7 @@ function SectionHeader({ title, subtitle, light = false }) {
 // Styles
 const styles = {
   container: {
-    fontFamily: "'Crimson Text', 'Georgia', serif",
+    fontFamily: "'Lora', 'Crimson Text', 'Georgia', serif",
     backgroundColor: '#1a0f08',
     color: '#e8dcc4',
     minHeight: '100vh',
@@ -1294,8 +1343,9 @@ const styles = {
     color: '#e8dcc4',
   },
   sectionInner: {
-    maxWidth: '1100px',
+    maxWidth: '1400px',
     margin: '0 auto',
+    padding: '0 40px',
   },
   
   // Section Header
@@ -1335,8 +1385,8 @@ const styles = {
   // About Section
   aboutGrid: {
     display: 'grid',
-    gridTemplateColumns: '1fr 300px',
-    gap: '60px',
+    gridTemplateColumns: '1fr 320px',
+    gap: '24px',
     alignItems: 'start',
   },
   aboutText: {
@@ -1346,19 +1396,35 @@ const styles = {
     fontSize: '18px',
     marginBottom: '24px',
     lineHeight: 1.8,
+    textAlign: 'justify',
   },
   dropCap: {
     float: 'left',
     fontFamily: "'Cinzel Decorative', serif",
-    fontSize: '64px',
-    lineHeight: '48px',
+    fontSize: '88px',
+    lineHeight: '64px',
     paddingTop: '8px',
-    paddingRight: '12px',
+    paddingRight: '14px',
     color: '#3d6b1e',
+  },
+  aboutDivider: {
+    height: '1px',
+    background: 'linear-gradient(90deg, rgba(201, 162, 39, 0.4), rgba(201, 162, 39, 0.1))',
+    margin: '40px 0 28px 0',
+  },
+  meetCastLink: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '16px',
+    fontWeight: '600',
+    color: '#c9a227',
+    cursor: 'pointer',
+    letterSpacing: '1px',
+    transition: 'color 0.3s ease',
   },
   aboutCard: {
     position: 'sticky',
     top: '100px',
+    marginTop: '12px',
   },
   groupPhoto: {
     width: '100%',
@@ -2134,7 +2200,7 @@ const styles = {
 // Add CSS animation keyframes via style injection
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
   
   @keyframes float {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
