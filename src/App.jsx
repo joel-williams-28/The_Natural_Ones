@@ -180,6 +180,11 @@ export default function TheNaturalOnesWebsite() {
           </div>
           <h2 style={{...styles.heroShowTitle, fontFamily: "'Poiret One', sans-serif"}}>Mystery at Murderingham Manor...</h2>
           <h2 style={{...styles.heroShowSubtitle, fontFamily: "'Caveat Brush', cursive"}}>And More...</h2>
+          <div style={styles.heroDivider}>
+            <span style={styles.dividerLine}></span>
+            <span style={styles.dividerDot}>✦</span>
+            <span style={styles.dividerLine}></span>
+          </div>
           <div style={styles.heroButtons}>
             <button style={styles.primaryButton} onClick={() => scrollToSection('support')}>
               Support Our Kickstarter
