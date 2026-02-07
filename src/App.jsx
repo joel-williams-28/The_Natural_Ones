@@ -12,12 +12,12 @@ const showsData = [
     hasRealPoster: true,
     scrollImage: "/images/Scroll01.png",
     hasScrollImage: true,
-    venue: "Alma Tavern & Theatre",
-    address: "18-20 Alma Vale Road, Clifton, Bristol, BS8 2HY",
-    date: "Sunday 18th January 2026",
-    doors: "17:30",
-    runtime: "Approx. 1 hour",
-    ticketUrl: "https://tickettailor.com/events/almatheatrecompany",
+    venue: "To Be Announced",
+    address: "",
+    date: "To Be Announced",
+    doors: "",
+    runtime: "",
+    ticketUrl: "#",
     description: "A comedy adventure where the dice decide the ending!",
     tagline: "Where the dice decide the ending"
   },
@@ -952,10 +952,12 @@ function ShowCarousel({ shows }) {
                 <div>
                   <strong style={styles.infoPopupLabel}>Venue</strong>
                   <p style={styles.infoPopupText}>{shows[flippedIndex].venue}</p>
-                  {shows[flippedIndex].addressUrl ? (
-                    <a href={shows[flippedIndex].addressUrl} target="_blank" rel="noopener noreferrer" style={{...styles.infoPopupSmall, display: 'block'}}>{shows[flippedIndex].address}</a>
-                  ) : (
-                    <p style={styles.infoPopupSmall}>{shows[flippedIndex].address}</p>
+                  {shows[flippedIndex].address && (
+                    shows[flippedIndex].addressUrl ? (
+                      <a href={shows[flippedIndex].addressUrl} target="_blank" rel="noopener noreferrer" style={{...styles.infoPopupSmall, display: 'block'}}>{shows[flippedIndex].address}</a>
+                    ) : (
+                      <p style={styles.infoPopupSmall}>{shows[flippedIndex].address}</p>
+                    )
                   )}
                 </div>
               </div>
@@ -966,14 +968,16 @@ function ShowCarousel({ shows }) {
                   <p style={styles.infoPopupText}>{shows[flippedIndex].date.split('\n').map((line, i) => (
                     <span key={i}>{i > 0 && <br />}{line}</span>
                   ))}</p>
-                  <p style={styles.infoPopupSmall}>Doors: {shows[flippedIndex].doors} | Runtime: {shows[flippedIndex].runtime}</p>
+                  {(shows[flippedIndex].doors || shows[flippedIndex].runtime) && (
+                    <p style={styles.infoPopupSmall}>Doors: {shows[flippedIndex].doors} | Runtime: {shows[flippedIndex].runtime}</p>
+                  )}
                 </div>
               </div>
-              <div style={styles.infoPopupItem}>
-                <span style={styles.infoPopupItemIcon}>🎫</span>
-                <div>
-                  <strong style={styles.infoPopupLabel}>Tickets</strong>
-                  {shows[flippedIndex].ticketUrl !== '#' ? (
+              {shows[flippedIndex].ticketUrl && shows[flippedIndex].ticketUrl !== '#' && (
+                <div style={styles.infoPopupItem}>
+                  <span style={styles.infoPopupItemIcon}>🎫</span>
+                  <div>
+                    <strong style={styles.infoPopupLabel}>Tickets</strong>
                     <a
                       href={shows[flippedIndex].ticketUrl}
                       target="_blank"
@@ -982,11 +986,9 @@ function ShowCarousel({ shows }) {
                     >
                       Book Now →
                     </a>
-                  ) : (
-                    <p style={styles.infoPopupText}>Coming Soon</p>
-                  )}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             <button
               style={styles.closeInfoButton}
