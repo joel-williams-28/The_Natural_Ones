@@ -332,34 +332,46 @@ export default function TheNaturalOnesWebsite() {
       <section id="cast" style={styles.section}>
         <div style={styles.sectionInner}>
           <SectionHeader title="The Party" subtitle="Meet Your Adventurers" />
-          <p style={styles.centeredText}>
-            Our fellowship of talented performers bring the world of tabletop gaming to life.
-          </p>
-          <div style={styles.castGrid}>
-            {/*
-              TO ADD CAST PHOTOS:
-              1. Add photos to public/images/cast/ folder
-              2. Name them: member1.jpg, member2.jpg, etc.
-              3. Update the 'photo' field below with the filename
-            */}
+
+          {/* The Creatives */}
+          <h3 style={styles.castSubheading}>The Creatives</h3>
+          <div className="cast-grid-row" style={styles.castGridRow}>
             {[
-              { name: 'Joel Williams', role: '', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.' },
-              { name: 'Sreya Rao', role: '', icon: '⚔️', photo: 'member2.jpg', bio: 'Bio coming soon.' },
-              { name: 'The Rogue', role: 'Ensemble', icon: '🗡️', photo: 'member3.jpg', bio: 'Bio coming soon.' },
-              { name: 'The Wizard', role: 'Technical Director', icon: '✨', photo: 'member4.jpg', bio: 'Bio coming soon.' },
-              { name: 'The Ranger', role: 'Stage Manager', icon: '🏹', photo: 'member5.jpg', bio: 'Bio coming soon.' },
-              { name: 'The Cleric', role: 'Producer', icon: '🛡️', photo: 'member6.jpg', bio: 'Bio coming soon.' },
+              { name: 'Richard Baker', role: '', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.' },
+              { name: 'James A. Coleman', role: '', icon: '📜', photo: 'member2.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
-              <div key={index} style={{...styles.castCard, cursor: 'pointer'}} onClick={() => setSelectedMember(member)}>
+              <div key={index} style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
                 <h3 style={styles.castName}>{member.name}</h3>
                 {member.role && <p style={styles.castRole}>{member.role}</p>}
               </div>
             ))}
           </div>
-          <p style={styles.castNote}>
-            Full cast and creative team to be announced. Check back for updates!
-          </p>
+
+          {/* The Cast ~ Past & Present */}
+          <h3 style={styles.castSubheading}>The Cast ~ Past & Present</h3>
+          <div className="cast-grid-row" style={styles.castGridRow}>
+            {[
+              { name: 'Mollie Clare', role: '', icon: '🎭', photo: 'member3.jpg', bio: 'Bio coming soon.' },
+              { name: 'Caroline Dorgan', role: '', icon: '🎭', photo: 'member4.jpg', bio: 'Bio coming soon.' },
+              { name: 'Matthew Edwards', role: '', icon: '🎭', photo: 'member5.jpg', bio: 'Bio coming soon.' },
+              { name: 'Jake Furness', role: '', icon: '🎭', photo: 'member6.jpg', bio: 'Bio coming soon.' },
+              { name: 'Zo\u00eb Harper', role: '', icon: '🎭', photo: 'member7.jpg', bio: 'Bio coming soon.' },
+              { name: 'Nicki Jean', role: '', icon: '🎭', photo: 'member8.jpg', bio: 'Bio coming soon.' },
+              { name: 'Kyran Pritchard', role: '', icon: '🎭', photo: 'member9.jpg', bio: 'Bio coming soon.' },
+              { name: 'Sreya Rao', role: '', icon: '🎭', photo: 'member10.jpg', bio: 'Bio coming soon.' },
+              { name: 'Daniel Robert', role: '', icon: '🎭', photo: 'member11.jpg', bio: 'Bio coming soon.' },
+              { name: 'Rebekah Tennyson', role: '', icon: '🎭', photo: 'member12.jpg', bio: 'Bio coming soon.' },
+              { name: 'Cate Welmers', role: '', icon: '🎭', photo: 'member13.jpg', bio: 'Bio coming soon.' },
+              { name: 'Joel Williams', role: '', icon: '🎭', photo: 'member14.jpg', bio: 'Bio coming soon.' },
+            ].map((member, index) => (
+              <div key={index} style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
+                <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
+                <h3 style={styles.castName}>{member.name}</h3>
+                {member.role && <p style={styles.castRole}>{member.role}</p>}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1931,6 +1943,21 @@ const styles = {
     gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
     gap: '24px',
   },
+  castGridRow: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(5, 1fr)',
+    gap: '24px',
+    justifyItems: 'center',
+    marginBottom: '40px',
+  },
+  castSubheading: {
+    fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
+    fontSize: '24px',
+    color: '#2d1810',
+    textAlign: 'center',
+    margin: '40px 0 24px 0',
+    letterSpacing: '2px',
+  },
   castCard: {
     textAlign: 'center',
     padding: '32px 16px',
@@ -1938,6 +1965,12 @@ const styles = {
     border: '1px solid rgba(201, 162, 39, 0.2)',
     transition: 'all 0.3s ease',
     overflow: 'hidden',
+  },
+  castCardClean: {
+    textAlign: 'center',
+    padding: '16px 8px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
   },
   castIcon: {
     fontSize: '48px',
@@ -2399,6 +2432,15 @@ styleSheet.textContent = `
   @media (max-width: 900px) {
     .aboutGrid, .showContent, .supportContent, .contactContent {
       grid-template-columns: 1fr !important;
+    }
+    .cast-grid-row {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cast-grid-row {
+      grid-template-columns: repeat(2, 1fr) !important;
     }
   }
 
