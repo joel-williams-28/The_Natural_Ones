@@ -402,7 +402,7 @@ export default function TheNaturalOnesWebsite() {
       {/* Support Section */}
       <section id="support" style={styles.sectionHighlight}>
         <div style={styles.sectionInner}>
-          <SectionHeader title="Support Our Quest" subtitle="Help Us Reach Edinburgh" light />
+          <SectionHeader title="Support Our Quest" subtitle="Help Us Reach Edinburgh" />
           <div style={styles.supportContent}>
             <div style={styles.questScroll}>
               <div style={styles.scrollTop}></div>
@@ -486,7 +486,7 @@ export default function TheNaturalOnesWebsite() {
       {/* Contact Section */}
       <section id="contact" style={styles.sectionContact}>
         <div style={styles.sectionInner}>
-          <SectionHeader title="Contact" subtitle="Send a Message" light />
+          <SectionHeader title="Contact" subtitle="Send a Message" />
           <div style={styles.contactContent}>
             <div style={styles.contactInfo}>
               <p style={styles.paragraph}>
@@ -1260,7 +1260,10 @@ const styles = {
     alignItems: 'center',
     textAlign: 'center',
     padding: '40px 20px 40px 20px',
-    background: 'linear-gradient(180deg, #1a0f08, #1a0f08)',
+    background: `
+      radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
+      linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
+    `,
     position: 'relative',
   },
   heroContent: {
@@ -1380,40 +1383,45 @@ const styles = {
   },
 
   // Sections
+  // Hero(dark) → About(cream) → Shows(cream) → Cast(dark) → Support(cream) → Contact(cream) → Footer(dark)
+  // Each transition is a hard line at the midpoint between sections, done via 50px fade at bottom/top.
   section: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #f5ede0 0%, #e8dcc4 100%)',
+    background: '#f5ede0',
     color: '#2d1810',
   },
   sectionAbout: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #1a0f08, #f5ede0)',
+    background: 'linear-gradient(180deg, #1a0f08 0px, #f5ede0 50px)',
     color: '#2d1810',
   },
   sectionShow: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #f5ede0, #2d1810)',
+    background: 'linear-gradient(to bottom, #f5ede0, #f5ede0 calc(100% - 50px), #1a0f08 100%)',
     color: '#2d1810',
   },
   sectionCast: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #2d1810, #2d1810)',
+    background: `
+      radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
+      linear-gradient(to bottom, #1a0f08 0px, #2d1810 50px, #2d1810 calc(100% - 50px), #1a0f08 100%)
+    `,
     color: '#e8dcc4',
+  },
+  sectionHighlight: {
+    padding: '100px 20px',
+    background: 'linear-gradient(to bottom, #1a0f08 0px, #f5ede0 50px)',
+    color: '#2d1810',
   },
   sectionContact: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #2d1810, #f5ede0 45%, #f5ede0 55%, #0d0705)',
+    background: 'linear-gradient(to bottom, #f5ede0, #f5ede0 calc(100% - 50px), #0d0705 100%)',
     color: '#2d1810',
   },
   sectionAlt: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #e8dcc4, #d4c4a8)',
+    background: '#f5ede0',
     color: '#2d1810',
-  },
-  sectionHighlight: {
-    padding: '100px 20px',
-    background: 'linear-gradient(180deg, #2d1810, #2d1810)',
-    color: '#e8dcc4',
   },
   sectionInner: {
     maxWidth: '1400px',
