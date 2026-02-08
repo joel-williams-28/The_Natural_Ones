@@ -350,6 +350,7 @@ export default function TheNaturalOnesWebsite() {
 
           {/* The Cast ~ Past & Present */}
           <h3 style={styles.castSubheading}>The Cast ~ Past & Present</h3>
+          {/* Row 1: 5 members */}
           <div className="cast-grid-row" style={styles.castGridRow}>
             {[
               { name: 'Mollie Clare', role: '', icon: '🎭', photo: 'member3.jpg', bio: 'Bio coming soon.' },
@@ -357,10 +358,32 @@ export default function TheNaturalOnesWebsite() {
               { name: 'Matthew Edwards', role: '', icon: '🎭', photo: 'member5.jpg', bio: 'Bio coming soon.' },
               { name: 'Jake Furness', role: '', icon: '🎭', photo: 'member6.jpg', bio: 'Bio coming soon.' },
               { name: 'Zo\u00eb Harper', role: '', icon: '🎭', photo: 'member7.jpg', bio: 'Bio coming soon.' },
+            ].map((member, index) => (
+              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
+                <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
+                <h3 style={styles.castName}>{member.name}</h3>
+                {member.role && <p style={styles.castRole}>{member.role}</p>}
+              </div>
+            ))}
+          </div>
+          {/* Row 2: 4 members (offset) */}
+          <div className="cast-grid-row" style={{...styles.castGridRow, marginTop: '-20px'}}>
+            {[
               { name: 'Nicki Jean', role: '', icon: '🎭', photo: 'member8.jpg', bio: 'Bio coming soon.' },
               { name: 'Kyran Pritchard', role: '', icon: '🎭', photo: 'member9.jpg', bio: 'Bio coming soon.' },
               { name: 'Sreya Rao', role: '', icon: '🎭', photo: 'member10.jpg', bio: 'Bio coming soon.' },
               { name: 'Daniel Robert', role: '', icon: '🎭', photo: 'member11.jpg', bio: 'Bio coming soon.' },
+            ].map((member, index) => (
+              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
+                <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
+                <h3 style={styles.castName}>{member.name}</h3>
+                {member.role && <p style={styles.castRole}>{member.role}</p>}
+              </div>
+            ))}
+          </div>
+          {/* Row 3: 3 members (offset) */}
+          <div className="cast-grid-row" style={{...styles.castGridRow, marginTop: '-20px'}}>
+            {[
               { name: 'Rebekah Tennyson', role: '', icon: '🎭', photo: 'member12.jpg', bio: 'Bio coming soon.' },
               { name: 'Cate Welmers', role: '', icon: '🎭', photo: 'member13.jpg', bio: 'Bio coming soon.' },
               { name: 'Joel Williams', role: '', icon: '🎭', photo: 'member14.jpg', bio: 'Bio coming soon.' },
