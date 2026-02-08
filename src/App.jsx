@@ -1382,9 +1382,8 @@ const styles = {
     animation: 'bounce 2s infinite',
   },
 
-  // Sections
+  // Sections — alternating solid colours with hard lines
   // Hero(dark) → About(cream) → Shows(cream) → Cast(dark) → Support(cream) → Contact(cream) → Footer(dark)
-  // Each transition is a hard line at the midpoint between sections, done via 50px fade at bottom/top.
   section: {
     padding: '100px 20px',
     background: '#f5ede0',
@@ -1392,30 +1391,30 @@ const styles = {
   },
   sectionAbout: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #1a0f08 0px, #f5ede0 50px)',
+    background: '#f5ede0',
     color: '#2d1810',
   },
   sectionShow: {
     padding: '100px 20px',
-    background: 'linear-gradient(to bottom, #f5ede0, #f5ede0 calc(100% - 50px), #1a0f08 100%)',
+    background: '#f5ede0',
     color: '#2d1810',
   },
   sectionCast: {
     padding: '100px 20px',
     background: `
       radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
-      linear-gradient(to bottom, #1a0f08 0px, #2d1810 50px, #2d1810 calc(100% - 50px), #1a0f08 100%)
+      linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
     `,
     color: '#e8dcc4',
   },
   sectionHighlight: {
     padding: '100px 20px',
-    background: 'linear-gradient(to bottom, #1a0f08 0px, #f5ede0 50px)',
+    background: '#f5ede0',
     color: '#2d1810',
   },
   sectionContact: {
     padding: '100px 20px',
-    background: 'linear-gradient(to bottom, #f5ede0, #f5ede0 calc(100% - 50px), #0d0705 100%)',
+    background: '#f5ede0',
     color: '#2d1810',
   },
   sectionAlt: {
@@ -2334,7 +2333,10 @@ const styles = {
   
   // Footer
   footer: {
-    backgroundColor: '#0d0705',
+    background: `
+      radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
+      linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
+    `,
     padding: '60px 20px',
     textAlign: 'center',
   },
