@@ -1986,6 +1986,9 @@ const styles = {
     overflow: 'hidden',
   },
   castCardClean: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     textAlign: 'center',
     padding: '16px 8px',
     cursor: 'pointer',
