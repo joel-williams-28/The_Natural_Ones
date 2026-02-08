@@ -1262,7 +1262,7 @@ const styles = {
     padding: '40px 20px 40px 20px',
     background: `
       radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
-      linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
+      linear-gradient(180deg, #1a0f08 0%, #1a0f08 10%, #231610 25%, #2d1810 45%, #2d1810 55%, #231610 75%, #1a0f08 90%, #1a0f08 100%)
     `,
     position: 'relative',
   },
@@ -1390,14 +1390,14 @@ const styles = {
   },
   sectionAbout: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #1a0f08 0%, #2d1810 5%, #4a3628 12%, #7a6450 22%, #b8a48a 35%, #e0d4c0 50%, #f5ede0 70%, #f5ede0 100%)',
+    background: 'linear-gradient(180deg, #1a0f08 0%, #1a0f08 3%, #231912 6%, #2d1810 10%, #3d2a1e 16%, #5a4535 24%, #7a6450 32%, #a08e72 42%, #c4b598 52%, #e0d4c0 64%, #eee6d6 76%, #f5ede0 88%, #f5ede0 100%)',
     color: '#2d1810',
   },
   sectionShow: {
     padding: '100px 20px',
     background: `
       url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-      linear-gradient(180deg, #f5ede0 0%, #e8dcc4 25%, #c4ad8a 50%, #8a7055 75%, #4a3628 92%, #2d1810 100%)
+      linear-gradient(180deg, #f5ede0 0%, #f5ede0 8%, #eee6d6 14%, #e0d4c0 22%, #c4b598 34%, #a08e72 46%, #7a6450 58%, #5a4535 70%, #3d2a1e 80%, #2d1810 90%, #2d1810 100%)
     `,
     color: '#2d1810',
   },
@@ -1405,13 +1405,13 @@ const styles = {
     padding: '100px 20px',
     background: `
       radial-gradient(ellipse at center, rgba(61, 107, 30, 0.1) 0%, transparent 60%),
-      linear-gradient(180deg, #2d1810 0%, #1a0f08 50%, #2d1810 100%)
+      linear-gradient(180deg, #2d1810 0%, #2d1810 5%, #231610 15%, #1a0f08 40%, #1a0f08 60%, #231610 85%, #2d1810 95%, #2d1810 100%)
     `,
     color: '#e8dcc4',
   },
   sectionContact: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #2d1810 0%, #4a3628 8%, #7a6450 18%, #b8a48a 30%, #e0d4c0 45%, #f5ede0 60%, #e0d4c0 75%, #7a6450 86%, #4a3628 93%, #1a0f08 98%, #0d0705 100%)',
+    background: 'linear-gradient(180deg, #2d1810 0%, #2d1810 3%, #3d2a1e 8%, #5a4535 14%, #7a6450 22%, #a08e72 30%, #c4b598 38%, #e0d4c0 46%, #f5ede0 55%, #f5ede0 60%, #e0d4c0 68%, #c4b598 74%, #a08e72 80%, #5a4535 86%, #3d2a1e 90%, #2d1810 94%, #1a0f08 97%, #0d0705 100%)',
     color: '#2d1810',
   },
   sectionAlt: {
@@ -1426,7 +1426,7 @@ const styles = {
     padding: '100px 20px',
     background: `
       radial-gradient(ellipse at center, rgba(61, 107, 30, 0.2) 0%, transparent 60%),
-      linear-gradient(180deg, #2d1810 0%, #1a0f08 50%, #2d1810 100%)
+      linear-gradient(180deg, #2d1810 0%, #2d1810 5%, #231610 15%, #1a0f08 40%, #1a0f08 60%, #231610 85%, #2d1810 95%, #2d1810 100%)
     `,
     color: '#e8dcc4',
   },
