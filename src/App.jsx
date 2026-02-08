@@ -340,7 +340,7 @@ export default function TheNaturalOnesWebsite() {
               { name: 'Richard Baker', role: '', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.' },
               { name: 'James A. Coleman', role: '', icon: '📜', photo: 'member2.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
-              <div key={index} style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
+              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
                 <h3 style={styles.castName}>{member.name}</h3>
                 {member.role && <p style={styles.castRole}>{member.role}</p>}
@@ -365,7 +365,7 @@ export default function TheNaturalOnesWebsite() {
               { name: 'Cate Welmers', role: '', icon: '🎭', photo: 'member13.jpg', bio: 'Bio coming soon.' },
               { name: 'Joel Williams', role: '', icon: '🎭', photo: 'member14.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
-              <div key={index} style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
+              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
                 <h3 style={styles.castName}>{member.name}</h3>
                 {member.role && <p style={styles.castRole}>{member.role}</p>}
@@ -1944,10 +1944,10 @@ const styles = {
     gap: '24px',
   },
   castGridRow: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(5, 1fr)',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     gap: '24px',
-    justifyItems: 'center',
     marginBottom: '40px',
   },
   castSubheading: {
@@ -1971,6 +1971,8 @@ const styles = {
     padding: '16px 8px',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
+    width: 'calc((100% - 96px) / 5)',
+    minWidth: '140px',
   },
   castIcon: {
     fontSize: '48px',
@@ -2433,14 +2435,14 @@ styleSheet.textContent = `
     .aboutGrid, .showContent, .supportContent, .contactContent {
       grid-template-columns: 1fr !important;
     }
-    .cast-grid-row {
-      grid-template-columns: repeat(3, 1fr) !important;
+    .cast-grid-row .cast-card-clean {
+      width: calc((100% - 48px) / 3) !important;
     }
   }
 
   @media (max-width: 600px) {
-    .cast-grid-row {
-      grid-template-columns: repeat(2, 1fr) !important;
+    .cast-grid-row .cast-card-clean {
+      width: calc((100% - 24px) / 2) !important;
     }
   }
 
