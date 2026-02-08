@@ -1389,7 +1389,7 @@ const styles = {
   },
   sectionAbout: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #1a0f08 0%, #1a0f08 3%, #231912 6%, #2d1810 10%, #3d2a1e 16%, #5a4535 24%, #7a6450 32%, #a08e72 42%, #c4b598 52%, #e0d4c0 64%, #eee6d6 76%, #f5ede0 88%, #f5ede0 100%)',
+    background: 'linear-gradient(180deg, #1a0f08 0%, #3d2a1e 2%, #7a6450 4%, #b8a48a 6%, #ddd0ba 8%, #f0e8d8 10%, #f5ede0 12%, #f5ede0 100%)',
     color: '#2d1810',
   },
   sectionShow: {
