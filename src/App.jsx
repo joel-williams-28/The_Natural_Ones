@@ -337,8 +337,8 @@ export default function TheNaturalOnesWebsite() {
           <h3 style={styles.castSubheading}>The Creatives</h3>
           <div className="cast-grid-row" style={styles.castGridRow}>
             {[
-              { name: 'Richard Baker', role: '', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.' },
-              { name: 'James A. Coleman', role: '', icon: '📜', photo: 'member2.jpg', bio: 'Bio coming soon.' },
+              { name: 'Richard Baker', role: 'Composer', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.' },
+              { name: 'James A. Coleman', role: 'Writer & Lyricist', icon: '📜', photo: 'member2.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
               <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
@@ -1117,12 +1117,12 @@ function ScrollImage({ src }) {
   );
 }
 
-// Cast Photo Component - shows photo if available, falls back to icon
+// Cast Photo Component - shows photo if available, falls back to green oval
 function CastPhoto({ src, fallbackIcon, name }) {
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
-    return <div style={styles.castIcon}>{fallbackIcon}</div>;
+    return <div style={styles.castPhotoPlaceholder}></div>;
   }
 
   return (
@@ -2005,6 +2005,15 @@ const styles = {
     objectFit: 'cover',
     border: '3px solid #3d6b1e',
     marginBottom: '16px',
+  },
+  castPhotoPlaceholder: {
+    width: '200px',
+    height: '250px',
+    maxWidth: '100%',
+    borderRadius: '50%',
+    border: '3px solid #3d6b1e',
+    marginBottom: '16px',
+    backgroundColor: 'rgba(61, 107, 30, 0.15)',
   },
   castName: {
     fontFamily: "'Cinzel', serif",
