@@ -218,9 +218,9 @@ export default function TheNaturalOnesWebsite() {
       </section>
 
       {/* About Section */}
-      <section id="about" style={styles.section}>
+      <section id="about" style={styles.sectionAbout}>
         <div style={styles.sectionInner}>
-          <SectionHeader title="About Us" subtitle="We Rolled a One. We Kept Playing." />
+          <SectionHeader title="About Us" subtitle="We Rolled a One. We Kept Playing." light />
           <div style={styles.aboutGrid}>
             <div style={styles.aboutText}>
               <p style={{...styles.paragraph, marginBottom: '40px'}}>
@@ -318,7 +318,7 @@ export default function TheNaturalOnesWebsite() {
       </section>
 
       {/* Show Section */}
-      <section id="show" style={styles.sectionAlt}>
+      <section id="show" style={styles.sectionShow}>
         <div style={styles.sectionInner}>
           <SectionHeader title="The Shows" subtitle="Our Quest Begins" />
           <p style={styles.centeredText}>
@@ -329,9 +329,9 @@ export default function TheNaturalOnesWebsite() {
       </section>
 
       {/* Cast Section */}
-      <section id="cast" style={styles.section}>
+      <section id="cast" style={styles.sectionCast}>
         <div style={styles.sectionInner}>
-          <SectionHeader title="The Party" subtitle="Meet Your Adventurers" />
+          <SectionHeader title="The Party" subtitle="Meet Your Adventurers" light />
 
           {/* The Creatives */}
           <h3 style={styles.castSubheading}>The Creatives</h3>
@@ -484,9 +484,9 @@ export default function TheNaturalOnesWebsite() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" style={styles.section}>
+      <section id="contact" style={styles.sectionContact}>
         <div style={styles.sectionInner}>
-          <SectionHeader title="Contact" subtitle="Send a Message" />
+          <SectionHeader title="Contact" subtitle="Send a Message" light />
           <div style={styles.contactContent}>
             <div style={styles.contactInfo}>
               <p style={styles.paragraph}>
@@ -1388,6 +1388,32 @@ const styles = {
     background: 'linear-gradient(180deg, #f5ede0 0%, #e8dcc4 100%)',
     color: '#2d1810',
   },
+  sectionAbout: {
+    padding: '100px 20px',
+    background: 'linear-gradient(180deg, #2d1810 0%, #4a3628 8%, #7a6450 18%, #b8a48a 30%, #e0d4c0 45%, #f5ede0 65%, #f5ede0 100%)',
+    color: '#2d1810',
+  },
+  sectionShow: {
+    padding: '100px 20px',
+    background: `
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+      linear-gradient(180deg, #f5ede0 0%, #e0d4c0 30%, #b8a48a 60%, #7a6450 85%, #4a3628 100%)
+    `,
+    color: '#2d1810',
+  },
+  sectionCast: {
+    padding: '100px 20px',
+    background: `
+      radial-gradient(ellipse at center, rgba(61, 107, 30, 0.1) 0%, transparent 60%),
+      linear-gradient(180deg, #2d1810 0%, #1a0f08 50%, #2d1810 100%)
+    `,
+    color: '#e8dcc4',
+  },
+  sectionContact: {
+    padding: '100px 20px',
+    background: 'linear-gradient(180deg, #2d1810 0%, #4a3628 10%, #7a6450 22%, #b8a48a 36%, #e0d4c0 52%, #f5ede0 68%, #e0d4c0 82%, #7a6450 92%, #2d1810 100%)',
+    color: '#2d1810',
+  },
   sectionAlt: {
     padding: '100px 20px',
     background: `
@@ -1953,7 +1979,7 @@ const styles = {
   castSubheading: {
     fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
     fontSize: '24px',
-    color: '#2d1810',
+    color: '#c9a227',
     textAlign: 'center',
     margin: '40px 0 24px 0',
     letterSpacing: '2px',
@@ -1990,7 +2016,7 @@ const styles = {
   castName: {
     fontFamily: "'Cinzel', serif",
     fontSize: '18px',
-    color: '#2d1810',
+    color: '#e8dcc4',
     margin: '0 0 8px 0',
   },
   castRole: {
