@@ -670,6 +670,12 @@ export default function TheNaturalOnesWebsite() {
                   <label style={styles.formLabel} htmlFor="contact-message">Message</label>
                   <textarea id="contact-message" name="message" required style={styles.formTextarea} rows={5} placeholder="Your message..."></textarea>
                 </div>
+                <div style={styles.formCheckboxGroup}>
+                  <label style={styles.formCheckboxLabel} htmlFor="contact-mailing-list">
+                    <input id="contact-mailing-list" type="checkbox" name="mailing_list" value="yes" style={styles.formCheckbox} />
+                    <span>Keep me updated about The Natural Ones</span>
+                  </label>
+                </div>
                 {formStatus === 'error' && (
                   <p style={styles.formErrorText}>Something went wrong. Please try again.</p>
                 )}
@@ -2613,6 +2619,24 @@ const styles = {
     alignSelf: 'center',
     width: '100%',
     maxWidth: '300px',
+  },
+  formCheckboxGroup: {
+    marginTop: '-4px',
+  },
+  formCheckboxLabel: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    fontSize: '15px',
+    color: '#2d1810',
+    cursor: 'pointer',
+  },
+  formCheckbox: {
+    width: '18px',
+    height: '18px',
+    accentColor: '#3d6b1e',
+    cursor: 'pointer',
+    flexShrink: 0,
   },
   formSuccessMessage: {
     maxWidth: '600px',
