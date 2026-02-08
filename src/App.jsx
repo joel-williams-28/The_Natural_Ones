@@ -70,6 +70,7 @@ export default function TheNaturalOnesWebsite() {
       name: form.elements.name.value,
       email: form.elements.email.value,
       message: form.elements.message.value,
+      mailing_list: form.elements.mailing_list.checked ? 'yes' : 'no',
     });
     try {
       const res = await fetch('/', {
@@ -2621,19 +2622,25 @@ const styles = {
     maxWidth: '300px',
   },
   formCheckboxGroup: {
-    marginTop: '-4px',
+    marginTop: '4px',
   },
   formCheckboxLabel: {
     display: 'flex',
     alignItems: 'center',
-    gap: '10px',
-    fontSize: '15px',
+    gap: '12px',
+    fontSize: '18px',
+    lineHeight: 1.8,
     color: '#2d1810',
     cursor: 'pointer',
+    padding: '14px',
+    backgroundColor: 'rgba(45, 24, 16, 0.05)',
+    border: '1px solid rgba(201, 162, 39, 0.3)',
+    borderRadius: '6px',
+    transition: 'all 0.3s ease',
   },
   formCheckbox: {
-    width: '18px',
-    height: '18px',
+    width: '20px',
+    height: '20px',
     accentColor: '#3d6b1e',
     cursor: 'pointer',
     flexShrink: 0,
