@@ -59,6 +59,31 @@ export default function TheNaturalOnesWebsite() {
   });
   const [kickstarterLoading, setKickstarterLoading] = useState(true);
   const [kickstarterError, setKickstarterError] = useState(false);
+  const [formStatus, setFormStatus] = useState('idle'); // idle | sending | success | error
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    const form = e.target;
+    const formData = new URLSearchParams({
+      'form-name': 'contact',
+      name: form.elements.name.value,
+      email: form.elements.email.value,
+      message: form.elements.message.value,
+    });
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData.toString(),
+      });
+      if (!res.ok) throw new Error('Form submission failed');
+      setFormStatus('success');
+      form.reset();
+    } catch {
+      setFormStatus('error');
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -617,23 +642,42 @@ export default function TheNaturalOnesWebsite() {
           {/* Contact Form - Get In Touch */}
           <div style={styles.contactFormBlock}>
             <span style={styles.contactSublabel}>Get In Touch</span>
-            <form className="contactFormInner" style={styles.contactFormInner} onSubmit={(e) => e.preventDefault()}>
-              <div style={styles.formGroup}>
-                <label style={styles.formLabel}>Your Name</label>
-                <input type="text" style={styles.formInput} placeholder="Adventurer name..." />
+            {formStatus === 'success' ? (
+              <div style={styles.formSuccessMessage}>
+                <span style={styles.formSuccessIcon}>&#10003;</span>
+                <p style={styles.formSuccessText}>Message sent! We'll get back to you soon.</p>
+                <button
+                  type="button"
+                  style={styles.formResetButton}
+                  onClick={() => setFormStatus('idle')}
+                >
+                  Send Another
+                </button>
               </div>
-              <div style={styles.formGroup}>
-                <label style={styles.formLabel}>Your Email</label>
-                <input type="email" style={styles.formInput} placeholder="your@email.com" />
-              </div>
-              <div style={styles.formGroup}>
-                <label style={styles.formLabel}>Message</label>
-                <textarea style={styles.formTextarea} rows={5} placeholder="Your message..."></textarea>
-              </div>
-              <button type="submit" style={styles.submitButton}>
-                Send Message
-              </button>
-            </form>
+            ) : (
+              <form className="contactFormInner" style={styles.contactFormInner} onSubmit={handleContactSubmit} name="contact" data-netlify="true" netlify-honeypot="bot-field">
+                <input type="hidden" name="form-name" value="contact" />
+                <p style={{ display: 'none' }}><input name="bot-field" /></p>
+                <div style={styles.formGroup}>
+                  <label style={styles.formLabel} htmlFor="contact-name">Your Name</label>
+                  <input id="contact-name" type="text" name="name" required style={styles.formInput} placeholder="Adventurer name..." />
+                </div>
+                <div style={styles.formGroup}>
+                  <label style={styles.formLabel} htmlFor="contact-email">Your Email</label>
+                  <input id="contact-email" type="email" name="email" required style={styles.formInput} placeholder="your@email.com" />
+                </div>
+                <div style={styles.formGroup}>
+                  <label style={styles.formLabel} htmlFor="contact-message">Message</label>
+                  <textarea id="contact-message" name="message" required style={styles.formTextarea} rows={5} placeholder="Your message..."></textarea>
+                </div>
+                {formStatus === 'error' && (
+                  <p style={styles.formErrorText}>Something went wrong. Please try again.</p>
+                )}
+                <button type="submit" style={styles.submitButton} disabled={formStatus === 'sending'}>
+                  {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </section>
@@ -2570,7 +2614,46 @@ const styles = {
     width: '100%',
     maxWidth: '300px',
   },
-  
+  formSuccessMessage: {
+    maxWidth: '600px',
+    margin: '0 auto',
+    textAlign: 'center',
+    padding: '48px 24px',
+    backgroundColor: 'rgba(61, 107, 30, 0.08)',
+    border: '1px solid rgba(61, 107, 30, 0.25)',
+    borderRadius: '6px',
+  },
+  formSuccessIcon: {
+    display: 'block',
+    fontSize: '40px',
+    color: '#3d6b1e',
+    marginBottom: '16px',
+  },
+  formSuccessText: {
+    fontSize: '18px',
+    color: '#2d1810',
+    marginBottom: '24px',
+  },
+  formResetButton: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '13px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+    padding: '12px 28px',
+    backgroundColor: 'transparent',
+    color: '#8b6914',
+    border: '1px solid rgba(201, 162, 39, 0.4)',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+  formErrorText: {
+    color: '#a03020',
+    fontSize: '15px',
+    textAlign: 'center',
+    margin: 0,
+  },
+
   // Footer
   footer: {
     background: `
