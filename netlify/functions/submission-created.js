@@ -46,7 +46,7 @@ export async function handler(event) {
         html: `
           <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #2d1810;">
             <div style="text-align: center; padding: 24px 0 16px;">
-              <img src="https://thenaturalonestheatre.com/images/Logo.png" alt="The Natural Ones" width="100" style="width: 100px; height: auto;" />
+              <img src="https://thenaturalones.netlify.app/images/Logo.png" alt="The Natural Ones" width="100" style="width: 100px; height: auto;" />
             </div>
             <p style="text-align: center; color: #8b6914; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 8px;">
               Amateur Theatre with a Critical Hit
