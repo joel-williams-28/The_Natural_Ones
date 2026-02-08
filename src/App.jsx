@@ -218,7 +218,7 @@ export default function TheNaturalOnesWebsite() {
       </section>
 
       {/* About Section */}
-      <section id="about" style={styles.section}>
+      <section id="about" style={styles.sectionAbout}>
         <div style={styles.sectionInner}>
           <SectionHeader title="About Us" subtitle="We Rolled a One. We Kept Playing." />
           <div style={styles.aboutGrid}>
@@ -318,7 +318,7 @@ export default function TheNaturalOnesWebsite() {
       </section>
 
       {/* Show Section */}
-      <section id="show" style={styles.sectionAlt}>
+      <section id="show" style={styles.sectionShow}>
         <div style={styles.sectionInner}>
           <SectionHeader title="The Shows" subtitle="Our Quest Begins" />
           <p style={styles.centeredText}>
@@ -329,37 +329,72 @@ export default function TheNaturalOnesWebsite() {
       </section>
 
       {/* Cast Section */}
-      <section id="cast" style={styles.section}>
+      <section id="cast" style={styles.sectionCast}>
         <div style={styles.sectionInner}>
-          <SectionHeader title="The Party" subtitle="Meet Your Adventurers" />
-          <p style={styles.centeredText}>
-            Our fellowship of talented performers bring the world of tabletop gaming to life.
-          </p>
-          <div style={styles.castGrid}>
-            {/*
-              TO ADD CAST PHOTOS:
-              1. Add photos to public/images/cast/ folder
-              2. Name them: member1.jpg, member2.jpg, etc.
-              3. Update the 'photo' field below with the filename
-            */}
+          <SectionHeader title="The Party" subtitle="Meet Your Adventurers" light />
+
+          {/* The Creatives */}
+          <h3 style={styles.castSubheading}>The Creatives</h3>
+          <div className="cast-grid-row" style={styles.castGridRow}>
             {[
-              { name: 'Joel Williams', role: '', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.' },
-              { name: 'Sreya Rao', role: '', icon: '⚔️', photo: 'member2.jpg', bio: 'Bio coming soon.' },
-              { name: 'The Rogue', role: 'Ensemble', icon: '🗡️', photo: 'member3.jpg', bio: 'Bio coming soon.' },
-              { name: 'The Wizard', role: 'Technical Director', icon: '✨', photo: 'member4.jpg', bio: 'Bio coming soon.' },
-              { name: 'The Ranger', role: 'Stage Manager', icon: '🏹', photo: 'member5.jpg', bio: 'Bio coming soon.' },
-              { name: 'The Cleric', role: 'Producer', icon: '🛡️', photo: 'member6.jpg', bio: 'Bio coming soon.' },
+              { name: 'Richard Baker', role: 'Composer', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.' },
+              { name: 'James A. Coleman', role: 'Writer & Lyricist', icon: '📜', photo: 'member2.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
-              <div key={index} style={{...styles.castCard, cursor: 'pointer'}} onClick={() => setSelectedMember(member)}>
+              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
                 <h3 style={styles.castName}>{member.name}</h3>
                 {member.role && <p style={styles.castRole}>{member.role}</p>}
               </div>
             ))}
           </div>
-          <p style={styles.castNote}>
-            Full cast and creative team to be announced. Check back for updates!
-          </p>
+
+          {/* The Cast ~ Past & Present */}
+          <h3 style={styles.castSubheading}>The Cast ~ Past & Present</h3>
+          {/* Row 1: 5 members */}
+          <div className="cast-grid-row" style={styles.castGridRow}>
+            {[
+              { name: 'Mollie Clare', role: '', icon: '🎭', photo: 'member3.jpg', bio: 'Bio coming soon.' },
+              { name: 'Caroline Dorgan', role: '', icon: '🎭', photo: 'member4.jpg', bio: 'Bio coming soon.' },
+              { name: 'Matthew Edwards', role: '', icon: '🎭', photo: 'member5.jpg', bio: 'Bio coming soon.' },
+              { name: 'Jake Furness', role: '', icon: '🎭', photo: 'member6.jpg', bio: 'Bio coming soon.' },
+              { name: 'Zo\u00eb Harper', role: '', icon: '🎭', photo: 'member7.jpg', bio: 'Bio coming soon.' },
+            ].map((member, index) => (
+              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
+                <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
+                <h3 style={styles.castName}>{member.name}</h3>
+                {member.role && <p style={styles.castRole}>{member.role}</p>}
+              </div>
+            ))}
+          </div>
+          {/* Row 2: 4 members (offset) */}
+          <div className="cast-grid-row" style={{...styles.castGridRow, marginTop: '-20px'}}>
+            {[
+              { name: 'Nicki Jean', role: '', icon: '🎭', photo: 'member8.jpg', bio: 'Bio coming soon.' },
+              { name: 'Kyran Pritchard', role: '', icon: '🎭', photo: 'member9.jpg', bio: 'Bio coming soon.' },
+              { name: 'Sreya Rao', role: '', icon: '🎭', photo: 'member10.jpg', bio: 'Bio coming soon.' },
+              { name: 'Daniel Robert', role: '', icon: '🎭', photo: 'member11.jpg', bio: 'Bio coming soon.' },
+            ].map((member, index) => (
+              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
+                <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
+                <h3 style={styles.castName}>{member.name}</h3>
+                {member.role && <p style={styles.castRole}>{member.role}</p>}
+              </div>
+            ))}
+          </div>
+          {/* Row 3: 3 members (offset) */}
+          <div className="cast-grid-row" style={{...styles.castGridRow, marginTop: '-20px'}}>
+            {[
+              { name: 'Rebekah Tennyson', role: '', icon: '🎭', photo: 'member12.jpg', bio: 'Bio coming soon.' },
+              { name: 'Cate Welmers', role: '', icon: '🎭', photo: 'member13.jpg', bio: 'Bio coming soon.' },
+              { name: 'Joel Williams', role: '', icon: '🎭', photo: 'member14.jpg', bio: 'Bio coming soon.' },
+            ].map((member, index) => (
+              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
+                <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
+                <h3 style={styles.castName}>{member.name}</h3>
+                {member.role && <p style={styles.castRole}>{member.role}</p>}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -390,7 +425,7 @@ export default function TheNaturalOnesWebsite() {
       {/* Support Section */}
       <section id="support" style={styles.sectionHighlight}>
         <div style={styles.sectionInner}>
-          <SectionHeader title="Support Our Quest" subtitle="Help Us Reach Edinburgh" light />
+          <SectionHeader title="Support Our Quest" subtitle="Help Us Reach Edinburgh" />
           <div style={styles.supportContent}>
             <div style={styles.questScroll}>
               <div style={styles.scrollTop}></div>
@@ -472,7 +507,7 @@ export default function TheNaturalOnesWebsite() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" style={styles.section}>
+      <section id="contact" style={styles.sectionContact}>
         <div style={styles.sectionInner}>
           <SectionHeader title="Contact" subtitle="Send a Message" />
           <div style={styles.contactContent}>
@@ -1105,12 +1140,12 @@ function ScrollImage({ src }) {
   );
 }
 
-// Cast Photo Component - shows photo if available, falls back to icon
+// Cast Photo Component - shows photo if available, falls back to green oval
 function CastPhoto({ src, fallbackIcon, name }) {
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
-    return <div style={styles.castIcon}>{fallbackIcon}</div>;
+    return <div style={styles.castPhotoPlaceholder}></div>;
   }
 
   return (
@@ -1183,13 +1218,14 @@ const styles = {
     position: 'fixed',
     top: 0,
     left: 0,
-    right: 0,
+    width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '16px 40px',
     zIndex: 100,
     transition: 'all 0.3s ease',
+    boxSizing: 'border-box',
   },
   navLogo: {
     display: 'flex',
@@ -1370,27 +1406,45 @@ const styles = {
     animation: 'bounce 2s infinite',
   },
 
-  // Sections
+  // Sections — alternating solid colours with hard lines
+  // Hero(dark) → About(cream) → Shows(cream) → Cast(dark) → Support(cream) → Contact(cream) → Footer(dark)
   section: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #f5ede0 0%, #e8dcc4 100%)',
+    background: '#f5ede0',
+    color: '#2d1810',
+  },
+  sectionAbout: {
+    padding: '100px 20px',
+    background: '#f5ede0',
+    color: '#2d1810',
+  },
+  sectionShow: {
+    padding: '100px 20px',
+    background: '#f5ede0',
+    color: '#2d1810',
+  },
+  sectionCast: {
+    padding: '100px 20px',
+    background: `
+      radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
+      linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
+    `,
+    color: '#e8dcc4',
+  },
+  sectionHighlight: {
+    padding: '100px 20px',
+    background: '#f5ede0',
+    color: '#2d1810',
+  },
+  sectionContact: {
+    padding: '100px 20px',
+    background: '#f5ede0',
     color: '#2d1810',
   },
   sectionAlt: {
     padding: '100px 20px',
-    background: `
-      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-      linear-gradient(180deg, #e8dcc4 0%, #d4c4a8 100%)
-    `,
+    background: '#f5ede0',
     color: '#2d1810',
-  },
-  sectionHighlight: {
-    padding: '100px 20px',
-    background: `
-      radial-gradient(ellipse at center, rgba(61, 107, 30, 0.2) 0%, transparent 60%),
-      linear-gradient(180deg, #2d1810 0%, #1a0f08 100%)
-    `,
-    color: '#e8dcc4',
   },
   sectionInner: {
     maxWidth: '1400px',
@@ -1931,6 +1985,21 @@ const styles = {
     gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
     gap: '24px',
   },
+  castGridRow: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: '24px',
+    marginBottom: '40px',
+  },
+  castSubheading: {
+    fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
+    fontSize: '24px',
+    color: '#c9a227',
+    textAlign: 'center',
+    margin: '40px 0 24px 0',
+    letterSpacing: '2px',
+  },
   castCard: {
     textAlign: 'center',
     padding: '32px 16px',
@@ -1938,6 +2007,17 @@ const styles = {
     border: '1px solid rgba(201, 162, 39, 0.2)',
     transition: 'all 0.3s ease',
     overflow: 'hidden',
+  },
+  castCardClean: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+    padding: '16px 8px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    width: 'calc((100% - 96px) / 5)',
+    minWidth: '140px',
   },
   castIcon: {
     fontSize: '48px',
@@ -1952,10 +2032,19 @@ const styles = {
     border: '3px solid #3d6b1e',
     marginBottom: '16px',
   },
+  castPhotoPlaceholder: {
+    width: '200px',
+    height: '250px',
+    maxWidth: '100%',
+    borderRadius: '50%',
+    border: '3px solid #3d6b1e',
+    marginBottom: '16px',
+    backgroundColor: 'rgba(61, 107, 30, 0.15)',
+  },
   castName: {
     fontFamily: "'Cinzel', serif",
     fontSize: '18px',
-    color: '#2d1810',
+    color: '#e8dcc4',
     margin: '0 0 8px 0',
   },
   castRole: {
@@ -2280,7 +2369,10 @@ const styles = {
   
   // Footer
   footer: {
-    backgroundColor: '#0d0705',
+    background: `
+      radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
+      linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
+    `,
     padding: '60px 20px',
     textAlign: 'center',
   },
@@ -2399,6 +2491,15 @@ styleSheet.textContent = `
   @media (max-width: 900px) {
     .aboutGrid, .showContent, .supportContent, .contactContent {
       grid-template-columns: 1fr !important;
+    }
+    .cast-grid-row .cast-card-clean {
+      width: calc((100% - 48px) / 3) !important;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cast-grid-row .cast-card-clean {
+      width: calc((100% - 24px) / 2) !important;
     }
   }
 
