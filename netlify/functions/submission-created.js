@@ -45,10 +45,10 @@ export async function handler(event) {
         subject: 'We got your message! — The Natural Ones',
         html: `
           <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #2d1810;">
-            <h2 style="font-family: Georgia, serif; color: #3d6b1e; margin-bottom: 4px;">
-              The Natural Ones
-            </h2>
-            <p style="color: #8b6914; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-top: 0;">
+            <div style="text-align: center; padding: 24px 0 16px;">
+              <img src="https://thenaturalonestheatre.com/images/Logo.png" alt="The Natural Ones" width="100" style="width: 100px; height: auto;" />
+            </div>
+            <p style="text-align: center; color: #8b6914; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 8px;">
               Amateur Theatre with a Critical Hit
             </p>
             <hr style="border: none; border-top: 1px solid #c9a227; margin: 24px 0;" />
@@ -62,9 +62,9 @@ export async function handler(event) {
               <strong>Your message:</strong><br />
               <em>${(message || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br />')}</em>
             </p>
-            <p style="color: #6b5b4a; font-size: 13px; margin-top: 24px;">
+            <p style="text-align: center; color: #6b5b4a; font-size: 13px; margin-top: 24px;">
               — The Natural Ones<br />
-              <a href="https://thenaturalones.co.uk" style="color: #8b6914;">thenaturalones.co.uk</a>
+              <a href="https://thenaturalonestheatre.com" style="color: #8b6914;">thenaturalonestheatre.com</a>
             </p>
           </div>
         `,
