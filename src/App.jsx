@@ -220,7 +220,7 @@ export default function TheNaturalOnesWebsite() {
       {/* About Section */}
       <section id="about" style={styles.sectionAbout}>
         <div style={styles.sectionInner}>
-          <SectionHeader title="About Us" subtitle="We Rolled a One. We Kept Playing." light />
+          <SectionHeader title="About Us" subtitle="We Rolled a One. We Kept Playing." />
           <div style={styles.aboutGrid}>
             <div style={styles.aboutText}>
               <p style={{...styles.paragraph, marginBottom: '40px'}}>
@@ -1389,7 +1389,7 @@ const styles = {
   },
   sectionAbout: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #1a0f08 0%, #3d2a1e 2%, #7a6450 4%, #b8a48a 6%, #ddd0ba 8%, #f0e8d8 10%, #f5ede0 12%, #f5ede0 100%)',
+    background: 'linear-gradient(180deg, #1a0f08 0%, #1a0f08 10%, #2d1810 20%, #3d2a1e 30%, #5a4535 40%, #7a6450 50%, #a08e72 58%, #c4b598 66%, #e0d4c0 78%, #eee6d6 86%, #f5ede0 92%, #f5ede0 100%)',
     color: '#2d1810',
   },
   sectionShow: {
