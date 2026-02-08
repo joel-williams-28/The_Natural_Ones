@@ -4,7 +4,10 @@
 // Required environment variable (set in Netlify dashboard > Site settings > Environment variables):
 //   RESEND_API_KEY - API key from https://resend.com
 
-const REPLY_FROM = 'The Natural Ones <onboarding@resend.dev>';
+// To use the custom domain address, verify thenaturalonestheatre.com in the Resend dashboard
+// and add the DNS records Resend provides to your Netlify DNS settings.
+// Until the domain is verified, fall back to Resend's shared test address.
+const REPLY_FROM = process.env.RESEND_FROM_EMAIL || 'The Natural Ones <onboarding@resend.dev>';
 
 export async function handler(event) {
   const { payload } = JSON.parse(event.body);
