@@ -252,7 +252,7 @@ export default function TheNaturalOnesWebsite() {
                 amateur productions across the country, he discovered tabletop role-playing games in his early
                 20s and immediately thought: <span style={{fontStyle: 'italic'}}>this needs to be a
                 musical.</span> Six years of development later — which is either dedication or stubbornness
-                depending on who you ask — <span style={{fontStyle: 'italic'}}>Roll, Play</span> was born.
+                depending on who you ask — <span style={{fontStyle: 'italic'}}>Tabletop Role-Playing Game: The Musical!</span> was born.
               </p>
               <p style={styles.paragraph}>
                 The music comes from <strong>Richard Baker</strong>, an Olivier Award-nominated composer whose
@@ -263,12 +263,12 @@ export default function TheNaturalOnesWebsite() {
                 him to bring the show's mad songs and scenes to life.
               </p>
               <p style={styles.paragraph}>
-                First assembled to perform <span style={{fontStyle: 'italic'}}>Roll, Play</span> in Abingdon in
+                First assembled to perform <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> in Abingdon in
                 2025, the group launched with a sold-out debut in January of that year before taking the show to
                 the Cheltenham Fringe Festival and performing extracts at MCM London Comic Con — where we had a
                 fantastic time and still managed to feel pretty out of place despite the surroundings. We're currently
                 preparing our newest comedy, <span style={{fontStyle: 'italic'}}>Mystery at Murderingham
-                Manor</span>, while also performing <span style={{fontStyle: 'italic'}}>Roll, Play</span> in
+                Manor</span>, while also performing <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> in
                 venues across the country and working towards our next great quest: the Edinburgh Fringe Festival
                 in 2026.
               </p>
@@ -498,7 +498,7 @@ export default function TheNaturalOnesWebsite() {
           {/* The Pitch */}
           <div style={styles.supportPitch}>
             <p style={styles.paragraph}>
-              Taking <em>Roll, Play</em> to the Edinburgh Fringe is the biggest thing we've ever
+              Taking <em>TTRPG:TM</em> to the Edinburgh Fringe is the biggest thing we've ever
               attempted — and we can't wait. But the Fringe is one of the most expensive places
               to put on a show. Venue hire, marketing, accommodation, and the general cost of
               keeping a cast fed and upright for a festival run all add up fast. We've been saving
