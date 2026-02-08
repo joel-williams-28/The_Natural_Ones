@@ -655,7 +655,7 @@ export default function TheNaturalOnesWebsite() {
                 </button>
               </div>
             ) : (
-              <form className="contactFormInner" style={styles.contactFormInner} onSubmit={handleContactSubmit} name="contact" data-netlify="true" netlify-honeypot="bot-field">
+              <form className="contactFormInner" style={styles.contactFormInner} onSubmit={handleContactSubmit}>
                 <input type="hidden" name="form-name" value="contact" />
                 <p style={{ display: 'none' }}><input name="bot-field" /></p>
                 <div style={styles.formGroup}>
