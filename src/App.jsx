@@ -1260,9 +1260,7 @@ const styles = {
     alignItems: 'center',
     textAlign: 'center',
     padding: '40px 20px 40px 20px',
-    background: `
-      linear-gradient(180deg, #1a0f08 0%, #1a0f08 10%, #231610 25%, #2d1810 45%, #2d1810 55%, #231610 75%, #1a0f08 90%, #1a0f08 100%)
-    `,
+    background: 'linear-gradient(180deg, #1a0f08, #1a0f08)',
     position: 'relative',
   },
   heroContent: {
@@ -1389,32 +1387,32 @@ const styles = {
   },
   sectionAbout: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #1a0f08 0%, #1a0f08 10%, #2d1810 20%, #3d2a1e 30%, #5a4535 40%, #7a6450 50%, #a08e72 58%, #c4b598 66%, #e0d4c0 78%, #eee6d6 86%, #f5ede0 92%, #f5ede0 100%)',
+    background: 'linear-gradient(180deg, #1a0f08, #f5ede0)',
     color: '#2d1810',
   },
   sectionShow: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #f5ede0 0%, #f5ede0 8%, #eee6d6 14%, #e0d4c0 22%, #c4b598 34%, #a08e72 46%, #7a6450 58%, #5a4535 70%, #3d2a1e 80%, #2d1810 90%, #2d1810 100%)',
+    background: 'linear-gradient(180deg, #f5ede0, #2d1810)',
     color: '#2d1810',
   },
   sectionCast: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #2d1810 0%, #2d1810 5%, #231610 15%, #1a0f08 40%, #1a0f08 60%, #231610 85%, #2d1810 95%, #2d1810 100%)',
+    background: 'linear-gradient(180deg, #2d1810, #2d1810)',
     color: '#e8dcc4',
   },
   sectionContact: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #2d1810 0%, #2d1810 3%, #3d2a1e 8%, #5a4535 14%, #7a6450 22%, #a08e72 30%, #c4b598 38%, #e0d4c0 46%, #f5ede0 55%, #f5ede0 60%, #e0d4c0 68%, #c4b598 74%, #a08e72 80%, #5a4535 86%, #3d2a1e 90%, #2d1810 94%, #1a0f08 97%, #0d0705 100%)',
+    background: 'linear-gradient(180deg, #2d1810, #f5ede0 45%, #f5ede0 55%, #0d0705)',
     color: '#2d1810',
   },
   sectionAlt: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #e8dcc4 0%, #d4c4a8 100%)',
+    background: 'linear-gradient(180deg, #e8dcc4, #d4c4a8)',
     color: '#2d1810',
   },
   sectionHighlight: {
     padding: '100px 20px',
-    background: 'linear-gradient(180deg, #2d1810 0%, #2d1810 5%, #231610 15%, #1a0f08 40%, #1a0f08 60%, #231610 85%, #2d1810 95%, #2d1810 100%)',
+    background: 'linear-gradient(180deg, #2d1810, #2d1810)',
     color: '#e8dcc4',
   },
   sectionInner: {
