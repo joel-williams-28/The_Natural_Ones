@@ -2366,7 +2366,6 @@ const styles = {
     borderRadius: '50%',
     objectFit: 'cover',
     border: '3px solid rgba(201,169,97,0.3)',
-    animation: 'spinToOval 1s ease-out forwards',
     boxShadow: '0 0 40px rgba(201,169,97,0.15), 0 0 80px rgba(201,169,97,0.08)',
   },
   castModalPhotoFallback: {
@@ -2378,7 +2377,6 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    animation: 'spinToOval 1s ease-out forwards',
     boxShadow: '0 0 40px rgba(201,169,97,0.15), 0 0 80px rgba(201,169,97,0.08)',
     overflow: 'hidden',
   },
