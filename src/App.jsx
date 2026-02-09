@@ -440,12 +440,7 @@ export default function TheNaturalOnesWebsite() {
             <button style={styles.castModalClose} onClick={() => setSelectedMember(null)}>✕</button>
             <div style={styles.castModalLayout}>
               <div style={styles.castModalPhotoWrap}>
-                <img
-                  className="cast-modal-photo"
-                  src={`/images/cast/${selectedMember.photo}`}
-                  alt={selectedMember.name}
-                  style={styles.castModalPhoto}
-                />
+                <ModalPhoto src={`/images/cast/${selectedMember.photo}`} name={selectedMember.name} />
               </div>
               <div style={styles.castModalInfo}>
                 <h2 style={styles.castModalName}>{selectedMember.name}</h2>
@@ -1347,6 +1342,29 @@ function CastPhoto({ src, name }) {
       alt={name}
       className="cast-photo"
       style={styles.castPhoto}
+      onError={() => setHasError(true)}
+    />
+  );
+}
+
+// Modal Photo Component - full oval for cast modal, with shield fallback
+function ModalPhoto({ src, name }) {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return (
+      <div className="cast-modal-photo" style={styles.castModalPhotoFallback}>
+        <ShieldFallback name={name} size={260} />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      className="cast-modal-photo"
+      src={src}
+      alt={name}
+      style={styles.castModalPhoto}
       onError={() => setHasError(true)}
     />
   );
@@ -2350,6 +2368,19 @@ const styles = {
     border: '3px solid rgba(201,169,97,0.3)',
     animation: 'spinToOval 1s ease-out forwards',
     boxShadow: '0 0 40px rgba(201,169,97,0.15), 0 0 80px rgba(201,169,97,0.08)',
+  },
+  castModalPhotoFallback: {
+    width: '300px',
+    height: '375px',
+    borderRadius: '50%',
+    border: '3px solid rgba(201,169,97,0.3)',
+    backgroundColor: 'rgba(60,50,30,0.6)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    animation: 'spinToOval 1s ease-out forwards',
+    boxShadow: '0 0 40px rgba(201,169,97,0.15), 0 0 80px rgba(201,169,97,0.08)',
+    overflow: 'hidden',
   },
   castModalInfo: {
     flex: 1,
