@@ -1952,18 +1952,20 @@ const styles = {
   },
   posterBackBody: {
     fontFamily: "'Cinzel', serif",
-    fontSize: '13px',
+    fontSize: '14px',
     color: '#2d1810',
     lineHeight: 1.55,
     margin: '0',
+    textAlign: 'justify',
   },
   posterBackBodyBold: {
     fontFamily: "'Cinzel', serif",
-    fontSize: '13px',
+    fontSize: '14px',
     color: '#2d1810',
     lineHeight: 1.55,
     margin: '0',
     fontWeight: 'bold',
+    textAlign: 'justify',
   },
   posterCardImage: {
     width: '100%',
