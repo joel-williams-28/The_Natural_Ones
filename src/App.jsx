@@ -361,12 +361,13 @@ export default function TheNaturalOnesWebsite() {
 
           {/* The Creatives */}
           <h3 style={styles.castSubheading}>The Creatives</h3>
-          <div className="cast-grid-row" style={styles.castGridRow}>
+          <div className="creatives-grid-row" style={styles.creativesGridRow}>
             {[
-              { name: 'Richard Baker', role: 'Composer', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.' },
-              { name: 'James A. Coleman', role: 'Writer & Lyricist', icon: '📜', photo: 'member2.jpg', bio: 'Bio coming soon.' },
+              { name: 'Richard Baker', role: 'Composer', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.', gridColumn: '1 / 3' },
+              { name: 'James A. Coleman', role: 'Writer & Lyricist', icon: '📜', photo: 'member2.jpg', bio: 'Bio coming soon.', gridColumn: '3' },
+              { name: 'Emma Coleman-Williams', role: 'Producer / Company Secretary', icon: '🎭', photo: 'member3.jpg', bio: 'Bio coming soon.', gridColumn: '4 / 6' },
             ].map((member, index) => (
-              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
+              <div key={index} className="cast-card-clean" style={{...styles.castCardClean, width: 'auto', gridColumn: member.gridColumn, justifySelf: 'center'}} onClick={() => setSelectedMember(member)}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
                 <h3 style={styles.castName}>{member.name}</h3>
                 {member.role && <p style={styles.castRole}>{member.role}</p>}
@@ -379,11 +380,11 @@ export default function TheNaturalOnesWebsite() {
           {/* Row 1: 5 members */}
           <div className="cast-grid-row" style={styles.castGridRow}>
             {[
-              { name: 'Mollie Clare', role: '', icon: '🎭', photo: 'member3.jpg', bio: 'Bio coming soon.' },
-              { name: 'Caroline Dorgan', role: '', icon: '🎭', photo: 'member4.jpg', bio: 'Bio coming soon.' },
-              { name: 'Matthew Edwards', role: '', icon: '🎭', photo: 'member5.jpg', bio: 'Bio coming soon.' },
-              { name: 'Jake Furness', role: '', icon: '🎭', photo: 'member6.jpg', bio: 'Bio coming soon.' },
-              { name: 'Zo\u00eb Harper', role: '', icon: '🎭', photo: 'member7.jpg', bio: 'Bio coming soon.' },
+              { name: 'Mollie Clare', role: '', icon: '🎭', photo: 'member4.jpg', bio: 'Bio coming soon.' },
+              { name: 'Caroline Dorgan', role: '', icon: '🎭', photo: 'member5.jpg', bio: 'Bio coming soon.' },
+              { name: 'Matthew Edwards', role: '', icon: '🎭', photo: 'member6.jpg', bio: 'Bio coming soon.' },
+              { name: 'Jake Furness', role: '', icon: '🎭', photo: 'member7.jpg', bio: 'Bio coming soon.' },
+              { name: 'Zo\u00eb Harper', role: '', icon: '🎭', photo: 'member8.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
               <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
@@ -395,10 +396,10 @@ export default function TheNaturalOnesWebsite() {
           {/* Row 2: 4 members (offset) */}
           <div className="cast-grid-row" style={{...styles.castGridRow, marginTop: '-20px'}}>
             {[
-              { name: 'Nicki Jean', role: '', icon: '🎭', photo: 'member8.jpg', bio: 'Bio coming soon.' },
-              { name: 'Kyran Pritchard', role: '', icon: '🎭', photo: 'member9.jpg', bio: 'Bio coming soon.' },
-              { name: 'Sreya Rao', role: '', icon: '🎭', photo: 'member10.jpg', bio: 'Bio coming soon.' },
-              { name: 'Daniel Robert', role: '', icon: '🎭', photo: 'member11.jpg', bio: 'Bio coming soon.' },
+              { name: 'Nicki Jean', role: '', icon: '🎭', photo: 'member9.jpg', bio: 'Bio coming soon.' },
+              { name: 'Kyran Pritchard', role: '', icon: '🎭', photo: 'member10.jpg', bio: 'Bio coming soon.' },
+              { name: 'Sreya Rao', role: '', icon: '🎭', photo: 'member11.jpg', bio: 'Bio coming soon.' },
+              { name: 'Daniel Robert', role: '', icon: '🎭', photo: 'member12.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
               <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
@@ -410,9 +411,9 @@ export default function TheNaturalOnesWebsite() {
           {/* Row 3: 3 members (offset) */}
           <div className="cast-grid-row" style={{...styles.castGridRow, marginTop: '-20px'}}>
             {[
-              { name: 'Rebekah Tennyson', role: '', icon: '🎭', photo: 'member12.jpg', bio: 'Bio coming soon.' },
-              { name: 'Cate Welmers', role: '', icon: '🎭', photo: 'member13.jpg', bio: 'Bio coming soon.' },
-              { name: 'Joel Williams', role: '', icon: '🎭', photo: 'member14.jpg', bio: 'Bio coming soon.' },
+              { name: 'Rebekah Tennyson', role: '', icon: '🎭', photo: 'member13.jpg', bio: 'Bio coming soon.' },
+              { name: 'Cate Welmers', role: '', icon: '🎭', photo: 'member14.jpg', bio: 'Bio coming soon.' },
+              { name: 'Joel Williams', role: '', icon: '🎭', photo: 'member15.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
               <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
                 <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
@@ -566,8 +567,9 @@ export default function TheNaturalOnesWebsite() {
               { price: '£600', title: 'Roll the D20', desc: 'Come to a live show and roll the dice that decides the fate of our heroes. One available — yes, really, just one.', limited: 'Only 1 available' },
               { price: '£600', title: 'Play a One-Shot', desc: 'Play a full tabletop RPG session with members of the cast, in character, on a brand new quest.', limited: 'Only 5 available' },
               { price: '£1,000', title: 'Play the Monster', desc: 'Step on stage in costume and play a creature in the climax of the show. Courage optional.', limited: 'Strictly limited — only 5 available' },
-            ].map((tier, i) => (
-              <div key={i} style={styles.supportRewardCard}>
+            ].map((tier, i, arr) => (
+              <div key={i} style={{...styles.supportRewardCard, ...(i === arr.length - 1 && arr.length % 3 === 1 ? { gridColumn: '2' } : {})}}>
+
                 {tier.limited && (
                   <span style={styles.supportRewardBadge}>{tier.limited}</span>
                 )}
@@ -614,7 +616,7 @@ export default function TheNaturalOnesWebsite() {
           <SectionHeader title="Contact" subtitle="Send a Message" />
 
           <p style={styles.contactIntro}>
-            Want to join our party? Have questions about the show? Looking to collaborate?
+            Got a question? Want to book us for a show? Think you can help us on our quest to Edinburgh?
             Send us a message via carrier pigeon (or the more reliable methods below).
           </p>
 
@@ -1365,7 +1367,7 @@ const styles = {
     cursor: 'pointer',
   },
   navLogoText: {
-    fontFamily: "'Cinzel', serif",
+    fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
     fontSize: '20px',
     fontWeight: 'bold',
     color: '#c9a227',
@@ -2123,6 +2125,12 @@ const styles = {
     gap: '24px',
     marginBottom: '40px',
   },
+  creativesGridRow: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(5, 1fr)',
+    gap: '24px',
+    marginBottom: '40px',
+  },
   castSubheading: {
     fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
     fontSize: '24px',
@@ -2839,6 +2847,12 @@ styleSheet.textContent = `
     .cast-grid-row .cast-card-clean {
       width: calc((100% - 48px) / 3) !important;
     }
+    .creatives-grid-row {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+    .creatives-grid-row .cast-card-clean {
+      grid-column: auto !important;
+    }
   }
 
   @media (max-width: 600px) {
@@ -2851,6 +2865,12 @@ styleSheet.textContent = `
     .supportFundsGrid {
       flex-direction: column !important;
       align-items: center !important;
+    }
+    .creatives-grid-row {
+      grid-template-columns: 1fr !important;
+    }
+    .creatives-grid-row .cast-card-clean {
+      grid-column: auto !important;
     }
     .cast-grid-row .cast-card-clean {
       width: calc((100% - 24px) / 2) !important;
