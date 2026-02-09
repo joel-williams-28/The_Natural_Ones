@@ -1907,7 +1907,7 @@ const styles = {
     height: '100%',
     backfaceVisibility: 'hidden',
     WebkitBackfaceVisibility: 'hidden',
-    transform: 'rotateY(180deg) scale(1.05)',
+    transform: 'rotateY(180deg)',
     borderRadius: '4px',
     background: 'linear-gradient(135deg, #c9a227, #8b6914)',
     padding: '6px',
