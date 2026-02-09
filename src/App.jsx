@@ -1265,6 +1265,26 @@ function PosterBack({ show }) {
     );
   }
 
+  if (show.id === 1) {
+    const p1Font = "'Cinzel Decorative', 'Cinzel', serif";
+    return (
+      <div style={styles.posterBackContent}>
+        <h2 style={{...styles.posterBackTitle, fontFamily: p1Font}}>Tabletop Role-Playing Game: The Musical</h2>
+        <p style={{...styles.posterBackSubtitle, fontFamily: p1Font}}><strong>Script by James A. Coleman | Music by Richard Baker</strong></p>
+        <div style={styles.posterBackBodyWrap}>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Six friends. One quest. Absolutely no plan.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}><em>TTRPG</em> is a brand new musical comedy about a group of tabletop role-playing gamers whose evening of swords, sorcery and questionable decision-making goes about as well as you'd expect when nobody reads the rules properly.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Meet the gang: there's a monk with a drinking problem, a princess who knows suspiciously little about her own religion, a cleric whose views on other races could politely be described as <em>robust</em>, a halfling who just wanted a nice simple dragon fight, and a ranger whose approach to diplomacy is best described as "indiscriminate."</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Oh, and a Dungeon Master who is absolutely, definitely, completely in control of the situation.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Together, they'll face treacherous villains, impossible puzzles, questionable laundry, and the greatest enemy of all — each other. There will be looting. There will be ballads. There will be at least one character death that is entirely avoidable and absolutely deserved.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Featuring original songs, a story that could go in <em>any</em> direction, and a finale that puts the fate of our heroes squarely in the hands of someone who almost certainly cannot be trusted with it — <em>TTRPG</em> is a love letter to friendship, imagination, and the fine art of rolling a one at the worst possible moment.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>No experience with tabletop games required. No experience with functioning adult relationships required either, but it helps.</p>
+          <p style={{...styles.posterBackBodyBold, fontFamily: p1Font}}>You don't need to know the rules. Neither do they.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={styles.posterBackContent}>
       <p style={styles.posterBackBody}>{show.backText || ''}</p>
