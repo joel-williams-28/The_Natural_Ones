@@ -19,7 +19,8 @@ const showsData = [
     runtime: "",
     ticketUrl: "#",
     description: "A comedy adventure where the dice decide the ending!",
-    tagline: "Where the dice decide the ending"
+    tagline: "Where the dice decide the ending",
+    backText: ""
   },
   {
     id: 2,
@@ -37,7 +38,8 @@ const showsData = [
     runtime: "Approx. 2hrs - incl. interval",
     ticketUrl: "https://www.ticketsource.co.uk/whats-on/abingdon/unicorn-theatre/mystery-at-murderingham-manor-and-more/e-kqamxo",
     description: "A tale of one DM's struggle against the chaos of their party.",
-    tagline: "One DM. Five players. Infinite chaos."
+    tagline: "One DM. Five players. Infinite chaos.",
+    backText: ""
   }
 ];
 
@@ -1131,22 +1133,11 @@ function ShowCarousel({ shows }) {
                 <PosterCard show={item.show} />
               </div>
 
-              {/* Back of card - Scroll image or generated scroll */}
+              {/* Back of card - Off-white background with border */}
               <div style={styles.flipCardBack}>
-                {item.show.hasScrollImage ? (
-                  <ScrollImage src={item.show.scrollImage} />
-                ) : (
-                  <div style={styles.scrollReveal}>
-                    <div style={styles.scrollRevealTop}></div>
-                    <div style={styles.scrollRevealBody}>
-                      <h3 style={styles.scrollRevealTitle}>{item.show.title}</h3>
-                      <p style={styles.scrollRevealDesc}>{item.show.description}</p>
-                      <div style={styles.scrollDivider}></div>
-                      <p style={styles.scrollRevealVenue}>{item.show.venue}</p>
-                    </div>
-                    <div style={styles.scrollRevealBottom}></div>
-                  </div>
-                )}
+                <div style={styles.posterBackContent}>
+                  <p style={styles.posterBackText}>{item.show.backText || ''}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -1918,6 +1909,31 @@ const styles = {
     WebkitBackfaceVisibility: 'hidden',
     transform: 'rotateY(180deg) scale(1.05)',
     borderRadius: '4px',
+    background: 'linear-gradient(135deg, #c9a227, #8b6914)',
+    padding: '6px',
+    boxShadow: '0 15px 50px rgba(0,0,0,0.4)',
+    boxSizing: 'border-box',
+  },
+  posterBackContent: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#f5f0e8',
+    borderRadius: '2px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '40px',
+    textAlign: 'center',
+    boxSizing: 'border-box',
+  },
+  posterBackText: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '16px',
+    color: '#2d1810',
+    lineHeight: 1.6,
+    margin: '0',
+    whiteSpace: 'pre-line',
   },
   posterCardImage: {
     width: '100%',
