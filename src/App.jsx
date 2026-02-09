@@ -1931,7 +1931,7 @@ const styles = {
     overflow: 'hidden',
   },
   posterBackTitle: {
-    fontFamily: "'Cinzel', serif",
+    fontFamily: "'Poiret One', sans-serif",
     fontSize: '22px',
     fontWeight: 'bold',
     color: '#2d1810',
@@ -1939,7 +1939,7 @@ const styles = {
     lineHeight: 1.3,
   },
   posterBackSubtitle: {
-    fontFamily: "'Cinzel', serif",
+    fontFamily: "'Poiret One', sans-serif",
     fontSize: '14px',
     color: '#2d1810',
     margin: '0 0 16px 0',
@@ -1951,7 +1951,7 @@ const styles = {
     gap: '12px',
   },
   posterBackBody: {
-    fontFamily: "'Cinzel', serif",
+    fontFamily: "'Poiret One', sans-serif",
     fontSize: '14px',
     color: '#2d1810',
     lineHeight: 1.55,
@@ -1959,7 +1959,7 @@ const styles = {
     textAlign: 'justify',
   },
   posterBackBodyBold: {
-    fontFamily: "'Cinzel', serif",
+    fontFamily: "'Poiret One', sans-serif",
     fontSize: '14px',
     color: '#2d1810',
     lineHeight: 1.55,
