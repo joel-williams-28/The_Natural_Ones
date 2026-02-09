@@ -1952,7 +1952,7 @@ const styles = {
   },
   posterBackBody: {
     fontFamily: "'Poiret One', sans-serif",
-    fontSize: '14px',
+    fontSize: '15px',
     color: '#2d1810',
     lineHeight: 1.55,
     margin: '0',
@@ -1960,7 +1960,7 @@ const styles = {
   },
   posterBackBodyBold: {
     fontFamily: "'Poiret One', sans-serif",
-    fontSize: '14px',
+    fontSize: '15px',
     color: '#2d1810',
     lineHeight: 1.55,
     margin: '0',
