@@ -2631,27 +2631,33 @@ const styles = {
   },
   formCheckboxGroup: {
     marginTop: '4px',
+    textAlign: 'center',
   },
   formCheckboxLabel: {
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
-    gap: '12px',
-    fontSize: '18px',
-    lineHeight: 1.8,
+    justifyContent: 'center',
+    gap: '10px',
+    fontSize: '15px',
     color: '#2d1810',
     cursor: 'pointer',
-    padding: '14px',
+  },
+  formCheckbox: {
+    WebkitAppearance: 'none',
+    MozAppearance: 'none',
+    appearance: 'none',
+    width: '30px',
+    height: '30px',
     backgroundColor: 'rgba(45, 24, 16, 0.05)',
     border: '1px solid rgba(201, 162, 39, 0.3)',
     borderRadius: '6px',
-    transition: 'all 0.3s ease',
-  },
-  formCheckbox: {
-    width: '20px',
-    height: '20px',
-    accentColor: '#3d6b1e',
     cursor: 'pointer',
     flexShrink: 0,
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.3s ease',
+    position: 'relative',
   },
   formSuccessMessage: {
     maxWidth: '600px',
@@ -2791,6 +2797,21 @@ styleSheet.textContent = `
     -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
   }
   
+  #contact-mailing-list:checked {
+    background-color: rgba(201, 162, 39, 0.15);
+    border-color: rgba(201, 162, 39, 0.6);
+  }
+  #contact-mailing-list:checked::after {
+    content: '\\2713';
+    color: #8b6914;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  #contact-mailing-list:hover {
+    border-color: rgba(201, 162, 39, 0.6);
+    background-color: rgba(45, 24, 16, 0.08);
+  }
+
   * {
     box-sizing: border-box;
   }
