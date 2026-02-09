@@ -19,7 +19,8 @@ const showsData = [
     runtime: "",
     ticketUrl: "#",
     description: "A comedy adventure where the dice decide the ending!",
-    tagline: "Where the dice decide the ending"
+    tagline: "Where the dice decide the ending",
+    backText: ""
   },
   {
     id: 2,
@@ -37,7 +38,8 @@ const showsData = [
     runtime: "Approx. 2hrs - incl. interval",
     ticketUrl: "https://www.ticketsource.co.uk/whats-on/abingdon/unicorn-theatre/mystery-at-murderingham-manor-and-more/e-kqamxo",
     description: "A tale of one DM's struggle against the chaos of their party.",
-    tagline: "One DM. Five players. Infinite chaos."
+    tagline: "One DM. Five players. Infinite chaos.",
+    backText: ""
   }
 ];
 
@@ -438,12 +440,7 @@ export default function TheNaturalOnesWebsite() {
             <button style={styles.castModalClose} onClick={() => setSelectedMember(null)}>✕</button>
             <div style={styles.castModalLayout}>
               <div style={styles.castModalPhotoWrap}>
-                <img
-                  className="cast-modal-photo"
-                  src={`/images/cast/${selectedMember.photo}`}
-                  alt={selectedMember.name}
-                  style={styles.castModalPhoto}
-                />
+                <ModalPhoto src={`/images/cast/${selectedMember.photo}`} name={selectedMember.name} />
               </div>
               <div style={styles.castModalInfo}>
                 <h2 style={styles.castModalName}>{selectedMember.name}</h2>
@@ -1131,22 +1128,9 @@ function ShowCarousel({ shows }) {
                 <PosterCard show={item.show} />
               </div>
 
-              {/* Back of card - Scroll image or generated scroll */}
+              {/* Back of card - Off-white background with border */}
               <div style={styles.flipCardBack}>
-                {item.show.hasScrollImage ? (
-                  <ScrollImage src={item.show.scrollImage} />
-                ) : (
-                  <div style={styles.scrollReveal}>
-                    <div style={styles.scrollRevealTop}></div>
-                    <div style={styles.scrollRevealBody}>
-                      <h3 style={styles.scrollRevealTitle}>{item.show.title}</h3>
-                      <p style={styles.scrollRevealDesc}>{item.show.description}</p>
-                      <div style={styles.scrollDivider}></div>
-                      <p style={styles.scrollRevealVenue}>{item.show.venue}</p>
-                    </div>
-                    <div style={styles.scrollRevealBottom}></div>
-                  </div>
-                )}
+                <PosterBack show={item.show} />
               </div>
             </div>
           </div>
@@ -1256,26 +1240,50 @@ function PosterCard({ show }) {
   );
 }
 
-// Scroll Image component for the back of flipped posters
-function ScrollImage({ src }) {
-  const [hasError, setHasError] = useState(false);
-
-  if (hasError) {
-    // Fallback to a simple styled scroll if image fails to load
+// Back content for flipped posters
+function PosterBack({ show }) {
+  if (show.id === 2) {
     return (
-      <div style={styles.scrollImageFallback}>
-        <p style={styles.scrollImageFallbackText}>📜</p>
+      <div style={styles.posterBackContent}>
+        <h2 style={styles.posterBackTitle}>Mystery at Murderingham Manor and More!</h2>
+        <p style={styles.posterBackSubtitle}><strong><em>An evening of comedy, music, and at least one death</em></strong></p>
+        <div style={styles.posterBackBodyWrap}>
+          <p style={styles.posterBackBody}>Welcome to our latest production! Or, as we like to call it, <em>MAMMAM</em>. Although actually we're starting with the <em>And More</em>, so technically it's <em>AMMAMM</em>. Look, the acronym needs work. The show doesn't. The show is fine. Probably.</p>
+          <p style={styles.posterBackBody}><strong>Act One</strong> brings you a selection of original comedy sketches, interspersed with live music. You'll meet a dental professional with a flair for the theatrical, a man in a witness protection programme who is <em>terrible</em> at witness protection, a coven of witches trying to navigate social media, and a pet shop that is definitely, absolutely, one hundred percent a real pet shop and not anything else, so stop asking questions.</p>
+          <p style={styles.posterBackBody}>We should mention that we're operating on a bit of a reduced budget. The script calls for a dentist's chair, but those are expensive, so we'll be using a regular chair. The script also calls for real actors, but those are expensive too, so you'll have to make do with us.</p>
+          <p style={styles.posterBackBody}><strong>Act Two</strong> is our one-act play, <em>Mystery at Murderingham Manor</em>, in which the world-renowned detective Harold Parsons is called to a country estate to investigate a suspicious death. Someone has been murdered. Then someone else has been murdered. Then, through what we can only describe as a remarkable lack of professional caution, someone else is also murdered. In fairness, three murders is quite a lot. You'd think people would start being more careful.</p>
+          <p style={styles.posterBackBody}>We can tell you that the play features a lord, a lady, a butler, a nun, a cousin, and a detective. We can tell you that not all of them are what they seem. We can tell you that at least one of them did it. We cannot, however, tell you who, or how, or why, because frankly we're not entirely sure the characters know either.</p>
+          <p style={styles.posterBackBody}>What we <em>can</em> promise is an evening of laughs, surprises, at least one dramatic gasp, and a twist you almost certainly won't see coming — partly because it's very clever, and partly because there's a power cut.</p>
+          <p style={styles.posterBackBodyBold}>Come for the mystery. Stay for the music. Leave before anyone asks you to help move the body.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (show.id === 1) {
+    const p1Font = "'Cinzel Decorative', 'Cinzel', serif";
+    return (
+      <div style={styles.posterBackContent}>
+        <h2 style={{...styles.posterBackTitle, fontFamily: p1Font}}>Tabletop Role-Playing Game: The Musical</h2>
+        <p style={{...styles.posterBackSubtitle, fontFamily: p1Font}}><strong>Script by James A. Coleman | Music by Richard Baker</strong></p>
+        <div style={styles.posterBackBodyWrap}>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Six friends. One quest. Absolutely no plan.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}><em>TTRPG</em> is a brand new musical comedy about a group of tabletop role-playing gamers whose evening of swords, sorcery and questionable decision-making goes about as well as you'd expect when nobody reads the rules properly.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Meet the gang: there's a monk with a drinking problem, a princess who knows suspiciously little about her own religion, a cleric whose views on other races could politely be described as <em>robust</em>, a halfling who just wanted a nice simple dragon fight, and a ranger whose approach to diplomacy is best described as "indiscriminate."</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Oh, and a Dungeon Master who is absolutely, definitely, completely in control of the situation.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Together, they'll face treacherous villains, impossible puzzles, questionable laundry, and the greatest enemy of all — each other. There will be looting. There will be ballads. There will be at least one character death that is entirely avoidable and absolutely deserved.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Featuring original songs, a story that could go in <em>any</em> direction, and a finale that puts the fate of our heroes squarely in the hands of someone who almost certainly cannot be trusted with it — <em>TTRPG</em> is a love letter to friendship, imagination, and the fine art of rolling a one at the worst possible moment.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>No experience with tabletop games required. No experience with functioning adult relationships required either, but it helps.</p>
+          <p style={{...styles.posterBackBodyBold, fontFamily: p1Font}}>You don't need to know the rules. Neither do they.</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <img
-      src={src}
-      alt="Performance scroll"
-      style={styles.scrollImage}
-      onError={() => setHasError(true)}
-    />
+    <div style={styles.posterBackContent}>
+      <p style={styles.posterBackBody}>{show.backText || ''}</p>
+    </div>
   );
 }
 
@@ -1334,6 +1342,29 @@ function CastPhoto({ src, name }) {
       alt={name}
       className="cast-photo"
       style={styles.castPhoto}
+      onError={() => setHasError(true)}
+    />
+  );
+}
+
+// Modal Photo Component - full oval for cast modal, with shield fallback
+function ModalPhoto({ src, name }) {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return (
+      <div className="cast-modal-photo" style={styles.castModalPhotoFallback}>
+        <ShieldFallback name={name} size={260} />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      className="cast-modal-photo"
+      src={src}
+      alt={name}
+      style={styles.castModalPhoto}
       onError={() => setHasError(true)}
     />
   );
@@ -1916,8 +1947,63 @@ const styles = {
     height: '100%',
     backfaceVisibility: 'hidden',
     WebkitBackfaceVisibility: 'hidden',
-    transform: 'rotateY(180deg) scale(1.05)',
+    transform: 'rotateY(180deg)',
     borderRadius: '4px',
+    background: 'linear-gradient(135deg, #c9a227, #8b6914)',
+    padding: '6px',
+    boxShadow: '0 15px 50px rgba(0,0,0,0.4)',
+    boxSizing: 'border-box',
+  },
+  posterBackContent: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#f5f0e8',
+    borderRadius: '2px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    padding: '40px 36px',
+    textAlign: 'left',
+    boxSizing: 'border-box',
+    overflow: 'hidden',
+  },
+  posterBackTitle: {
+    fontFamily: "'Poiret One', sans-serif",
+    fontSize: '22px',
+    fontWeight: 'bold',
+    color: '#2d1810',
+    margin: '0 0 6px 0',
+    lineHeight: 1.3,
+  },
+  posterBackSubtitle: {
+    fontFamily: "'Poiret One', sans-serif",
+    fontSize: '14px',
+    color: '#2d1810',
+    margin: '0 0 16px 0',
+    lineHeight: 1.4,
+  },
+  posterBackBodyWrap: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+  },
+  posterBackBody: {
+    fontFamily: "'Poiret One', sans-serif",
+    fontSize: '15px',
+    color: '#2d1810',
+    lineHeight: 1.55,
+    margin: '0',
+    textAlign: 'justify',
+  },
+  posterBackBodyBold: {
+    fontFamily: "'Poiret One', sans-serif",
+    fontSize: '15px',
+    color: '#2d1810',
+    lineHeight: 1.55,
+    margin: '0',
+    fontWeight: 'bold',
+    textAlign: 'justify',
   },
   posterCardImage: {
     width: '100%',
@@ -2280,8 +2366,19 @@ const styles = {
     borderRadius: '50%',
     objectFit: 'cover',
     border: '3px solid rgba(201,169,97,0.3)',
-    animation: 'spinToOval 1s ease-out forwards',
     boxShadow: '0 0 40px rgba(201,169,97,0.15), 0 0 80px rgba(201,169,97,0.08)',
+  },
+  castModalPhotoFallback: {
+    width: '300px',
+    height: '375px',
+    borderRadius: '50%',
+    border: '3px solid rgba(201,169,97,0.3)',
+    backgroundColor: 'rgba(60,50,30,0.6)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '0 0 40px rgba(201,169,97,0.15), 0 0 80px rgba(201,169,97,0.08)',
+    overflow: 'hidden',
   },
   castModalInfo: {
     flex: 1,
