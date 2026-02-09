@@ -224,7 +224,7 @@ export default function TheNaturalOnesWebsite() {
           <h2 style={styles.heroShowSubtitle}>The Musical!</h2>
           <div style={styles.heroDivider}>
             <span style={styles.dividerLine}></span>
-            <span style={{...styles.dividerDot, color: '#c9a227', fontFamily: "'Vatican Light', serif", fontSize: '32px'}}>&</span>
+            <span style={{...styles.dividerDot, color: '#c9a227', fontFamily: "'Cinzel Decorative', 'Cinzel', serif", fontSize: '32px'}}>&</span>
             <span style={styles.dividerLine}></span>
           </div>
           <h2 style={{...styles.heroShowTitle, fontFamily: "'Poiret One', sans-serif"}}>Mystery at Murderingham Manor...</h2>
@@ -357,71 +357,77 @@ export default function TheNaturalOnesWebsite() {
       {/* Cast Section */}
       <section id="cast" style={styles.sectionCast}>
         <div style={styles.sectionInner}>
-          <SectionHeader title="The Party" subtitle="Meet Your Adventurers" light />
+          {/* Header with D20 divider */}
+          <div style={styles.sectionHeader}>
+            <span style={{...styles.headerSubtitle, color: '#c9a227'}}>Meet Your Adventurers</span>
+            <h2 style={{...styles.headerTitle, color: '#e8dcc4'}}>The Party</h2>
+            <div style={styles.headerDivider}>
+              <span style={{ width: '80px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(201,169,97,0.6))' }}></span>
+              <svg width="32" height="32" viewBox="0 0 100 100" style={{ display: 'block', flexShrink: 0 }}>
+                <polygon points="50,5 93,27.5 93,72.5 50,95 7,72.5 7,27.5"
+                  fill="none" stroke="rgba(201,169,97,0.6)" strokeWidth="3" />
+                <text x="50" y="58" textAnchor="middle" fontFamily="'Cinzel', serif"
+                  fontSize="28" fontWeight="700" fill="rgba(201,169,97,0.7)">20</text>
+              </svg>
+              <span style={{ width: '80px', height: '1px', background: 'linear-gradient(270deg, transparent, rgba(201,169,97,0.6))' }}></span>
+            </div>
+          </div>
 
           {/* The Creatives */}
           <h3 style={styles.castSubheading}>The Creatives</h3>
-          <div className="creatives-grid-row" style={styles.creativesGridRow}>
+          <div className="creatives-card-grid" style={styles.creativesCardGrid}>
             {[
-              { name: 'Richard Baker', role: 'Composer', icon: '🎵', photo: 'member1.jpg', bio: 'Bio coming soon.', gridColumn: '1 / 3' },
-              { name: 'James A. Coleman', role: 'Writer & Lyricist', icon: '📜', photo: 'member2.jpg', bio: 'Bio coming soon.', gridColumn: '3' },
-              { name: 'Emma Coleman-Williams', role: 'Producer / Company Secretary', icon: '🎭', photo: 'member3.jpg', bio: 'Bio coming soon.', gridColumn: '4 / 6' },
+              { name: 'Richard Baker', role: 'Composer', photo: 'member1.jpg', bio: 'Bio coming soon.', flavour: 'Weaver of sonic enchantments. Olivier Award-nominated bard.' },
+              { name: 'James A. Coleman', role: 'Writer & Lyricist', photo: 'member2.jpg', bio: 'Bio coming soon.', flavour: 'Architect of worlds. Crafter of verse and voice.' },
+              { name: 'Emma Coleman-Williams', role: 'Producer / Company Secretary', photo: 'member3.jpg', bio: 'Bio coming soon.', flavour: 'Keeper of the coin purse. Master strategist.' },
             ].map((member, index) => (
-              <div key={index} className="cast-card-clean" style={{...styles.castCardClean, width: 'auto', gridColumn: member.gridColumn, justifySelf: 'center'}} onClick={() => setSelectedMember(member)}>
-                <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
-                <h3 style={styles.castName}>{member.name}</h3>
-                {member.role && <p style={styles.castRole}>{member.role}</p>}
+              <div key={index} className="creative-card" style={{ animation: `fadeSlideUp 0.7s ease-out ${index * 0.15}s both` }} onClick={() => setSelectedMember(member)}>
+                {/* Corner ornaments */}
+                <span className="corner-tl" /><span className="corner-tr" />
+                <span className="corner-bl" /><span className="corner-br" />
+                <CreativePhoto src={`/images/cast/${member.photo}`} name={member.name} />
+                <h3 className="creative-name">{member.name}</h3>
+                <p className="creative-role">{member.role}</p>
+                <p className="creative-flavour"><em>{member.flavour}</em></p>
               </div>
             ))}
+          </div>
+
+          {/* Section divider */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', margin: '50px 0 10px 0' }}>
+            <span style={{ flex: '0 1 120px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(201,169,97,0.4))' }}></span>
+            <span style={{ fontFamily: "'Cinzel', serif", fontSize: '18px', color: 'rgba(201,169,97,0.45)', flexShrink: 0 }}>{'\u2694'}</span>
+            <span style={{ flex: '0 1 120px', height: '1px', background: 'linear-gradient(270deg, transparent, rgba(201,169,97,0.4))' }}></span>
           </div>
 
           {/* The Cast ~ Past & Present */}
           <h3 style={styles.castSubheading}>The Cast ~ Past & Present</h3>
-          {/* Row 1: 5 members */}
-          <div className="cast-grid-row" style={styles.castGridRow}>
+          <div className="cast-member-grid" style={styles.castMemberGrid}>
             {[
-              { name: 'Mollie Clare', role: '', icon: '🎭', photo: 'member4.jpg', bio: 'Bio coming soon.' },
-              { name: 'Caroline Dorgan', role: '', icon: '🎭', photo: 'member5.jpg', bio: 'Bio coming soon.' },
-              { name: 'Matthew Edwards', role: '', icon: '🎭', photo: 'member6.jpg', bio: 'Bio coming soon.' },
-              { name: 'Jake Furness', role: '', icon: '🎭', photo: 'member7.jpg', bio: 'Bio coming soon.' },
-              { name: 'Zo\u00eb Harper', role: '', icon: '🎭', photo: 'member8.jpg', bio: 'Bio coming soon.' },
+              { name: 'Mollie Clare', photo: 'member4.jpg', bio: 'Bio coming soon.' },
+              { name: 'Caroline Dorgan', photo: 'member5.jpg', bio: 'Bio coming soon.' },
+              { name: 'Matthew Edwards', photo: 'member6.jpg', bio: 'Bio coming soon.' },
+              { name: 'Jake Furness', photo: 'member7.jpg', bio: 'Bio coming soon.' },
+              { name: 'Zo\u00eb Harper', photo: 'member8.jpg', bio: 'Bio coming soon.' },
+              { name: 'Nicki Jean', photo: 'member9.jpg', bio: 'Bio coming soon.' },
+              { name: 'Kyran Pritchard', photo: 'member10.jpg', bio: 'Bio coming soon.' },
+              { name: 'Sreya Rao', photo: 'member11.jpg', bio: 'Bio coming soon.' },
+              { name: 'Daniel Robert', photo: 'member12.jpg', bio: 'Bio coming soon.' },
+              { name: 'Rebekah Tennyson', photo: 'member13.jpg', bio: 'Bio coming soon.' },
+              { name: 'Cate Welmers', photo: 'member14.jpg', bio: 'Bio coming soon.' },
+              { name: 'Joel Williams', photo: 'member15.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
-              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
-                <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
-                <h3 style={styles.castName}>{member.name}</h3>
-                {member.role && <p style={styles.castRole}>{member.role}</p>}
+              <div key={index} className="cast-member-item" style={{ animation: `fadeSlideUp 0.5s ease-out ${0.3 + index * 0.07}s both` }} onClick={() => setSelectedMember(member)}>
+                <CastPhoto src={`/images/cast/${member.photo}`} name={member.name} />
+                <h3 className="cast-member-name">{member.name}</h3>
               </div>
             ))}
           </div>
-          {/* Row 2: 4 members (offset) */}
-          <div className="cast-grid-row" style={{...styles.castGridRow, marginTop: '-20px'}}>
-            {[
-              { name: 'Nicki Jean', role: '', icon: '🎭', photo: 'member9.jpg', bio: 'Bio coming soon.' },
-              { name: 'Kyran Pritchard', role: '', icon: '🎭', photo: 'member10.jpg', bio: 'Bio coming soon.' },
-              { name: 'Sreya Rao', role: '', icon: '🎭', photo: 'member11.jpg', bio: 'Bio coming soon.' },
-              { name: 'Daniel Robert', role: '', icon: '🎭', photo: 'member12.jpg', bio: 'Bio coming soon.' },
-            ].map((member, index) => (
-              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
-                <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
-                <h3 style={styles.castName}>{member.name}</h3>
-                {member.role && <p style={styles.castRole}>{member.role}</p>}
-              </div>
-            ))}
-          </div>
-          {/* Row 3: 3 members (offset) */}
-          <div className="cast-grid-row" style={{...styles.castGridRow, marginTop: '-20px'}}>
-            {[
-              { name: 'Rebekah Tennyson', role: '', icon: '🎭', photo: 'member13.jpg', bio: 'Bio coming soon.' },
-              { name: 'Cate Welmers', role: '', icon: '🎭', photo: 'member14.jpg', bio: 'Bio coming soon.' },
-              { name: 'Joel Williams', role: '', icon: '🎭', photo: 'member15.jpg', bio: 'Bio coming soon.' },
-            ].map((member, index) => (
-              <div key={index} className="cast-card-clean" style={styles.castCardClean} onClick={() => setSelectedMember(member)}>
-                <CastPhoto src={`/images/cast/${member.photo}`} fallbackIcon={member.icon} name={member.name} />
-                <h3 style={styles.castName}>{member.name}</h3>
-                {member.role && <p style={styles.castRole}>{member.role}</p>}
-              </div>
-            ))}
-          </div>
+
+          {/* Footer tagline */}
+          <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: '11px', color: 'rgba(201,169,97,0.15)', marginTop: '60px', animation: 'fadeSlideUp 0.6s ease-out 1.5s both', fontFamily: 'Georgia, serif', letterSpacing: '0.5px' }}>
+            Every adventurer has a story. These are ours.
+          </p>
         </div>
       </section>
 
@@ -1273,18 +1279,60 @@ function ScrollImage({ src }) {
   );
 }
 
-// Cast Photo Component - shows photo if available, falls back to green oval
-function CastPhoto({ src, fallbackIcon, name }) {
+// Shield Fallback SVG - shows initials inside a shield shape
+function ShieldFallback({ name, size = 140 }) {
+  const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  const s = size;
+  return (
+    <svg width={s} height={s} viewBox="0 0 100 100" style={{ display: 'block' }}>
+      <path d="M50 8 L82 22 C82 22 84 58 50 90 C16 58 18 22 18 22 Z"
+        fill="rgba(60,50,30,0.6)" stroke="rgba(201,169,97,0.35)" strokeWidth="1.5" />
+      <text x="50" y="56" textAnchor="middle" fontFamily="'Cinzel', serif"
+        fontSize="22" fontWeight="600" fill="rgba(201,169,97,0.6)" letterSpacing="1">{initials}</text>
+    </svg>
+  );
+}
+
+// Creative Photo Component - larger circle for creatives section
+function CreativePhoto({ src, name }) {
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
-    return <div style={styles.castPhotoPlaceholder}></div>;
+    return (
+      <div style={styles.creativePhotoFallback}>
+        <ShieldFallback name={name} size={140} />
+      </div>
+    );
   }
 
   return (
     <img
       src={src}
       alt={name}
+      className="creative-photo"
+      style={styles.creativePhoto}
+      onError={() => setHasError(true)}
+    />
+  );
+}
+
+// Cast Photo Component - smaller circle for cast grid
+function CastPhoto({ src, name }) {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return (
+      <div style={styles.castPhotoFallback}>
+        <ShieldFallback name={name} size={100} />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={name}
+      className="cast-photo"
       style={styles.castPhoto}
       onError={() => setHasError(true)}
     />
@@ -1559,7 +1607,7 @@ const styles = {
   sectionCast: {
     padding: '100px 20px',
     background: `
-      radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
+      radial-gradient(ellipse at center, rgba(201,169,97,0.04) 0%, transparent 70%),
       linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
     `,
     color: '#e8dcc4',
@@ -2113,91 +2161,76 @@ const styles = {
     margin: '0 auto 15px auto',
     color: '#6b5b4a',
   },
-  castGrid: {
+  // Creatives card grid
+  creativesCardGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-    gap: '24px',
+    gap: '32px',
+    maxWidth: '920px',
+    margin: '0 auto 40px auto',
+    justifyItems: 'center',
   },
-  castGridRow: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: '24px',
-    marginBottom: '40px',
-  },
-  creativesGridRow: {
+  // Cast member grid
+  castMemberGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(5, 1fr)',
-    gap: '24px',
-    marginBottom: '40px',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+    gap: '24px 16px',
+    maxWidth: '860px',
+    margin: '0 auto',
   },
   castSubheading: {
     fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
     fontSize: '24px',
     color: '#c9a227',
     textAlign: 'center',
-    margin: '40px 0 24px 0',
+    margin: '40px 0 28px 0',
     letterSpacing: '2px',
   },
-  castCard: {
-    textAlign: 'center',
-    padding: '32px 16px',
-    backgroundColor: 'rgba(45, 24, 16, 0.05)',
-    border: '1px solid rgba(201, 162, 39, 0.2)',
-    transition: 'all 0.3s ease',
-    overflow: 'hidden',
-  },
-  castCardClean: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    padding: '16px 8px',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    width: 'calc((100% - 96px) / 5)',
-    minWidth: '140px',
-  },
-  castIcon: {
-    fontSize: '48px',
-    marginBottom: '16px',
-  },
-  castPhoto: {
-    width: '200px',
-    height: '250px',
-    maxWidth: '100%',
+  // Creative photo (large circle)
+  creativePhoto: {
+    width: '140px',
+    height: '140px',
     borderRadius: '50%',
     objectFit: 'cover',
-    border: '3px solid #3d6b1e',
+    border: '2px solid rgba(201,169,97,0.25)',
     marginBottom: '16px',
+    transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
   },
-  castPhotoPlaceholder: {
-    width: '200px',
-    height: '250px',
-    maxWidth: '100%',
+  creativePhotoFallback: {
+    width: '140px',
+    height: '140px',
     borderRadius: '50%',
-    border: '3px solid #3d6b1e',
     marginBottom: '16px',
-    backgroundColor: 'rgba(61, 107, 30, 0.15)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(60,50,30,0.4)',
+    border: '2px solid rgba(201,169,97,0.25)',
+    overflow: 'hidden',
+    transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
   },
-  castName: {
-    fontFamily: "'Cinzel', serif",
-    fontSize: '18px',
-    color: '#e8dcc4',
-    margin: '0 0 8px 0',
+  // Cast photo (smaller circle)
+  castPhoto: {
+    width: '100px',
+    height: '100px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    border: '1.5px solid rgba(201,169,97,0.2)',
+    marginBottom: '10px',
+    transition: 'all 0.3s ease',
   },
-  castRole: {
-    fontSize: '14px',
-    color: '#8b6914',
-    margin: 0,
-    letterSpacing: '1px',
-  },
-  castNote: {
-    textAlign: 'center',
-    fontSize: '14px',
-    color: '#a08060',
-    fontStyle: 'italic',
-    marginTop: '40px',
+  castPhotoFallback: {
+    width: '100px',
+    height: '100px',
+    borderRadius: '50%',
+    marginBottom: '10px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(60,50,30,0.4)',
+    border: '1.5px solid rgba(201,169,97,0.2)',
+    overflow: 'hidden',
+    transition: 'all 0.3s ease',
   },
   castModalOverlay: {
     position: 'fixed',
@@ -2218,7 +2251,7 @@ const styles = {
     maxWidth: '900px',
     padding: '48px',
     backgroundColor: '#1a0e08',
-    border: '2px solid #3d6b1e',
+    border: '2px solid rgba(201,169,97,0.3)',
     borderRadius: '12px',
   },
   castModalClose: {
@@ -2246,9 +2279,9 @@ const styles = {
     height: '375px',
     borderRadius: '50%',
     objectFit: 'cover',
-    border: '3px solid #3d6b1e',
+    border: '3px solid rgba(201,169,97,0.3)',
     animation: 'spinToOval 1s ease-out forwards',
-    boxShadow: '0 0 40px rgba(61, 107, 30, 0.3), 0 0 80px rgba(61, 107, 30, 0.15)',
+    boxShadow: '0 0 40px rgba(201,169,97,0.15), 0 0 80px rgba(201,169,97,0.08)',
   },
   castModalInfo: {
     flex: 1,
@@ -2752,7 +2785,7 @@ const styles = {
 // Add CSS animation keyframes via style injection
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
-  @import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poiret+One&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poiret+One&display=swap');
   
   @keyframes float {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -2796,7 +2829,155 @@ styleSheet.textContent = `
     mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
     -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
   }
-  
+
+  /* fadeSlideUp animation */
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== Creative Card Styles ===== */
+  .creative-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 32px 20px 28px 20px;
+    max-width: 280px;
+    width: 100%;
+    background: linear-gradient(165deg, rgba(60,50,30,0.4) 0%, rgba(30,24,14,0.8) 100%);
+    border: 1px solid rgba(201,169,97,0.15);
+    cursor: pointer;
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+    overflow: visible;
+  }
+  .creative-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(201,169,97,0.5);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(201,169,97,0.06);
+    background: linear-gradient(165deg, rgba(70,58,30,0.5) 0%, rgba(35,28,16,0.85) 100%);
+  }
+
+  /* Corner ornaments */
+  .creative-card .corner-tl,
+  .creative-card .corner-tr,
+  .creative-card .corner-bl,
+  .creative-card .corner-br {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+  }
+  .creative-card .corner-tl {
+    top: 6px; left: 6px;
+    border-top: 1.5px solid rgba(201,169,97,0.3);
+    border-left: 1.5px solid rgba(201,169,97,0.3);
+  }
+  .creative-card .corner-tr {
+    top: 6px; right: 6px;
+    border-top: 1.5px solid rgba(201,169,97,0.3);
+    border-right: 1.5px solid rgba(201,169,97,0.3);
+  }
+  .creative-card .corner-bl {
+    bottom: 6px; left: 6px;
+    border-bottom: 1.5px solid rgba(201,169,97,0.3);
+    border-left: 1.5px solid rgba(201,169,97,0.3);
+  }
+  .creative-card .corner-br {
+    bottom: 6px; right: 6px;
+    border-bottom: 1.5px solid rgba(201,169,97,0.3);
+    border-right: 1.5px solid rgba(201,169,97,0.3);
+  }
+
+  /* Creative photo hover */
+  .creative-card:hover .creative-photo,
+  .creative-card:hover .creative-photo-fallback-wrap {
+    border-color: rgba(201,169,97,0.5);
+    box-shadow: 0 0 15px rgba(201,169,97,0.1);
+  }
+
+  /* Creative name */
+  .creative-name {
+    font-family: 'Cinzel', serif;
+    font-variant: small-caps;
+    font-size: 16px;
+    color: #e8dcc8;
+    letter-spacing: 1.5px;
+    margin: 0 0 6px 0;
+    font-weight: 600;
+  }
+
+  /* Creative role */
+  .creative-role {
+    font-size: 11px;
+    color: rgba(201,169,97,0.8);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+    font-family: 'Cinzel', serif;
+  }
+
+  /* Creative flavour text - hidden by default, fade in on hover */
+  .creative-flavour {
+    font-family: Georgia, serif;
+    font-size: 12px;
+    color: rgba(201,169,97,0.6);
+    margin: 0;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    max-width: 220px;
+  }
+  .creative-card:hover .creative-flavour {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== Cast Member Item Styles ===== */
+  .cast-member-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    padding: 12px 4px;
+    transition: transform 0.3s ease;
+  }
+  .cast-member-item:hover {
+    transform: translateY(-2px);
+  }
+  .cast-member-item:hover .cast-photo {
+    transform: scale(1.08);
+    border-color: rgba(201,169,97,0.5);
+    box-shadow: 0 0 15px rgba(201,169,97,0.1);
+  }
+  .cast-member-item:hover .cast-photo-fallback-wrap {
+    transform: scale(1.08);
+    border-color: rgba(201,169,97,0.5);
+    box-shadow: 0 0 15px rgba(201,169,97,0.1);
+  }
+  .cast-member-name {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(232,220,200,0.7);
+    margin: 0;
+    transition: color 0.3s ease;
+    font-weight: 400;
+  }
+  .cast-member-item:hover .cast-member-name {
+    color: #e8dcc8;
+  }
+
   #contact-mailing-list:checked {
     background-color: rgba(201, 162, 39, 0.15);
     border-color: rgba(201, 162, 39, 0.6);
@@ -2865,14 +3046,11 @@ styleSheet.textContent = `
     .supportFundingBar {
       padding: 24px 20px !important;
     }
-    .cast-grid-row .cast-card-clean {
-      width: calc((100% - 48px) / 3) !important;
+    .creatives-card-grid {
+      gap: 24px !important;
     }
-    .creatives-grid-row {
-      grid-template-columns: repeat(3, 1fr) !important;
-    }
-    .creatives-grid-row .cast-card-clean {
-      grid-column: auto !important;
+    .cast-member-grid {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important;
     }
   }
 
@@ -2887,14 +3065,18 @@ styleSheet.textContent = `
       flex-direction: column !important;
       align-items: center !important;
     }
-    .creatives-grid-row {
+    .creatives-card-grid {
       grid-template-columns: 1fr !important;
+      max-width: 300px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
     }
-    .creatives-grid-row .cast-card-clean {
-      grid-column: auto !important;
+    .creative-card {
+      max-width: 100% !important;
     }
-    .cast-grid-row .cast-card-clean {
-      width: calc((100% - 24px) / 2) !important;
+    .cast-member-grid {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+      gap: 16px 12px !important;
     }
     .contactSocialRow {
       gap: 10px !important;
