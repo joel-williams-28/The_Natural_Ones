@@ -224,7 +224,7 @@ export default function TheNaturalOnesWebsite() {
           <h2 style={styles.heroShowSubtitle}>The Musical!</h2>
           <div style={styles.heroDivider}>
             <span style={styles.dividerLine}></span>
-            <span style={{...styles.dividerDot, color: '#c9a227', fontFamily: "'Vatican Light', serif", fontSize: '32px'}}>&</span>
+            <span style={{...styles.dividerDot, color: '#c9a227', fontFamily: "'Cinzel Decorative', 'Cinzel', serif", fontSize: '32px'}}>&</span>
             <span style={styles.dividerLine}></span>
           </div>
           <h2 style={{...styles.heroShowTitle, fontFamily: "'Poiret One', sans-serif"}}>Mystery at Murderingham Manor...</h2>
@@ -425,7 +425,7 @@ export default function TheNaturalOnesWebsite() {
           </div>
 
           {/* Footer tagline */}
-          <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: '11px', color: 'rgba(201,169,97,0.25)', marginTop: '60px', animation: 'fadeSlideUp 0.6s ease-out 1.5s both', fontFamily: 'Georgia, serif', letterSpacing: '0.5px' }}>
+          <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: '11px', color: 'rgba(201,169,97,0.15)', marginTop: '60px', animation: 'fadeSlideUp 0.6s ease-out 1.5s both', fontFamily: 'Georgia, serif', letterSpacing: '0.5px' }}>
             Every adventurer has a story. These are ours.
           </p>
         </div>
