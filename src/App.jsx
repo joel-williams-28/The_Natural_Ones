@@ -701,7 +701,7 @@ export default function TheNaturalOnesWebsite() {
                 <div style={styles.formCheckboxGroup}>
                   <label style={styles.formCheckboxLabel} htmlFor="contact-mailing-list">
                     <input id="contact-mailing-list" type="checkbox" name="mailing_list" value="yes" style={styles.formCheckbox} />
-                    <span>Keep me updated about The Natural Ones</span>
+                    <span style={{ fontWeight: 'bold' }}>Keep me updated about The Natural Ones</span>
                   </label>
                 </div>
                 {formStatus === 'error' && (
