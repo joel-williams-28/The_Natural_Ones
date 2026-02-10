@@ -63,20 +63,12 @@ export default function TheNaturalOnesWebsite() {
   const [kickstarterLoading, setKickstarterLoading] = useState(true);
   const [kickstarterError, setKickstarterError] = useState(false);
   const [formStatus, setFormStatus] = useState('idle'); // idle | sending | success | error
+  const [showCaptcha, setShowCaptcha] = useState(false);
   const recaptchaRef = useRef(null);
+  const contactFormRef = useRef(null);
 
-  const handleContactSubmit = async (e) => {
-    e.preventDefault();
-
-    // Verify reCAPTCHA before submitting
-    const recaptchaResponse = recaptchaRef.current?.getValue();
-    if (!recaptchaResponse) {
-      setFormStatus('captcha-error');
-      return;
-    }
-
+  const submitForm = async (form, recaptchaResponse) => {
     setFormStatus('sending');
-    const form = e.target;
     const formData = new URLSearchParams({
       'form-name': 'contact',
       name: form.elements.name.value,
@@ -94,10 +86,37 @@ export default function TheNaturalOnesWebsite() {
       if (!res.ok) throw new Error('Form submission failed');
       setFormStatus('success');
       form.reset();
+      setShowCaptcha(false);
       recaptchaRef.current?.reset();
     } catch {
       setFormStatus('error');
       recaptchaRef.current?.reset();
+    }
+  };
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+
+    const recaptchaResponse = recaptchaRef.current?.getValue();
+    if (!recaptchaResponse) {
+      // Show the CAPTCHA if not yet visible
+      if (!showCaptcha) {
+        setShowCaptcha(true);
+        setFormStatus('captcha-pending');
+        return;
+      }
+      // CAPTCHA is visible but not completed
+      setFormStatus('captcha-error');
+      return;
+    }
+
+    submitForm(e.target, recaptchaResponse);
+  };
+
+  const handleCaptchaChange = (value) => {
+    if (value && contactFormRef.current) {
+      setFormStatus('idle');
+      submitForm(contactFormRef.current, value);
     }
   };
 
@@ -696,7 +715,7 @@ export default function TheNaturalOnesWebsite() {
                 </button>
               </div>
             ) : (
-              <form className="contactFormInner" style={styles.contactFormInner} onSubmit={handleContactSubmit}>
+              <form ref={contactFormRef} className="contactFormInner" style={styles.contactFormInner} onSubmit={handleContactSubmit}>
                 <input type="hidden" name="form-name" value="contact" />
                 <p style={{ display: 'none' }}><input name="bot-field" /></p>
                 <div style={styles.formGroup}>
@@ -717,12 +736,18 @@ export default function TheNaturalOnesWebsite() {
                     <span style={{ fontWeight: 'bold' }}>Keep me updated about The Natural Ones</span>
                   </label>
                 </div>
-                <div className="recaptcha-wrapper">
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-                  />
-                </div>
+                {showCaptcha && (
+                  <div className="recaptcha-wrapper recaptcha-reveal">
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                      onChange={handleCaptchaChange}
+                    />
+                  </div>
+                )}
+                {formStatus === 'captcha-pending' && (
+                  <p style={styles.formCaptchaHint}>Please complete the CAPTCHA above to send your message.</p>
+                )}
                 {formStatus === 'captcha-error' && (
                   <p style={styles.formErrorText}>Please complete the CAPTCHA to send your message.</p>
                 )}
@@ -2879,6 +2904,12 @@ const styles = {
     textAlign: 'center',
     margin: 0,
   },
+  formCaptchaHint: {
+    color: '#8b6914',
+    fontSize: '15px',
+    textAlign: 'center',
+    margin: 0,
+  },
 
   // Footer
   footer: {
@@ -3151,6 +3182,25 @@ styleSheet.textContent = `
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
+  }
+
+  .recaptcha-wrapper.recaptcha-reveal {
+    animation: captchaReveal 0.4s ease-out;
+  }
+
+  @keyframes captchaReveal {
+    from {
+      opacity: 0;
+      max-height: 0;
+      margin-bottom: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      max-height: 120px;
+      margin-bottom: 1rem;
+      transform: translateY(0);
+    }
   }
 
   .recaptcha-wrapper > div > div {
