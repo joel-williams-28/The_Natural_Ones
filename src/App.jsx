@@ -3171,13 +3171,13 @@ styleSheet.textContent = `
   /* reCAPTCHA popup overlay */
   .recaptcha-overlay {
     position: absolute;
-    inset: 0;
+    inset: -24px -32px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(45, 24, 16, 0.25);
     backdrop-filter: blur(2px);
-    border-radius: 6px;
+    border-radius: 12px;
     z-index: 10;
     animation: overlayFadeIn 0.3s ease-out;
   }
