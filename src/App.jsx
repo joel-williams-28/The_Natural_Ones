@@ -2360,7 +2360,9 @@ const styles = {
   castModalContent: {
     position: 'relative',
     width: '90vw',
-    maxWidth: '900px',
+    maxWidth: '1100px',
+    maxHeight: '90vh',
+    overflowY: 'auto',
     padding: '48px',
     backgroundColor: '#1a0e08',
     border: '2px solid rgba(201,169,97,0.3)',
