@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 // Show data for the carousel - Two shows
 // Images: Place poster01.jpg, scroll01.jpg, poster02.jpg, scroll02.jpg, etc. in public/images/
@@ -62,12 +63,13 @@ export default function TheNaturalOnesWebsite() {
   const [kickstarterLoading, setKickstarterLoading] = useState(true);
   const [kickstarterError, setKickstarterError] = useState(false);
   const [formStatus, setFormStatus] = useState('idle'); // idle | sending | success | error
+  const recaptchaRef = useRef(null);
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
 
     // Verify reCAPTCHA before submitting
-    const recaptchaResponse = window.grecaptcha && window.grecaptcha.getResponse();
+    const recaptchaResponse = recaptchaRef.current?.getValue();
     if (!recaptchaResponse) {
       setFormStatus('captcha-error');
       return;
@@ -92,10 +94,10 @@ export default function TheNaturalOnesWebsite() {
       if (!res.ok) throw new Error('Form submission failed');
       setFormStatus('success');
       form.reset();
-      if (window.grecaptcha) window.grecaptcha.reset();
+      recaptchaRef.current?.reset();
     } catch {
       setFormStatus('error');
-      if (window.grecaptcha) window.grecaptcha.reset();
+      recaptchaRef.current?.reset();
     }
   };
 
@@ -715,7 +717,12 @@ export default function TheNaturalOnesWebsite() {
                     <span style={{ fontWeight: 'bold' }}>Keep me updated about The Natural Ones</span>
                   </label>
                 </div>
-                <div data-netlify-recaptcha="true" style={{ marginBottom: '1rem' }}></div>
+                <div style={{ marginBottom: '1rem' }}>
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                  />
+                </div>
                 {formStatus === 'captcha-error' && (
                   <p style={styles.formErrorText}>Please complete the CAPTCHA to send your message.</p>
                 )}
