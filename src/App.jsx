@@ -428,7 +428,7 @@ export default function TheNaturalOnesWebsite() {
           </div>
 
           {/* Footer tagline */}
-          <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: '12px', color: 'rgba(201,169,97,0.3)', marginTop: '60px', animation: 'fadeSlideUp 0.6s ease-out 1.5s both', fontFamily: 'Georgia, serif', letterSpacing: '0.5px' }}>
+          <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: '12px', color: 'rgba(232,220,200,0.7)', marginTop: '60px', animation: 'fadeSlideUp 0.6s ease-out 1.5s both', fontFamily: 'Georgia, serif', letterSpacing: '0.5px' }}>
             Every adventurer has a story. These are ours.
           </p>
         </div>
