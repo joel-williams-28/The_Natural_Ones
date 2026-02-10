@@ -2431,7 +2431,7 @@ const styles = {
     color: '#e8dcc4',
     lineHeight: 1.8,
     margin: 0,
-    animation: 'fadeSlideDown 2s ease-out 0.15s both',
+    animation: 'fadeSlideDown 1.5s ease-out 0.15s both',
   },
   
   // Support Section
