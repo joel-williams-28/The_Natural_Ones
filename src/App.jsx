@@ -63,20 +63,12 @@ export default function TheNaturalOnesWebsite() {
   const [kickstarterLoading, setKickstarterLoading] = useState(true);
   const [kickstarterError, setKickstarterError] = useState(false);
   const [formStatus, setFormStatus] = useState('idle'); // idle | sending | success | error
+  const [showCaptcha, setShowCaptcha] = useState(false);
   const recaptchaRef = useRef(null);
+  const contactFormRef = useRef(null);
 
-  const handleContactSubmit = async (e) => {
-    e.preventDefault();
-
-    // Verify reCAPTCHA before submitting
-    const recaptchaResponse = recaptchaRef.current?.getValue();
-    if (!recaptchaResponse) {
-      setFormStatus('captcha-error');
-      return;
-    }
-
+  const submitForm = async (form, recaptchaResponse) => {
     setFormStatus('sending');
-    const form = e.target;
     const formData = new URLSearchParams({
       'form-name': 'contact',
       name: form.elements.name.value,
@@ -94,10 +86,34 @@ export default function TheNaturalOnesWebsite() {
       if (!res.ok) throw new Error('Form submission failed');
       setFormStatus('success');
       form.reset();
+      setShowCaptcha(false);
       recaptchaRef.current?.reset();
     } catch {
       setFormStatus('error');
       recaptchaRef.current?.reset();
+    }
+  };
+
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+
+    const recaptchaResponse = recaptchaRef.current?.getValue();
+    if (!recaptchaResponse) {
+      // Show the CAPTCHA popup if not yet visible
+      if (!showCaptcha) {
+        setShowCaptcha(true);
+        return;
+      }
+      return;
+    }
+
+    submitForm(e.target, recaptchaResponse);
+  };
+
+  const handleCaptchaChange = (value) => {
+    if (value && contactFormRef.current) {
+      setFormStatus('idle');
+      submitForm(contactFormRef.current, value);
     }
   };
 
@@ -696,7 +712,7 @@ export default function TheNaturalOnesWebsite() {
                 </button>
               </div>
             ) : (
-              <form className="contactFormInner" style={styles.contactFormInner} onSubmit={handleContactSubmit}>
+              <form ref={contactFormRef} className="contactFormInner" style={styles.contactFormInner} onSubmit={handleContactSubmit}>
                 <input type="hidden" name="form-name" value="contact" />
                 <p style={{ display: 'none' }}><input name="bot-field" /></p>
                 <div style={styles.formGroup}>
@@ -717,21 +733,26 @@ export default function TheNaturalOnesWebsite() {
                     <span style={{ fontWeight: 'bold' }}>Keep me updated about The Natural Ones</span>
                   </label>
                 </div>
-                <div style={{ marginBottom: '1rem' }}>
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-                  />
-                </div>
-                {formStatus === 'captcha-error' && (
-                  <p style={styles.formErrorText}>Please complete the CAPTCHA to send your message.</p>
-                )}
                 {formStatus === 'error' && (
                   <p style={styles.formErrorText}>Something went wrong. Please try again.</p>
                 )}
                 <button type="submit" style={styles.submitButton} disabled={formStatus === 'sending'}>
                   {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
                 </button>
+                {showCaptcha && (
+                  <div className="recaptcha-overlay" onClick={() => { setShowCaptcha(false); setFormStatus('idle'); }}>
+                    <div className="recaptcha-popup" onClick={(e) => e.stopPropagation()}>
+                      <p className="recaptcha-popup-label">One last step...</p>
+                      <div className="recaptcha-wrapper">
+                        <ReCAPTCHA
+                          ref={recaptchaRef}
+                          sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                          onChange={handleCaptchaChange}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
               </form>
             )}
           </div>
@@ -2750,6 +2771,7 @@ const styles = {
     textAlign: 'center',
   },
   contactFormInner: {
+    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
@@ -3144,6 +3166,72 @@ styleSheet.textContent = `
   #contact-mailing-list:hover {
     border-color: rgba(201, 162, 39, 0.6);
     background-color: rgba(45, 24, 16, 0.08);
+  }
+
+  /* reCAPTCHA popup overlay */
+  .recaptcha-overlay {
+    position: absolute;
+    inset: -24px -32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(45, 24, 16, 0.25);
+    backdrop-filter: blur(2px);
+    border-radius: 12px;
+    z-index: 10;
+    animation: overlayFadeIn 0.3s ease-out;
+  }
+
+  .recaptcha-popup {
+    background: linear-gradient(145deg, #f5f0e8, #ece4d4);
+    border: 1px solid rgba(201, 162, 39, 0.4);
+    border-radius: 10px;
+    padding: 24px 28px 20px;
+    box-shadow: 0 8px 32px rgba(45, 24, 16, 0.2), 0 0 0 1px rgba(201, 162, 39, 0.1);
+    animation: popupScaleIn 0.3s ease-out;
+    text-align: center;
+  }
+
+  .recaptcha-popup-label {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8b6914;
+    margin: 0 0 16px 0;
+  }
+
+  .recaptcha-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .recaptcha-wrapper > div > div {
+    border-radius: 6px !important;
+    overflow: hidden;
+    border: 1px solid rgba(201, 162, 39, 0.3) !important;
+    background-color: rgba(45, 24, 16, 0.04) !important;
+    box-shadow: none !important;
+  }
+
+  .recaptcha-wrapper iframe {
+    border-radius: 6px;
+  }
+
+  @keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes popupScaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   * {
