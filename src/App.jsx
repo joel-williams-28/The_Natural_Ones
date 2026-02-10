@@ -424,21 +424,21 @@ export default function TheNaturalOnesWebsite() {
             <span style={{ flex: '0 1 120px', height: '1px', background: 'linear-gradient(270deg, transparent, rgba(201,169,97,0.4))' }}></span>
           </div>
 
-          {/* The Cast ~ Past & Present */}
-          <h3 style={styles.castSubheading}>The Cast ~ Past & Present</h3>
+          {/* Meet The Cast ~ Past & Present */}
+          <h3 style={styles.castSubheading}>Meet The Cast ~ Past & Present</h3>
           <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: '12px', color: 'rgba(232,220,200,0.7)', marginTop: '0', marginBottom: '30px', animation: 'fadeSlideUp 0.6s ease-out 1.5s both', fontFamily: 'Georgia, serif', letterSpacing: '0.5px' }}>
             Every adventurer has a story. These are ours.
           </p>
           <div className="cast-member-grid" style={styles.castMemberGrid}>
             {[
-              { name: 'Mollie Iwanczak', photo: 'member4.jpg', bio: 'Bio coming soon.' },
-              { name: 'Caroline Dorgan', photo: 'member5.jpg', bio: 'Bio coming soon.' },
+              { name: 'Mollie Iwanczak', photo: 'member4.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Mollie has been doing theatre since she was in secondary school, throughout university and then into her adult life. She met her lovely castmates in a local theatre group (and Sreya at a water park) and has never looked back!</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Her favourite shows she's been in are <em>Rent</em>, <em>Chitty Chitty Bang Bang</em>, <em>9 to 5</em> and <em>Guys and Dolls</em>.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>This show has mixed her love of TTRPGs and musicals and they have the best fun doing these performances. She could honestly pinch herself that this is such a huge part of her life now.</p><p style={{ textAlign: 'justify', margin: 0 }}>Hope you enjoy our shows!</p></> },
+              { name: 'Caroline Dorgan', photo: 'member5.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Caroline found her way to The Natural Ones via Abingdon Operatic Society, where she met this wonderful bunch of silly, talented, theatre-loving humans and was honoured to be asked to stick around.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>She's only been performing for the last few years, but she's wasted no time — she's already had a lot of fun playing General Cartwright in <em>Guys and Dolls</em> and is currently deep in rehearsals as Mrs Potts in <em>Beauty and the Beast</em> — getting a good <em>"handle"</em> on the role, she says, and no, she will not apologise for that.</p><p style={{ textAlign: 'justify', margin: 0 }}>Caroline has loved theatre since childhood and grew up going to many shows with her parents, so joining a group of enthusiastic, slightly nerdy, very loveable performers feels exactly right. She's finally found her people.</p></> },
               { name: 'Matthew Edwards', photo: 'member6.jpg', bio: 'Bio coming soon.' },
-              { name: 'Jake Furness', photo: 'member7.jpg', bio: 'Bio coming soon.' },
+              { name: 'Jake Furness', photo: 'member7.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Jake was recruited to The Natural Ones when James told him he had a part that was <em>"a bit of a dick"</em> and thought Jake would be perfect for it. He's still not sure whether that was a compliment.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Jake trained in ballet, tap and modern dance from the age of six, earning junior associate scholarships from both the Royal Ballet and the British Ballet Organisation. He appeared in professional pantomimes in Coventry as a child and teenager, before moving into musical theatre with Coventry Youth Operatic Group and later with Stratford-upon-Avon. He then took what he describes as an <em>"extended intermission"</em> from the stage — spanning many, many years — before deciding he rather missed it and returning to amateur dramatics with Abingdon Operatic Society.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Since then, Jake has thrown himself into choreography with the Society and is looking forward to serving as principal choreographer for their upcoming production of <em>Come From Away</em>.</p><p style={{ textAlign: 'justify', margin: 0 }}>Jake is delighted to be back doing what he loves, thrilled to be part of The Natural Ones, and only mildly concerned about what it says about him that James's first thought for <em>"a bit of a dick"</em> was to come straight to him.</p></> },
               { name: 'Zo\u00eb Harper', photo: 'member8.jpg', bio: 'Bio coming soon.' },
               { name: 'Nicki Rochford', photo: 'member9.jpg', bio: 'Bio coming soon.' },
               { name: 'Kyran Pritchard', photo: 'member10.jpg', bio: 'Bio coming soon.' },
-              { name: 'Sreya Rao', photo: 'member11.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>After meeting Mollie through a mutual friend (at a water park, of all places!) and then getting to know the rest of the troupe through a musical theatre group, I was delighted to become part of The Natural Ones.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>I have been acting in community groups for about 20 years, including plays, musicals, and pantos, and I sing with a chamber choir. Favourite roles include Puck in <em>A Midsummer Night&#39;s Dream</em>, Marianne in <em>Sense &amp; Sensibility</em>, Margaret in <em>Dear Brutus</em>, and Cis in <em>The Magistrate</em>. I&#39;ve also had the pleasure of playing many parts in stage adaptations of Terry Pratchett&#39;s Discworld series, written and directed by Stephen Briggs - including donning a big bushy beard as Cheery Littlebottom, the dwarf!</p><p style={{ textAlign: 'justify', margin: 0 }}>The best thing about theatre is working with people from all walks of life and how it&#39;s a mix of serious and silly - though we are heavy on the silly!</p></> },
+              { name: 'Sreya Rao', photo: 'member11.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>After meeting Mollie through a mutual friend (at a water park, of all places!) and then getting to know the rest of the troupe through a musical theatre group, Sreya was delighted to become part of The Natural Ones.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>She has been acting in community groups for about 20 years, including plays, musicals, and pantos, and she sings with a chamber choir. Favourite roles include Puck in <em>A Midsummer Night's Dream</em>, Marianne in <em>Sense &amp; Sensibility</em>, Margaret in <em>Dear Brutus</em>, and Cis in <em>The Magistrate</em>. She's also had the pleasure of playing many parts in stage adaptations of Terry Pratchett's Discworld series, written and directed by Stephen Briggs — including donning a big bushy beard as Cheery Littlebottom, the dwarf!</p><p style={{ textAlign: 'justify', margin: 0 }}>The best thing about theatre, she says, is working with people from all walks of life and how it's a mix of serious and silly — though The Natural Ones are heavy on the silly!</p></> },
               { name: 'Daniel Robert', photo: 'member12.jpg', bio: 'Bio coming soon.' },
               { name: 'Rebekah Tennyson', photo: 'member13.jpg', bio: 'Bio coming soon.' },
               { name: 'Cate Welmers', photo: 'member14.jpg', bio: 'Bio coming soon.' },
@@ -701,7 +701,7 @@ export default function TheNaturalOnesWebsite() {
                 <div style={styles.formCheckboxGroup}>
                   <label style={styles.formCheckboxLabel} htmlFor="contact-mailing-list">
                     <input id="contact-mailing-list" type="checkbox" name="mailing_list" value="yes" style={styles.formCheckbox} />
-                    <span>Keep me updated about The Natural Ones</span>
+                    <span style={{ fontWeight: 'bold' }}>Keep me updated about The Natural Ones</span>
                   </label>
                 </div>
                 {formStatus === 'error' && (
@@ -2348,7 +2348,9 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
     zIndex: 1000,
     display: 'flex',
     alignItems: 'center',
@@ -2358,7 +2360,9 @@ const styles = {
   castModalContent: {
     position: 'relative',
     width: '90vw',
-    maxWidth: '900px',
+    maxWidth: '1100px',
+    maxHeight: '90vh',
+    overflowY: 'auto',
     padding: '48px',
     backgroundColor: '#1a0e08',
     border: '2px solid rgba(201,169,97,0.3)',
@@ -2427,6 +2431,7 @@ const styles = {
     color: '#e8dcc4',
     lineHeight: 1.8,
     margin: 0,
+    animation: 'fadeSlideDown 1.5s ease-out 0.15s both',
   },
   
   // Support Section
@@ -2944,6 +2949,11 @@ styleSheet.textContent = `
   @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }
+  }
+
+  @keyframes fadeSlideDown {
+    0% { opacity: 0; transform: translateY(-15px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
   .cast-modal-photo {
