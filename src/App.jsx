@@ -281,35 +281,25 @@ export default function TheNaturalOnesWebsite() {
           <div className="about-grid" style={styles.aboutGrid}>
             <div style={styles.aboutText}>
               <p style={{...styles.paragraph, marginBottom: '40px'}}>
-                <span className="drop-cap" style={styles.dropCap}>E</span>very great adventure starts somewhere. Ours started with
-                a name that didn't stick.
-              </p>
-              <p style={styles.paragraph}>
-                The Natural Ones began life as <span style={{fontStyle: 'italic'}}>A Box of Frogs</span> — which,
-                in hindsight, was less a name and more a description of our rehearsal process. After a few
-                iterations (none of which we'll be sharing, for legal and dignity reasons), we landed
-                on <strong>The Natural Ones</strong>: a nod to the most feared roll in tabletop gaming, the
-                dreaded natural one on a D20. For the uninitiated, a natural one means total, catastrophic
+                <span className="drop-cap" style={styles.dropCap}>T</span>he Natural Ones are an
+                Oxfordshire-based performing arts group dedicated to original comedy theatre. The name is a nod
+                to the most feared roll in tabletop gaming: the natural one on a D20. Total, catastrophic
                 failure. Your sword shatters. Your spell backfires. You fall off the bridge you were standing
                 perfectly still on.
               </p>
               <p style={styles.paragraph}>
-                We thought it suited us rather well.
+                We went through a few other names first (none of which we'll be sharing, for legal and dignity
+                reasons). We thought it suited us rather well.
               </p>
               <p style={styles.paragraph}>
-                <strong>The Natural Ones</strong> are an Oxfordshire-based performing arts group made up of a
-                brilliant selection of weirdos who all happen to be brilliant singers and actors
-                too. We're dedicated to original comedy theatre — the kind of shows where the scripts are new,
-                the laughs are genuine, and the props budget is optimistic at best.
-              </p>
-              <p style={styles.paragraph}>
-                Our founder, <strong>James A. Coleman</strong> — scriptwriter, lyricist, director and
-                producer — is both a lifelong musical theatre obsessive and an irredeemable nerd, which really
-                made this whole thing an inevitability. After years of performing, crewing, writing and directing
-                amateur productions across the country, he discovered tabletop role-playing games in his early
+                Our founder, <strong>James A. Coleman</strong> (scriptwriter, lyricist, director and
+                producer) is both a lifelong musical theatre obsessive and an irredeemable nerd, which really
+                made this whole thing an inevitability. After plenty of time performing, crewing, writing and
+                directing amateur productions, he discovered tabletop role-playing games in his early
                 20s and immediately thought: <span style={{fontStyle: 'italic'}}>this needs to be a
-                musical.</span> Six years of development later — which is either dedication or stubbornness
-                depending on who you ask — <span style={{fontStyle: 'italic'}}>Tabletop Role-Playing Game: The Musical!</span> was born.
+                musical.</span> Several years of development
+                later, <span style={{fontStyle: 'italic'}}>Tabletop Roll-Playing Game: The
+                Musical</span> (or <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> for short) was born.
               </p>
               <p style={styles.paragraph}>
                 The music comes from <strong>Richard Baker</strong>, an Olivier Award-nominated composer whose
@@ -320,25 +310,18 @@ export default function TheNaturalOnesWebsite() {
                 him to bring the show's mad songs and scenes to life.
               </p>
               <p style={styles.paragraph}>
-                First assembled to perform <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> in Abingdon in
-                2025, the group launched with a sold-out debut in January of that year before taking the show to
-                the Cheltenham Fringe Festival and performing extracts at MCM London Comic Con — where we had a
-                fantastic time and still managed to feel pretty out of place despite the surroundings. We're currently
-                preparing our newest comedy, <span style={{fontStyle: 'italic'}}>Mystery at Murderingham
-                Manor</span>, while also performing <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> in
-                venues across the country and working towards our next great quest: the Edinburgh Fringe Festival
-                in 2026.
-              </p>
-              <p style={styles.paragraph}>
-                We're a group of fledgling artists with big ambitions, questionable judgement, and an unreasonable
-                fondness for puns. If that sounds like your sort of thing, we'd love to have you along for the ride.
+                Since our sold-out debut in Abingdon in January 2025, we've
+                taken <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> to the Cheltenham Fringe Festival, MCM
+                London Comic Con, and venues across the country. We're currently preparing our newest
+                comedy, <span style={{fontStyle: 'italic'}}>Mystery at Murderingham Manor</span>, and working
+                towards our next great quest: the Edinburgh Fringe Festival in 2026.
               </p>
               <div style={styles.aboutDivider}></div>
               <div
                 style={styles.meetCastLink}
                 onClick={() => scrollToSection('cast')}
               >
-                <span style={{marginRight: '8px'}}>&#8594;</span> Meet the Creatives & Cast
+                <span style={{marginRight: '8px'}}>&#8594;</span> Find out who's bringing it all to life: Meet the Creatives & Cast
               </div>
             </div>
             <div className="about-card" style={styles.aboutCard}>
