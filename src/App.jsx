@@ -381,6 +381,7 @@ export default function TheNaturalOnesWebsite() {
             {[
               { name: 'Richard Baker', role: 'Composer', photo: 'member1.jpg', bio: 'Bio coming soon.', flavour: 'Weaver of sonic enchantments. Olivier Award-nominated bard.' },
               { name: 'James A. Coleman', role: 'Writer & Lyricist', photo: 'member2.jpg', bio: 'Bio coming soon.', flavour: 'Architect of worlds. Crafter of verse and voice.' },
+              { name: 'Sreya Rao', role: 'Treasurer', photo: 'member11.jpg', bio: 'Bio coming soon.', flavour: 'Guardian of the guild vault. Every gold piece accounted for.' },
               { name: 'Emma Coleman-Williams', role: 'Producer / Company Secretary', photo: 'member3.jpg', bio: 'Bio coming soon.', flavour: 'Keeper of the coin purse. Master strategist.' },
             ].map((member, index) => (
               <div key={index} className="creative-card" style={{ animation: `fadeSlideUp 0.7s ease-out ${index * 0.15}s both` }} onClick={() => setSelectedMember(member)}>
@@ -406,12 +407,12 @@ export default function TheNaturalOnesWebsite() {
           <h3 style={styles.castSubheading}>The Cast ~ Past & Present</h3>
           <div className="cast-member-grid" style={styles.castMemberGrid}>
             {[
-              { name: 'Mollie Clare', photo: 'member4.jpg', bio: 'Bio coming soon.' },
+              { name: 'Mollie Iwanczak', photo: 'member4.jpg', bio: 'Bio coming soon.' },
               { name: 'Caroline Dorgan', photo: 'member5.jpg', bio: 'Bio coming soon.' },
               { name: 'Matthew Edwards', photo: 'member6.jpg', bio: 'Bio coming soon.' },
               { name: 'Jake Furness', photo: 'member7.jpg', bio: 'Bio coming soon.' },
               { name: 'Zo\u00eb Harper', photo: 'member8.jpg', bio: 'Bio coming soon.' },
-              { name: 'Nicki Jean', photo: 'member9.jpg', bio: 'Bio coming soon.' },
+              { name: 'Nicki Rochford', photo: 'member9.jpg', bio: 'Bio coming soon.' },
               { name: 'Kyran Pritchard', photo: 'member10.jpg', bio: 'Bio coming soon.' },
               { name: 'Sreya Rao', photo: 'member11.jpg', bio: 'Bio coming soon.' },
               { name: 'Daniel Robert', photo: 'member12.jpg', bio: 'Bio coming soon.' },
@@ -427,7 +428,7 @@ export default function TheNaturalOnesWebsite() {
           </div>
 
           {/* Footer tagline */}
-          <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: '11px', color: 'rgba(201,169,97,0.15)', marginTop: '60px', animation: 'fadeSlideUp 0.6s ease-out 1.5s both', fontFamily: 'Georgia, serif', letterSpacing: '0.5px' }}>
+          <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: '12px', color: 'rgba(201,169,97,0.3)', marginTop: '60px', animation: 'fadeSlideUp 0.6s ease-out 1.5s both', fontFamily: 'Georgia, serif', letterSpacing: '0.5px' }}>
             Every adventurer has a story. These are ours.
           </p>
         </div>
