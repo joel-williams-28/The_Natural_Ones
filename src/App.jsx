@@ -99,14 +99,11 @@ export default function TheNaturalOnesWebsite() {
 
     const recaptchaResponse = recaptchaRef.current?.getValue();
     if (!recaptchaResponse) {
-      // Show the CAPTCHA if not yet visible
+      // Show the CAPTCHA popup if not yet visible
       if (!showCaptcha) {
         setShowCaptcha(true);
-        setFormStatus('captcha-pending');
         return;
       }
-      // CAPTCHA is visible but not completed
-      setFormStatus('captcha-error');
       return;
     }
 
@@ -736,27 +733,26 @@ export default function TheNaturalOnesWebsite() {
                     <span style={{ fontWeight: 'bold' }}>Keep me updated about The Natural Ones</span>
                   </label>
                 </div>
-                {showCaptcha && (
-                  <div className="recaptcha-wrapper recaptcha-reveal">
-                    <ReCAPTCHA
-                      ref={recaptchaRef}
-                      sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-                      onChange={handleCaptchaChange}
-                    />
-                  </div>
-                )}
-                {formStatus === 'captcha-pending' && (
-                  <p style={styles.formCaptchaHint}>Please complete the CAPTCHA above to send your message.</p>
-                )}
-                {formStatus === 'captcha-error' && (
-                  <p style={styles.formErrorText}>Please complete the CAPTCHA to send your message.</p>
-                )}
                 {formStatus === 'error' && (
                   <p style={styles.formErrorText}>Something went wrong. Please try again.</p>
                 )}
                 <button type="submit" style={styles.submitButton} disabled={formStatus === 'sending'}>
                   {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
                 </button>
+                {showCaptcha && (
+                  <div className="recaptcha-overlay" onClick={() => { setShowCaptcha(false); setFormStatus('idle'); }}>
+                    <div className="recaptcha-popup" onClick={(e) => e.stopPropagation()}>
+                      <p className="recaptcha-popup-label">One last step...</p>
+                      <div className="recaptcha-wrapper">
+                        <ReCAPTCHA
+                          ref={recaptchaRef}
+                          sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                          onChange={handleCaptchaChange}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
               </form>
             )}
           </div>
@@ -2775,6 +2771,7 @@ const styles = {
     textAlign: 'center',
   },
   contactFormInner: {
+    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
@@ -2900,12 +2897,6 @@ const styles = {
   },
   formErrorText: {
     color: '#a03020',
-    fontSize: '15px',
-    textAlign: 'center',
-    margin: 0,
-  },
-  formCaptchaHint: {
-    color: '#8b6914',
     fontSize: '15px',
     textAlign: 'center',
     margin: 0,
@@ -3177,30 +3168,42 @@ styleSheet.textContent = `
     background-color: rgba(45, 24, 16, 0.08);
   }
 
-  /* reCAPTCHA styling to blend with form */
+  /* reCAPTCHA popup overlay */
+  .recaptcha-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(45, 24, 16, 0.25);
+    backdrop-filter: blur(2px);
+    border-radius: 6px;
+    z-index: 10;
+    animation: overlayFadeIn 0.3s ease-out;
+  }
+
+  .recaptcha-popup {
+    background: linear-gradient(145deg, #f5f0e8, #ece4d4);
+    border: 1px solid rgba(201, 162, 39, 0.4);
+    border-radius: 10px;
+    padding: 24px 28px 20px;
+    box-shadow: 0 8px 32px rgba(45, 24, 16, 0.2), 0 0 0 1px rgba(201, 162, 39, 0.1);
+    animation: popupScaleIn 0.3s ease-out;
+    text-align: center;
+  }
+
+  .recaptcha-popup-label {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8b6914;
+    margin: 0 0 16px 0;
+  }
+
   .recaptcha-wrapper {
     display: flex;
     justify-content: center;
-    margin-bottom: 1rem;
-  }
-
-  .recaptcha-wrapper.recaptcha-reveal {
-    animation: captchaReveal 0.4s ease-out;
-  }
-
-  @keyframes captchaReveal {
-    from {
-      opacity: 0;
-      max-height: 0;
-      margin-bottom: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      max-height: 120px;
-      margin-bottom: 1rem;
-      transform: translateY(0);
-    }
   }
 
   .recaptcha-wrapper > div > div {
@@ -3213,6 +3216,22 @@ styleSheet.textContent = `
 
   .recaptcha-wrapper iframe {
     border-radius: 6px;
+  }
+
+  @keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes popupScaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   * {
