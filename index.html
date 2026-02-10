@@ -27,11 +27,12 @@
   </head>
   <body>
     <!-- Hidden form for Netlify Forms detection (React SPA requirement) -->
-    <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+    <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" data-netlify-recaptcha="true" hidden>
       <input type="text" name="name" />
       <input type="email" name="email" />
       <textarea name="message"></textarea>
       <input type="checkbox" name="mailing_list" />
+      <div data-netlify-recaptcha="true"></div>
     </form>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

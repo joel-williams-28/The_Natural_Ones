@@ -65,6 +65,14 @@ export default function TheNaturalOnesWebsite() {
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
+
+    // Verify reCAPTCHA before submitting
+    const recaptchaResponse = window.grecaptcha && window.grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+      setFormStatus('captcha-error');
+      return;
+    }
+
     setFormStatus('sending');
     const form = e.target;
     const formData = new URLSearchParams({
@@ -73,6 +81,7 @@ export default function TheNaturalOnesWebsite() {
       email: form.elements.email.value,
       message: form.elements.message.value,
       mailing_list: form.elements.mailing_list.checked ? 'yes' : 'no',
+      'g-recaptcha-response': recaptchaResponse,
     });
     try {
       const res = await fetch('/', {
@@ -83,8 +92,10 @@ export default function TheNaturalOnesWebsite() {
       if (!res.ok) throw new Error('Form submission failed');
       setFormStatus('success');
       form.reset();
+      if (window.grecaptcha) window.grecaptcha.reset();
     } catch {
       setFormStatus('error');
+      if (window.grecaptcha) window.grecaptcha.reset();
     }
   };
 
@@ -704,6 +715,10 @@ export default function TheNaturalOnesWebsite() {
                     <span style={{ fontWeight: 'bold' }}>Keep me updated about The Natural Ones</span>
                   </label>
                 </div>
+                <div data-netlify-recaptcha="true" style={{ marginBottom: '1rem' }}></div>
+                {formStatus === 'captcha-error' && (
+                  <p style={styles.formErrorText}>Please complete the CAPTCHA to send your message.</p>
+                )}
                 {formStatus === 'error' && (
                   <p style={styles.formErrorText}>Something went wrong. Please try again.</p>
                 )}
