@@ -717,7 +717,7 @@ export default function TheNaturalOnesWebsite() {
                     <span style={{ fontWeight: 'bold' }}>Keep me updated about The Natural Ones</span>
                   </label>
                 </div>
-                <div style={{ marginBottom: '1rem' }}>
+                <div className="recaptcha-wrapper">
                   <ReCAPTCHA
                     ref={recaptchaRef}
                     sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
@@ -3144,6 +3144,25 @@ styleSheet.textContent = `
   #contact-mailing-list:hover {
     border-color: rgba(201, 162, 39, 0.6);
     background-color: rgba(45, 24, 16, 0.08);
+  }
+
+  /* reCAPTCHA styling to blend with form */
+  .recaptcha-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .recaptcha-wrapper > div > div {
+    border-radius: 6px !important;
+    overflow: hidden;
+    border: 1px solid rgba(201, 162, 39, 0.3) !important;
+    background-color: rgba(45, 24, 16, 0.04) !important;
+    box-shadow: none !important;
+  }
+
+  .recaptcha-wrapper iframe {
+    border-radius: 6px;
   }
 
   * {
