@@ -424,8 +424,8 @@ export default function TheNaturalOnesWebsite() {
             <span style={{ flex: '0 1 120px', height: '1px', background: 'linear-gradient(270deg, transparent, rgba(201,169,97,0.4))' }}></span>
           </div>
 
-          {/* The Cast ~ Past & Present */}
-          <h3 style={styles.castSubheading}>The Cast ~ Past & Present</h3>
+          {/* Meet The Cast ~ Past & Present */}
+          <h3 style={styles.castSubheading}>Meet The Cast ~ Past & Present</h3>
           <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: '12px', color: 'rgba(232,220,200,0.7)', marginTop: '0', marginBottom: '30px', animation: 'fadeSlideUp 0.6s ease-out 1.5s both', fontFamily: 'Georgia, serif', letterSpacing: '0.5px' }}>
             Every adventurer has a story. These are ours.
           </p>
