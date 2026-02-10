@@ -170,24 +170,24 @@ export default function TheNaturalOnesWebsite() {
       <div style={styles.textureOverlay}></div>
       
       {/* Navigation */}
-      <nav style={{
+      <nav className="site-nav" style={{
         ...styles.nav,
         backgroundColor: scrolled ? 'rgba(26, 15, 8, 0.95)' : 'transparent',
         boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.4)' : 'none'
       }}>
-        <div style={styles.navLogo} onClick={() => scrollToSection('home')}>
+        <div className="nav-logo" style={styles.navLogo} onClick={() => scrollToSection('home')}>
           {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
           <Logo size={40} />
-          <span style={styles.navLogoText}>The Natural Ones</span>
+          <span className="nav-logo-text" style={styles.navLogoText}>The Natural Ones</span>
         </div>
-        
-        <button style={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)}>
+
+        <button className="menu-toggle" style={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)}>
           <span style={styles.menuBar}></span>
           <span style={styles.menuBar}></span>
           <span style={styles.menuBar}></span>
         </button>
-        
-        <ul style={{
+
+        <ul className={`nav-links${menuOpen ? ' nav-links-open' : ''}`} style={{
           ...styles.navLinks,
           ...(menuOpen ? styles.navLinksOpen : {})
         }}>
@@ -210,12 +210,12 @@ export default function TheNaturalOnesWebsite() {
 
       {/* Hero Section */}
       <section id="home" style={styles.hero}>
-        <div style={styles.heroContent}>
+        <div className="hero-content" style={styles.heroContent}>
           <div style={styles.heroD20Container}>
             {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
             <Logo size={180} />
           </div>
-          <h1 style={styles.heroTitle}>The Natural Ones</h1>
+          <h1 className="hero-title" style={styles.heroTitle}>The Natural Ones</h1>
           <p style={styles.heroSubtitle}>Amateur Theatre with a Critical Hit</p>
           <div style={styles.heroDivider}>
             <span style={styles.dividerLine}></span>
@@ -247,12 +247,12 @@ export default function TheNaturalOnesWebsite() {
 
       {/* About Section */}
       <section id="about" style={styles.sectionAbout}>
-        <div style={styles.sectionInner}>
+        <div className="section-inner" style={styles.sectionInner}>
           <SectionHeader title="About Us" subtitle="We Rolled a One. We Kept Playing." />
-          <div style={styles.aboutGrid}>
+          <div className="about-grid" style={styles.aboutGrid}>
             <div style={styles.aboutText}>
               <p style={{...styles.paragraph, marginBottom: '40px'}}>
-                <span style={styles.dropCap}>E</span>very great adventure starts somewhere. Ours started with
+                <span className="drop-cap" style={styles.dropCap}>E</span>very great adventure starts somewhere. Ours started with
                 a name that didn't stick.
               </p>
               <p style={styles.paragraph}>
@@ -312,7 +312,7 @@ export default function TheNaturalOnesWebsite() {
                 <span style={{marginRight: '8px'}}>&#8594;</span> Meet the Creatives & Cast
               </div>
             </div>
-            <div style={styles.aboutCard}>
+            <div className="about-card" style={styles.aboutCard}>
               {/* TO ADD GROUP PHOTO: Place group-photo.jpg in public/images/ folder */}
               <GroupPhoto />
               <div style={styles.statBlock}>
@@ -347,7 +347,7 @@ export default function TheNaturalOnesWebsite() {
 
       {/* Show Section */}
       <section id="show" style={styles.sectionShow}>
-        <div style={styles.sectionInner}>
+        <div className="section-inner" style={styles.sectionInner}>
           <SectionHeader title="The Shows" subtitle="Our Quest Begins" />
           <p style={styles.centeredText}>
             Click on a poster to reveal performance details
@@ -358,7 +358,7 @@ export default function TheNaturalOnesWebsite() {
 
       {/* Cast Section */}
       <section id="cast" style={styles.sectionCast}>
-        <div style={styles.sectionInner}>
+        <div className="section-inner" style={styles.sectionInner}>
           {/* Header with D20 divider */}
           <div style={styles.sectionHeader}>
             <span style={{...styles.headerSubtitle, color: '#c9a227'}}>Meet Your Adventurers</span>
@@ -436,9 +436,9 @@ export default function TheNaturalOnesWebsite() {
       {/* Cast Member Modal */}
       {selectedMember && (
         <div style={styles.castModalOverlay} onClick={() => setSelectedMember(null)}>
-          <div style={styles.castModalContent} onClick={(e) => e.stopPropagation()}>
+          <div className="cast-modal-content" style={styles.castModalContent} onClick={(e) => e.stopPropagation()}>
             <button style={styles.castModalClose} onClick={() => setSelectedMember(null)}>✕</button>
-            <div style={styles.castModalLayout}>
+            <div className="cast-modal-layout" style={styles.castModalLayout}>
               <div style={styles.castModalPhotoWrap}>
                 <ModalPhoto src={`/images/cast/${selectedMember.photo}`} name={selectedMember.name} />
               </div>
@@ -454,7 +454,7 @@ export default function TheNaturalOnesWebsite() {
 
       {/* Support Section */}
       <section id="support" style={styles.sectionHighlight}>
-        <div style={styles.sectionInner}>
+        <div className="section-inner" style={styles.sectionInner}>
           <SectionHeader title="Support Our Quest" subtitle="Help Us Reach Edinburgh" />
 
           {/* Funding Progress - Full Width, Prominent */}
@@ -571,7 +571,7 @@ export default function TheNaturalOnesWebsite() {
               { price: '£600', title: 'Play a One-Shot', desc: 'Play a full tabletop RPG session with members of the cast, in character, on a brand new quest.', limited: 'Only 5 available' },
               { price: '£1,000', title: 'Play the Monster', desc: 'Step on stage in costume and play a creature in the climax of the show. Courage optional.', limited: 'Strictly limited — only 5 available' },
             ].map((tier, i, arr) => (
-              <div key={i} style={{...styles.supportRewardCard, ...(i === arr.length - 1 && arr.length % 3 === 1 ? { gridColumn: '2' } : {})}}>
+              <div key={i} className="support-reward-card" style={{...styles.supportRewardCard, ...(i === arr.length - 1 && arr.length % 3 === 1 ? { gridColumn: '2' } : {})}}>
 
                 {tier.limited && (
                   <span style={styles.supportRewardBadge}>{tier.limited}</span>
@@ -600,6 +600,7 @@ export default function TheNaturalOnesWebsite() {
               href="https://www.kickstarter.com/projects/1310830097/tabletop-role-playing-game-the-musical-at-the-fringe"
               target="_blank"
               rel="noopener noreferrer"
+              className="support-cta-button"
               style={styles.supportCtaButton}
             >
               {kickstarterData.isLive ? 'Back Us on Kickstarter' : 'View on Kickstarter'}
@@ -615,7 +616,7 @@ export default function TheNaturalOnesWebsite() {
 
       {/* Contact Section */}
       <section id="contact" style={styles.sectionContact}>
-        <div style={styles.sectionInner}>
+        <div className="section-inner" style={styles.sectionInner}>
           <SectionHeader title="Contact" subtitle="Send a Message" />
 
           <p style={styles.contactIntro}>
@@ -695,7 +696,7 @@ export default function TheNaturalOnesWebsite() {
       </section>
 
       {/* Footer */}
-      <footer style={styles.footer}>
+      <footer className="site-footer" style={styles.footer}>
         <div style={styles.footerContent}>
           <div style={styles.footerLogo}>
             <Logo size={50} />
@@ -1097,9 +1098,10 @@ function ShowCarousel({ shows }) {
   const displayIndex = flippedIndex !== null ? flippedIndex : currentIndex;
 
   return (
-    <div ref={containerRef} style={styles.carouselContainer}>
+    <div ref={containerRef} className="carousel-container" style={styles.carouselContainer}>
       <div
         ref={carouselRef}
+        className="carousel-track"
         style={styles.carouselTrack}
         onMouseDown={handleDragStart}
         onMouseMove={handleDragMove}
@@ -1112,6 +1114,7 @@ function ShowCarousel({ shows }) {
         {getItemsToRender().map((item) => (
           <div
             key={item.key}
+            className="carousel-slide"
             style={{
               ...styles.carouselSlide,
               ...(item.show.cardWidth ? { width: `${item.show.cardWidth}px` } : {}),
@@ -1138,7 +1141,7 @@ function ShowCarousel({ shows }) {
       </div>
 
       {/* Info box that pops in when flipped - to the right of poster */}
-      <div style={{
+      <div className="info-popup" style={{
         ...styles.infoPopup,
         opacity: infoVisible && flippedIndex !== null ? 1 : 0,
         transform: infoVisible && flippedIndex !== null ? 'translateY(-50%) scale(1)' : 'translateY(-50%) translateX(30px) scale(0.95)',
@@ -1244,7 +1247,7 @@ function PosterCard({ show }) {
 function PosterBack({ show }) {
   if (show.id === 2) {
     return (
-      <div style={styles.posterBackContent}>
+      <div className="poster-back-content" style={styles.posterBackContent}>
         <h2 style={styles.posterBackTitle}>Mystery at Murderingham Manor and More!</h2>
         <p style={styles.posterBackSubtitle}><strong><em>An evening of comedy, music, and at least one death</em></strong></p>
         <div style={styles.posterBackBodyWrap}>
@@ -1263,7 +1266,7 @@ function PosterBack({ show }) {
   if (show.id === 1) {
     const p1Font = "'Cinzel Decorative', 'Cinzel', serif";
     return (
-      <div style={styles.posterBackContent}>
+      <div className="poster-back-content" style={styles.posterBackContent}>
         <h2 style={{...styles.posterBackTitle, fontFamily: p1Font}}>Tabletop Role-Playing Game: The Musical</h2>
         <p style={{...styles.posterBackSubtitle, fontFamily: p1Font}}><strong>Script by James A. Coleman | Music by Richard Baker</strong></p>
         <div style={styles.posterBackBodyWrap}>
@@ -3127,12 +3130,69 @@ styleSheet.textContent = `
     box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
   }
 
-  @media (max-width: 900px) {
-    .aboutGrid, .showContent {
+  /* Flip card perspective fix */
+  .flip-card-container {
+    perspective: 1200px;
+  }
+
+  /* Grabbing cursor when dragging */
+  .carousel-track:active {
+    cursor: grabbing;
+  }
+
+  /* =============================================
+     TABLET BREAKPOINT (max-width: 1023px)
+     ============================================= */
+  @media (max-width: 1023px) {
+    /* Navigation - show hamburger, hide horizontal links */
+    .menu-toggle {
+      display: flex !important;
+    }
+    .nav-links {
+      display: none !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: rgba(26, 15, 8, 0.97);
+      z-index: 99;
+      padding: 80px 20px 40px;
+      margin: 0;
+    }
+    .nav-links-open {
+      display: flex !important;
+    }
+    .nav-links .nav-link-btn {
+      font-size: 18px !important;
+      padding: 14px 24px !important;
+      min-height: 48px;
+    }
+
+    /* About grid - stack vertically */
+    .about-grid {
       grid-template-columns: 1fr !important;
     }
+    .about-card {
+      position: relative !important;
+      top: auto !important;
+      margin-top: 40px !important;
+      transform: none !important;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Support section adjustments */
     .supportRewardGrid {
       grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .support-reward-card {
+      grid-column: auto !important;
     }
     .supportStatsRow {
       gap: 32px !important;
@@ -3143,70 +3203,286 @@ styleSheet.textContent = `
     .supportFundingBar {
       padding: 24px 20px !important;
     }
+
+    /* Cast grids */
     .creatives-card-grid {
       gap: 24px !important;
     }
     .cast-member-grid {
       grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important;
     }
+
+    /* Carousel - scale down for tablets */
+    .carousel-container {
+      min-height: 750px !important;
+      overflow: hidden !important;
+    }
+    .carousel-track {
+      width: 450px !important;
+      height: 633px !important;
+    }
+    .carousel-slide {
+      width: 450px !important;
+      height: 633px !important;
+    }
+
+    /* Poster back content - tighter on tablet */
+    .poster-back-content {
+      padding: 28px 24px !important;
+    }
+
+    /* Cast modal - adjust for tablet */
+    .cast-modal-content {
+      padding: 36px !important;
+    }
   }
 
-  @media (max-width: 600px) {
-    .supportRewardGrid {
+  /* =============================================
+     MOBILE BREAKPOINT (max-width: 768px)
+     ============================================= */
+  @media (max-width: 768px) {
+    /* --- General section spacing --- */
+    #home, #about, #show, #cast, #support, #contact {
+      padding: 60px 12px !important;
+    }
+    .section-inner {
+      padding: 0 8px !important;
+    }
+
+    /* --- Navigation mobile --- */
+    .site-nav {
+      padding: 12px 16px !important;
+    }
+    .nav-logo-text {
+      font-size: 16px !important;
+      letter-spacing: 1px !important;
+    }
+    .menu-toggle {
+      display: flex !important;
+      z-index: 101;
+    }
+    .nav-links {
+      display: none !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background-color: rgba(26, 15, 8, 0.98);
+      z-index: 100;
+      padding: 80px 20px 40px;
+      margin: 0;
+    }
+    .nav-links-open {
+      display: flex !important;
+    }
+    .nav-links .nav-link-btn {
+      font-size: 20px !important;
+      padding: 16px 32px !important;
+      min-height: 48px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* --- Hero section --- */
+    .hero-title {
+      white-space: normal !important;
+      font-size: clamp(28px, 10vw, 48px) !important;
+      letter-spacing: 2px !important;
+    }
+    .hero-content {
+      padding: 0 8px;
+    }
+
+    /* --- About section --- */
+    .about-grid {
       grid-template-columns: 1fr !important;
+      gap: 16px !important;
     }
-    .supportStatsRow {
-      gap: 24px !important;
+    .about-card {
+      position: relative !important;
+      top: auto !important;
+      margin-top: 32px !important;
+      transform: none !important;
+      max-width: 100%;
     }
-    .supportFundsGrid {
-      flex-direction: column !important;
-      align-items: center !important;
+    .drop-cap {
+      font-size: 60px !important;
+      line-height: 48px !important;
+      padding-right: 10px !important;
     }
+
+    /* --- Show Carousel --- */
+    .carousel-container {
+      min-height: auto !important;
+      padding-bottom: 20px !important;
+      overflow: hidden !important;
+    }
+    .carousel-track {
+      width: calc(100vw - 40px) !important;
+      max-width: 340px !important;
+      height: auto !important;
+      aspect-ratio: 625 / 879;
+    }
+    .carousel-slide {
+      width: calc(100vw - 40px) !important;
+      max-width: 340px !important;
+      height: auto !important;
+      aspect-ratio: 625 / 879;
+    }
+
+    /* Info popup - reposition for mobile */
+    .info-popup {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      right: auto !important;
+      transform: translate(-50%, -50%) !important;
+      width: 90vw !important;
+      max-width: 340px !important;
+      z-index: 200 !important;
+    }
+
+    /* Poster back content - mobile sizing */
+    .poster-back-content {
+      padding: 20px 16px !important;
+      overflow-y: auto !important;
+    }
+    .poster-back-content h2 {
+      font-size: 16px !important;
+    }
+    .poster-back-content p {
+      font-size: 12px !important;
+      line-height: 1.45 !important;
+    }
+
+    /* --- Cast section --- */
     .creatives-card-grid {
       grid-template-columns: 1fr !important;
       max-width: 300px !important;
       margin-left: auto !important;
       margin-right: auto !important;
+      gap: 24px !important;
     }
     .creative-card {
       max-width: 100% !important;
     }
+    /* Show flavour text on mobile since no hover */
+    .creative-flavour {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
     .cast-member-grid {
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)) !important;
       gap: 16px 12px !important;
     }
+
+    /* Cast modal - mobile stacking */
+    .cast-modal-content {
+      width: 95vw !important;
+      padding: 24px 16px !important;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .cast-modal-layout {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 24px !important;
+    }
+    .cast-modal-photo,
+    .cast-modal-content .cast-modal-photo {
+      width: 180px !important;
+      height: 225px !important;
+    }
+
+    /* --- Support section --- */
+    .supportFundingBar {
+      padding: 20px 12px !important;
+    }
+    .supportStatsRow {
+      gap: 20px !important;
+    }
+    .supportFundsGrid {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 12px !important;
+    }
+    .supportRewardGrid {
+      grid-template-columns: 1fr !important;
+    }
+    .support-reward-card {
+      grid-column: auto !important;
+    }
+    .support-cta-button {
+      font-size: 14px !important;
+      padding: 16px 24px !important;
+      letter-spacing: 2px !important;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+    }
+
+    /* --- Contact section --- */
     .contactSocialRow {
       gap: 10px !important;
     }
     .contactSocialRow .contact-social-link {
       padding: 12px !important;
+      min-width: 48px;
+      min-height: 48px;
     }
     .contactFormInner {
       max-width: 100% !important;
     }
-  }
 
-  /* Carousel responsive styles */
-  @media (max-width: 768px) {
-    .carousel-info-popup {
-      position: fixed !important;
-      left: 50% !important;
-      right: auto !important;
-      top: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      width: 90vw !important;
-      max-width: 320px !important;
+    /* --- Footer --- */
+    .site-footer {
+      padding: 40px 16px !important;
+    }
+
+    /* --- Images and media fluid scaling --- */
+    video, iframe, embed, object {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    /* Creative photos - slightly smaller on mobile */
+    .creative-photo {
+      width: 120px !important;
+      height: 120px !important;
+    }
+    /* Cast photos - slightly smaller on mobile */
+    .cast-photo {
+      width: 80px !important;
+      height: 80px !important;
     }
   }
 
-  /* Flip card perspective fix */
-  .flip-card-container {
-    perspective: 1200px;
-  }
-
-  /* Grabbing cursor when dragging */
-  .carousel-track:active {
-    cursor: grabbing;
+  /* =============================================
+     SMALL MOBILE (max-width: 480px)
+     ============================================= */
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: clamp(24px, 10vw, 36px) !important;
+    }
+    .carousel-track,
+    .carousel-slide {
+      max-width: 290px !important;
+    }
+    .cast-member-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 12px 8px !important;
+    }
+    .cast-photo {
+      width: 70px !important;
+      height: 70px !important;
+    }
+    .cast-member-name {
+      font-size: 10px !important;
+    }
   }
 `;
 document.head.appendChild(styleSheet);
