@@ -705,7 +705,7 @@ export default function TheNaturalOnesWebsite() {
           <p style={styles.footerTagline}>Amateur Theatre with a Critical Hit</p>
           <div style={styles.footerDivider}></div>
           <p style={styles.footerCopy}>
-            © 2026 The Natural Ones. Bristol, UK. All rights reserved.
+            © 2026 The Natural Ones. Oxfordshire, UK. All rights reserved.
           </p>
           <p style={styles.footerNote}>
             "Tabletop Role-Playing Game: The Musical!" written by James A. Coleman, music by Richard Baker.
