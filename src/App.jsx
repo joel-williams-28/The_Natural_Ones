@@ -2254,9 +2254,9 @@ const styles = {
   // Creatives card grid
   creativesCardGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gridTemplateColumns: 'repeat(4, 1fr)',
     gap: '32px',
-    maxWidth: '920px',
+    maxWidth: '1100px',
     margin: '0 auto 40px auto',
     justifyItems: 'center',
   },
@@ -3207,6 +3207,7 @@ styleSheet.textContent = `
 
     /* Cast grids */
     .creatives-card-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
       gap: 24px !important;
     }
     .cast-member-grid {
