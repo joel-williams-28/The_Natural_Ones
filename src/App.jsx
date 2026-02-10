@@ -2431,6 +2431,7 @@ const styles = {
     color: '#e8dcc4',
     lineHeight: 1.8,
     margin: 0,
+    animation: 'fadeSlideDown 0.5s ease-out 0.15s both',
   },
   
   // Support Section
@@ -2948,6 +2949,11 @@ styleSheet.textContent = `
   @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }
+  }
+
+  @keyframes fadeSlideDown {
+    0% { opacity: 0; transform: translateY(-15px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
   .cast-modal-photo {
