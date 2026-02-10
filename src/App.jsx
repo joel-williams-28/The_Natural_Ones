@@ -426,6 +426,9 @@ export default function TheNaturalOnesWebsite() {
 
           {/* The Cast ~ Past & Present */}
           <h3 style={styles.castSubheading}>The Cast ~ Past & Present</h3>
+          <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: '12px', color: 'rgba(232,220,200,0.7)', marginTop: '0', marginBottom: '30px', animation: 'fadeSlideUp 0.6s ease-out 1.5s both', fontFamily: 'Georgia, serif', letterSpacing: '0.5px' }}>
+            Every adventurer has a story. These are ours.
+          </p>
           <div className="cast-member-grid" style={styles.castMemberGrid}>
             {[
               { name: 'Mollie Iwanczak', photo: 'member4.jpg', bio: 'Bio coming soon.' },
@@ -448,10 +451,6 @@ export default function TheNaturalOnesWebsite() {
             ))}
           </div>
 
-          {/* Footer tagline */}
-          <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: '12px', color: 'rgba(232,220,200,0.7)', marginTop: '60px', animation: 'fadeSlideUp 0.6s ease-out 1.5s both', fontFamily: 'Georgia, serif', letterSpacing: '0.5px' }}>
-            Every adventurer has a story. These are ours.
-          </p>
         </div>
       </section>
 
