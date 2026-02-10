@@ -381,7 +381,7 @@ export default function TheNaturalOnesWebsite() {
             {[
               { name: 'Richard Baker', role: 'Composer', photo: 'member1.jpg', bio: 'Bio coming soon.', flavour: 'Weaver of sonic enchantments. Olivier Award-nominated bard.' },
               { name: 'James A. Coleman', role: 'Writer & Lyricist', photo: 'member2.jpg', bio: 'Bio coming soon.', flavour: 'Architect of worlds. Crafter of verse and voice.' },
-              { name: 'Sreya Rao', role: 'Treasurer', photo: 'member11.jpg', bio: 'Bio coming soon.', flavour: 'Guardian of the guild vault. Every gold piece accounted for.' },
+              { name: 'Sreya Rao', role: 'Treasurer', photo: 'member11.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>After meeting Mollie through a mutual friend (at a water park, of all places!) and then getting to know the rest of the troupe through a musical theatre group, I was delighted to become part of The Natural Ones.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>I have been acting in community groups for about 20 years, including plays, musicals, and pantos, and I sing with a chamber choir. Favourite roles include Puck in <em>A Midsummer Night&#39;s Dream</em>, Marianne in <em>Sense &amp; Sensibility</em>, Margaret in <em>Dear Brutus</em>, and Cis in <em>The Magistrate</em>. I&#39;ve also had the pleasure of playing many parts in stage adaptations of Terry Pratchett&#39;s Discworld series, written and directed by Stephen Briggs - including donning a big bushy beard as Cheery Littlebottom, the dwarf!</p><p style={{ textAlign: 'justify', margin: 0 }}>The best thing about theatre is working with people from all walks of life and how it&#39;s a mix of serious and silly - though we are heavy on the silly!</p></>, flavour: 'Guardian of the guild vault. Every gold piece accounted for.' },
               { name: 'Emma Coleman-Williams', role: 'Producer / Company Secretary', photo: 'member3.jpg', bio: 'Bio coming soon.', flavour: 'Keeper of the coin purse. Master strategist.' },
             ].map((member, index) => (
               <div key={index} className="creative-card" style={{ animation: `fadeSlideUp 0.7s ease-out ${index * 0.15}s both` }} onClick={() => setSelectedMember(member)}>
@@ -414,7 +414,7 @@ export default function TheNaturalOnesWebsite() {
               { name: 'Zo\u00eb Harper', photo: 'member8.jpg', bio: 'Bio coming soon.' },
               { name: 'Nicki Rochford', photo: 'member9.jpg', bio: 'Bio coming soon.' },
               { name: 'Kyran Pritchard', photo: 'member10.jpg', bio: 'Bio coming soon.' },
-              { name: 'Sreya Rao', photo: 'member11.jpg', bio: 'Bio coming soon.' },
+              { name: 'Sreya Rao', photo: 'member11.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>After meeting Mollie through a mutual friend (at a water park, of all places!) and then getting to know the rest of the troupe through a musical theatre group, I was delighted to become part of The Natural Ones.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>I have been acting in community groups for about 20 years, including plays, musicals, and pantos, and I sing with a chamber choir. Favourite roles include Puck in <em>A Midsummer Night&#39;s Dream</em>, Marianne in <em>Sense &amp; Sensibility</em>, Margaret in <em>Dear Brutus</em>, and Cis in <em>The Magistrate</em>. I&#39;ve also had the pleasure of playing many parts in stage adaptations of Terry Pratchett&#39;s Discworld series, written and directed by Stephen Briggs - including donning a big bushy beard as Cheery Littlebottom, the dwarf!</p><p style={{ textAlign: 'justify', margin: 0 }}>The best thing about theatre is working with people from all walks of life and how it&#39;s a mix of serious and silly - though we are heavy on the silly!</p></> },
               { name: 'Daniel Robert', photo: 'member12.jpg', bio: 'Bio coming soon.' },
               { name: 'Rebekah Tennyson', photo: 'member13.jpg', bio: 'Bio coming soon.' },
               { name: 'Cate Welmers', photo: 'member14.jpg', bio: 'Bio coming soon.' },
@@ -446,7 +446,7 @@ export default function TheNaturalOnesWebsite() {
               <div style={styles.castModalInfo}>
                 <h2 style={styles.castModalName}>{selectedMember.name}</h2>
                 {selectedMember.role && <p style={styles.castModalRole}>{selectedMember.role}</p>}
-                <p style={styles.castModalBio}>{selectedMember.bio}</p>
+                <div style={styles.castModalBio}>{selectedMember.bio}</div>
               </div>
             </div>
           </div>
