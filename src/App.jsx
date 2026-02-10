@@ -3215,7 +3215,8 @@ styleSheet.textContent = `
     /* Carousel - scale down for tablets */
     .carousel-container {
       min-height: 750px !important;
-      overflow: hidden !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
     }
     .carousel-track {
       width: 450px !important;
@@ -3320,7 +3321,9 @@ styleSheet.textContent = `
     .carousel-container {
       min-height: auto !important;
       padding-bottom: 20px !important;
-      overflow: hidden !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+      flex-direction: column !important;
     }
     .carousel-track {
       width: calc(100vw - 40px) !important;
@@ -3335,16 +3338,17 @@ styleSheet.textContent = `
       aspect-ratio: 625 / 879;
     }
 
-    /* Info popup - reposition for mobile */
+    /* Info popup - flow below the poster on mobile */
     .info-popup {
-      position: fixed !important;
-      top: 50% !important;
-      left: 50% !important;
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
       right: auto !important;
-      transform: translate(-50%, -50%) !important;
-      width: 90vw !important;
+      transform: none !important;
+      width: calc(100vw - 40px) !important;
       max-width: 340px !important;
-      z-index: 200 !important;
+      margin: 20px auto 0 !important;
+      z-index: 25 !important;
     }
 
     /* Poster back content - mobile sizing */
