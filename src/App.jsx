@@ -313,7 +313,28 @@ export default function TheNaturalOnesWebsite() {
               </div>
             </div>
             <div className="about-card" style={styles.aboutCard}>
-              {/* TO ADD GROUP PHOTO: Place group-photo.jpg in public/images/ folder */}
+              {/* Social Links above character sheet */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+                  <a href="https://www.instagram.com/tabletopmusical" target="_blank" rel="noopener noreferrer" className="about-social-link" aria-label="Instagram">
+                    <svg style={{ width: '22px', height: '22px', flexShrink: 0 }} viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+                  </a>
+                  <a href="https://www.tiktok.com/@tabletopmusical" target="_blank" rel="noopener noreferrer" className="about-social-link" aria-label="TikTok">
+                    <svg style={{ width: '22px', height: '22px', flexShrink: 0 }} viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M448 209.9a210.1 210.1 0 0 1-122.8-39.3v178.8A162.6 162.6 0 1 1 185 188.3v89.9a74.6 74.6 0 1 0 52.2 71.2V0h88a121 121 0 0 0 1.9 22.2 122.2 122.2 0 0 0 53.9 80.2 121 121 0 0 0 67 20.1z"/></svg>
+                  </a>
+                  <a href="https://www.facebook.com/people/Tabletop-Role-Playing-Game-The-Musical/61572807667929/" target="_blank" rel="noopener noreferrer" className="about-social-link" aria-label="Facebook">
+                    <svg style={{ width: '22px', height: '22px', flexShrink: 0 }} viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-56.6v-78.2h56.6v-61.3c0-56 33.4-86.9 84.4-86.9 24.4 0 50 4.4 50 4.4v55.1h-28.2c-27.8 0-36.4 17.2-36.4 34.9v42h62.1l-9.9 78.2h-52.2v170.3C429.3 476.8 512 376 512 256z"/></svg>
+                  </a>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+                  <a href="https://bsky.app/profile/tabletopmusical.bsky.social" target="_blank" rel="noopener noreferrer" className="about-social-link" aria-label="Bluesky">
+                    <svg style={{ width: '22px', height: '22px', flexShrink: 0 }} viewBox="0 0 600 530" aria-hidden="true"><path fill="currentColor" d="m135.72 44.03c66.496 49.921 138.02 151.14 164.28 205.46 26.262-54.316 97.782-155.54 164.28-205.46 47.98-36.021 125.72-63.892 125.72 24.795 0 17.712-10.155 148.79-16.111 170.07-20.703 73.984-96.144 92.854-163.25 81.433 117.3 19.964 147.14 86.092 82.697 152.22-122.39 125.59-175.91-31.511-189.63-71.766-2.514-7.3797-3.6904-10.832-3.7077-7.8964-0.0174-2.9357-1.1937 0.51669-3.7077 7.8964-13.72 40.255-67.24 197.36-189.63 71.766-64.444-66.128-34.605-132.26 82.697-152.22-67.108 11.421-142.55-7.4491-163.25-81.433-5.9562-21.282-16.111-152.36-16.111-170.07 0-88.687 77.742-60.816 125.72-24.795z"/></svg>
+                  </a>
+                  <a href="https://www.kickstarter.com/projects/1310830097/tabletop-role-playing-game-the-musical-at-the-fringe" target="_blank" rel="noopener noreferrer" className="about-social-link" aria-label="Kickstarter">
+                    <svg style={{ width: '22px', height: '22px', flexShrink: 0 }} viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M86.4 5.5c-28.8 0-52.3 23.5-52.3 52.3v396.4c0 28.8 23.5 52.3 52.3 52.3h58.2c28.8 0 52.3-23.5 52.3-52.3V313.8l107 140.2c17.2 22.5 49.4 26.7 71.9 9.5l40.2-30.7c22.5-17.2 26.7-49.4 9.5-71.9L310.7 218l96.7-126.8c17.2-22.5 12.9-54.7-9.5-71.9l-40.2-30.7c-22.5-17.2-54.7-12.9-71.9 9.5L196.9 124.5V57.8c0-28.8-23.5-52.3-52.3-52.3z"/></svg>
+                  </a>
+                </div>
+              </div>
               <GroupPhoto />
               <div style={styles.statBlock}>
                 <h3 style={styles.statBlockTitle}>The Natural Ones</h3>
@@ -2694,8 +2715,8 @@ const styles = {
     transition: 'all 0.3s ease',
   },
   contactSocialSvg: {
-    width: '30px',
-    height: '30px',
+    width: '34px',
+    height: '34px',
     flexShrink: 0,
     color: '#8b6914',
   },
@@ -3115,6 +3136,23 @@ styleSheet.textContent = `
   
   a:hover {
     opacity: 0.9;
+  }
+
+  /* About section social links */
+  .about-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #c9a227;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .about-social-link:hover {
+    opacity: 1 !important;
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 6px rgba(201, 162, 39, 0.4));
   }
 
   .contact-social-link:hover {
