@@ -46,6 +46,7 @@ const showsData = [
 
 // Fantasy tabletop-inspired website for The Natural Ones Theatre Group
 export default function TheNaturalOnesWebsite() {
+  const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'affiliations'
   const [activeSection, setActiveSection] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -199,9 +200,24 @@ export default function TheNaturalOnesWebsite() {
   }, []);
 
   const scrollToSection = (sectionId) => {
-    setActiveSection(sectionId);
     setMenuOpen(false);
+    if (currentPage !== 'home') {
+      setCurrentPage('home');
+      setActiveSection(sectionId);
+      // Wait for home page to render before scrolling
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+      return;
+    }
+    setActiveSection(sectionId);
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const navigateToPage = (page) => {
+    setMenuOpen(false);
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -238,20 +254,37 @@ export default function TheNaturalOnesWebsite() {
                   className="nav-link-btn"
                   style={{
                     ...styles.navLink,
-                    color: activeSection === item ? '#c9a227' : '#e8dcc4'
+                    color: currentPage === 'home' && activeSection === item ? '#c9a227' : '#e8dcc4'
                   }}
                   onClick={() => scrollToSection(item)}
-                  aria-current={activeSection === item ? 'true' : undefined}
+                  aria-current={currentPage === 'home' && activeSection === item ? 'true' : undefined}
                 >
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </button>
               </li>
             ))}
+            <li key="affiliates">
+              <button
+                className="nav-link-btn"
+                style={{
+                  ...styles.navLink,
+                  color: currentPage === 'affiliations' ? '#c9a227' : '#e8dcc4'
+                }}
+                onClick={() => navigateToPage('affiliations')}
+                aria-current={currentPage === 'affiliations' ? 'true' : undefined}
+              >
+                Affiliates
+              </button>
+            </li>
           </ul>
         </nav>
       </header>
 
       <main id="main-content">
+      {currentPage === 'affiliations' ? (
+        <AffiliationsPage onNavigateHome={() => scrollToSection('home')} />
+      ) : (
+      <>
       {/* Hero Section */}
       <section id="home" style={styles.hero}>
         <div className="hero-content" style={styles.heroContent}>
@@ -816,6 +849,8 @@ export default function TheNaturalOnesWebsite() {
         </div>
       </section>
 
+      </>
+      )}
       </main>
 
       {/* Footer */}
@@ -827,6 +862,15 @@ export default function TheNaturalOnesWebsite() {
           </div>
           <p style={styles.footerTagline}>Amateur Theatre with a Critical Hit</p>
           <div style={styles.footerDivider}></div>
+          <div style={styles.footerLinks}>
+            <button
+              className="footer-link-btn"
+              style={styles.footerLinkButton}
+              onClick={() => navigateToPage('affiliations')}
+            >
+              Our Affiliates
+            </button>
+          </div>
           <p style={styles.footerCopy}>
             © 2026 The Natural Ones. Oxfordshire, UK. All rights reserved.
           </p>
@@ -835,6 +879,144 @@ export default function TheNaturalOnesWebsite() {
           </p>
         </div>
       </footer>
+    </div>
+  );
+}
+
+// Affiliations & Associations Page
+function AffiliationsPage({ onNavigateHome }) {
+  return (
+    <div className="affiliations-page">
+      {/* Hero banner */}
+      <section style={styles.affiliationsHero}>
+        <div style={styles.affiliationsHeroInner}>
+          <span style={styles.affiliationsSubtitle}>Our Allies & Companions</span>
+          <h1 style={styles.affiliationsTitle}>Affiliations & Associations</h1>
+          <div style={styles.headerDivider}>
+            <span style={styles.headerLine}></span>
+            <span style={{...styles.headerDot, color: '#c9a227'}}>⚔</span>
+            <span style={styles.headerLine}></span>
+          </div>
+          <p style={styles.affiliationsIntro}>
+            No adventuring party succeeds alone. These are the talented groups and individuals
+            we're proud to call allies on this quest.
+          </p>
+        </div>
+      </section>
+
+      {/* Vocalize Show Choir Feature */}
+      <section className="affiliate-section" style={styles.affiliateSection}>
+        <div className="section-inner" style={styles.sectionInner}>
+
+          {/* Affiliate Card: Vocalize */}
+          <div className="affiliate-card" style={styles.affiliateCard}>
+            {/* Corner ornaments */}
+            <span className="corner-tl" /><span className="corner-tr" />
+            <span className="corner-bl" /><span className="corner-br" />
+
+            <div className="affiliate-card-header" style={styles.affiliateCardHeader}>
+              {/* Music note icon */}
+              <svg style={styles.affiliateIcon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+              </svg>
+              <div>
+                <h2 style={styles.affiliateCardTitle}>Vocalize Show Choir</h2>
+                <p style={styles.affiliateCardRole}>Collaboration Partner</p>
+              </div>
+            </div>
+
+            <div style={styles.affiliateCardDivider}></div>
+
+            <div style={styles.affiliateCardBody}>
+              <p style={styles.affiliateCardText}>
+                <span style={styles.affiliateDropCap}>W</span>e're thrilled to be joining forces with
+                {' '}<strong>Vocalize Show Choir</strong>, a vibrant, auditioned ensemble based right here
+                in Oxfordshire. While Vocalize's community choirs welcome everyone regardless of experience,
+                the Show Choir is something special: a dedicated group of singers who bring musical theatre
+                and popular songs to life with real performance flair, complete with movement and choreography.
+              </p>
+
+              <p style={styles.affiliateCardText}>
+                Rehearsing weekly in Didcot during term time, the Show Choir is built for people who love
+                to perform and aren't afraid to throw themselves into it. Whether it's a soaring
+                West End number or a pop anthem reimagined with theatrical energy, this group brings
+                the drama in the best possible way.
+              </p>
+
+              <div className="affiliate-highlight" style={styles.affiliateHighlight}>
+                <div className="affiliate-highlight-inner" style={styles.affiliateHighlightInner}>
+                  <svg style={{ width: '24px', height: '24px', flexShrink: 0, color: '#c9a227' }} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                  <p style={styles.affiliateHighlightText}>
+                    Our collaboration with Vocalize Show Choir brings together the theatrical storytelling
+                    of The Natural Ones with the vocal power and performance polish of an ensemble trained
+                    to command a stage. Keep your eyes on us — something exciting is in the works.
+                  </p>
+                </div>
+              </div>
+
+              <p style={styles.affiliateCardText}>
+                If you're a singer looking for something with a bit more bite, or you've ever wanted to
+                combine your love of musical theatre with the thrill of live ensemble performance,
+                Vocalize Show Choir might be exactly the quest you've been waiting for.
+              </p>
+            </div>
+
+            <div style={styles.affiliateCardDivider}></div>
+
+            {/* Founder section */}
+            <div style={styles.affiliateFounder}>
+              <div style={styles.affiliateFounderBadge}>
+                <svg style={{ width: '20px', height: '20px', color: '#c9a227' }} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                </svg>
+              </div>
+              <div style={styles.affiliateFounderInfo}>
+                <h3 style={styles.affiliateFounderName}>Sarah Louise Chitty</h3>
+                <p style={styles.affiliateFounderRole}>Founder & Musical Director</p>
+                <p style={styles.affiliateFounderBio}>
+                  A graduate of Southampton University with a BA in Music, Sarah specialises in solo musical theatre
+                  singing and ensemble performance across classical and popular styles. She has served as musical
+                  director for five different choirs and runs her own adult and youth theatre groups
+                  from her music studio in Grove, Wantage. Sarah also teaches singing at Didcot Girls' School
+                  and conducts the Vocalize community choirs that meet weekly in Didcot and Grove.
+                </p>
+              </div>
+            </div>
+
+            <div style={styles.affiliateCardDivider}></div>
+
+            {/* CTA */}
+            <div style={styles.affiliateCtaWrap}>
+              <a
+                href="https://www.vocalizechoir.co.uk/showchoir"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="affiliate-cta-button"
+                style={styles.affiliateCtaButton}
+              >
+                Visit Vocalize Show Choir
+                <span style={{ marginLeft: '8px' }} aria-hidden="true">→</span>
+              </a>
+              <p style={styles.affiliateCtaNote}>vocalizechoir.co.uk</p>
+            </div>
+          </div>
+
+          {/* Back to home */}
+          <div style={styles.affiliateBackWrap}>
+            <button
+              style={styles.affiliateBackButton}
+              onClick={onNavigateHome}
+              className="affiliate-back-btn"
+            >
+              <span aria-hidden="true" style={{ marginRight: '8px' }}>←</span>
+              Back to Main Page
+            </button>
+          </div>
+
+        </div>
+      </section>
     </div>
   );
 }
@@ -3035,6 +3217,250 @@ const styles = {
     margin: 0,
   },
 
+  // Affiliations Page
+  affiliationsHero: {
+    minHeight: '50vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    padding: '120px 20px 60px 20px',
+    background: `
+      radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
+      linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
+    `,
+    position: 'relative',
+  },
+  affiliationsHeroInner: {
+    maxWidth: '700px',
+  },
+  affiliationsSubtitle: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '14px',
+    letterSpacing: '4px',
+    textTransform: 'uppercase',
+    color: '#c9a227',
+    display: 'block',
+    marginBottom: '8px',
+  },
+  affiliationsTitle: {
+    fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
+    fontSize: 'clamp(28px, 5vw, 48px)',
+    fontWeight: 'bold',
+    color: '#e8dcc4',
+    margin: '0 0 16px 0',
+    letterSpacing: '2px',
+  },
+  affiliationsIntro: {
+    fontSize: '18px',
+    color: '#a08060',
+    lineHeight: 1.8,
+    marginTop: '24px',
+    fontStyle: 'italic',
+  },
+
+  affiliateSection: {
+    padding: '80px 20px 100px 20px',
+    background: '#f5ede0',
+    color: '#2d1810',
+  },
+
+  affiliateCard: {
+    position: 'relative',
+    maxWidth: '800px',
+    margin: '0 auto',
+    padding: '48px 40px',
+    background: 'linear-gradient(165deg, rgba(245,237,224,0.95) 0%, rgba(232,220,196,0.95) 100%)',
+    border: '1px solid rgba(201,169,97,0.3)',
+    boxShadow: '0 8px 32px rgba(0,0,0,0.08), 0 0 0 1px rgba(201,169,97,0.1)',
+  },
+
+  affiliateCardHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '20px',
+    marginBottom: '8px',
+  },
+  affiliateIcon: {
+    width: '48px',
+    height: '48px',
+    color: '#3d6b1e',
+    flexShrink: 0,
+    padding: '10px',
+    background: 'rgba(61, 107, 30, 0.08)',
+    borderRadius: '50%',
+    border: '1.5px solid rgba(61, 107, 30, 0.2)',
+  },
+  affiliateCardTitle: {
+    fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
+    fontSize: 'clamp(22px, 4vw, 32px)',
+    fontWeight: 'bold',
+    color: '#2d1810',
+    margin: '0 0 4px 0',
+    letterSpacing: '1px',
+  },
+  affiliateCardRole: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '12px',
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    color: '#8b6914',
+    margin: 0,
+  },
+  affiliateCardDivider: {
+    height: '1px',
+    background: 'linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.4), transparent)',
+    margin: '28px 0',
+  },
+  affiliateCardBody: {
+    lineHeight: 1.8,
+  },
+  affiliateCardText: {
+    fontSize: '17px',
+    marginBottom: '20px',
+    lineHeight: 1.8,
+    textAlign: 'justify',
+    color: '#2d1810',
+  },
+  affiliateDropCap: {
+    float: 'left',
+    fontFamily: "'Cinzel Decorative', serif",
+    fontSize: '72px',
+    lineHeight: '54px',
+    paddingTop: '6px',
+    paddingRight: '12px',
+    color: '#3d6b1e',
+  },
+
+  affiliateHighlight: {
+    margin: '28px 0',
+    padding: '24px',
+    background: 'rgba(61, 107, 30, 0.06)',
+    border: '1px solid rgba(61, 107, 30, 0.2)',
+    borderLeft: '3px solid #3d6b1e',
+  },
+  affiliateHighlightInner: {
+    display: 'flex',
+    gap: '16px',
+    alignItems: 'flex-start',
+  },
+  affiliateHighlightText: {
+    fontSize: '16px',
+    lineHeight: 1.7,
+    color: '#2d1810',
+    margin: 0,
+    fontStyle: 'italic',
+  },
+
+  affiliateFounder: {
+    display: 'flex',
+    gap: '20px',
+    alignItems: 'flex-start',
+  },
+  affiliateFounderBadge: {
+    width: '48px',
+    height: '48px',
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'rgba(45, 24, 16, 0.06)',
+    borderRadius: '50%',
+    border: '1.5px solid rgba(201,169,97,0.3)',
+  },
+  affiliateFounderInfo: {
+    flex: 1,
+  },
+  affiliateFounderName: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '18px',
+    fontWeight: 700,
+    color: '#2d1810',
+    margin: '0 0 4px 0',
+    letterSpacing: '1px',
+  },
+  affiliateFounderRole: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '11px',
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    color: '#8b6914',
+    margin: '0 0 12px 0',
+  },
+  affiliateFounderBio: {
+    fontSize: '16px',
+    lineHeight: 1.7,
+    color: '#4a3f35',
+    margin: 0,
+  },
+
+  affiliateCtaWrap: {
+    textAlign: 'center',
+    marginTop: '8px',
+  },
+  affiliateCtaButton: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    fontFamily: "'Cinzel', serif",
+    fontSize: '14px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+    padding: '16px 36px',
+    backgroundColor: '#3d6b1e',
+    color: '#e8dcc4',
+    border: '2px solid #c9a227',
+    cursor: 'pointer',
+    textDecoration: 'none',
+    transition: 'all 0.3s ease',
+  },
+  affiliateCtaNote: {
+    fontSize: '12px',
+    color: '#a08060',
+    marginTop: '12px',
+    letterSpacing: '1px',
+  },
+
+  affiliateBackWrap: {
+    textAlign: 'center',
+    marginTop: '48px',
+  },
+  affiliateBackButton: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    fontFamily: "'Cinzel', serif",
+    fontSize: '13px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+    padding: '12px 28px',
+    backgroundColor: 'transparent',
+    color: '#8b6914',
+    border: '1px solid rgba(201, 162, 39, 0.4)',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+
+  // Footer links
+  footerLinks: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '24px',
+    marginBottom: '20px',
+  },
+  footerLinkButton: {
+    background: 'none',
+    border: 'none',
+    fontFamily: "'Cinzel', serif",
+    fontSize: '13px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+    color: '#c9a227',
+    cursor: 'pointer',
+    padding: '4px 8px',
+    transition: 'all 0.3s ease',
+    opacity: 0.7,
+  },
+
   // Footer
   footer: {
     background: `
@@ -3592,6 +4018,61 @@ styleSheet.textContent = `
     cursor: grabbing;
   }
 
+  /* Footer link hover */
+  .footer-link-btn:hover {
+    opacity: 1 !important;
+    text-shadow: 0 0 8px rgba(201, 162, 39, 0.4);
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Affiliate CTA hover */
+  .affiliate-cta-button:hover {
+    background-color: #4a8024 !important;
+    box-shadow: 0 4px 16px rgba(201, 162, 39, 0.3);
+    transform: translateY(-2px);
+  }
+  .affiliate-back-btn:hover {
+    border-color: rgba(201, 162, 39, 0.7) !important;
+    color: #c9a227 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(201, 162, 39, 0.15);
+  }
+
+  /* Affiliate card corners - reuse creative-card corners */
+  .affiliate-card {
+    position: relative;
+  }
+  .affiliate-card .corner-tl,
+  .affiliate-card .corner-tr,
+  .affiliate-card .corner-bl,
+  .affiliate-card .corner-br {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+  }
+  .affiliate-card .corner-tl {
+    top: 8px; left: 8px;
+    border-top: 1.5px solid rgba(201,169,97,0.3);
+    border-left: 1.5px solid rgba(201,169,97,0.3);
+  }
+  .affiliate-card .corner-tr {
+    top: 8px; right: 8px;
+    border-top: 1.5px solid rgba(201,169,97,0.3);
+    border-right: 1.5px solid rgba(201,169,97,0.3);
+  }
+  .affiliate-card .corner-bl {
+    bottom: 8px; left: 8px;
+    border-bottom: 1.5px solid rgba(201,169,97,0.3);
+    border-left: 1.5px solid rgba(201,169,97,0.3);
+  }
+  .affiliate-card .corner-br {
+    bottom: 8px; right: 8px;
+    border-bottom: 1.5px solid rgba(201,169,97,0.3);
+    border-right: 1.5px solid rgba(201,169,97,0.3);
+  }
+
   /* =============================================
      TABLET BREAKPOINT (max-width: 1023px)
      ============================================= */
@@ -3931,6 +4412,18 @@ styleSheet.textContent = `
     }
     .contactFormInner {
       max-width: 100% !important;
+    }
+
+    /* --- Affiliations page --- */
+    .affiliate-card {
+      padding: 28px 20px !important;
+    }
+    .affiliate-card-header {
+      flex-direction: column !important;
+      text-align: center !important;
+    }
+    .affiliations-page .affiliate-section {
+      padding: 40px 12px 60px 12px !important;
     }
 
     /* --- Footer --- */
