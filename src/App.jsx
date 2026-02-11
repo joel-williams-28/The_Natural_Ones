@@ -885,6 +885,7 @@ function ShowCarousel({ shows }) {
   const carouselRef = useRef(null);
   const containerRef = useRef(null);
   const animationRef = useRef(null);
+  const skipFlipTransition = useRef(false);
 
   // Use ref for animated offset to ensure synchronous updates with index changes
   const offsetRef = useRef(0);
@@ -972,6 +973,8 @@ function ShowCarousel({ shows }) {
 
   // Swap to a new poster while keeping flipped state (no carousel animation)
   const crossFadeToIndex = (newIndex) => {
+    // Disable flip transition so the card never visually unflips during the swap
+    skipFlipTransition.current = true;
     setCurrentIndex(newIndex);
     setFlippedIndex(newIndex);
     // Reset scroll position of all poster back text areas to top
@@ -980,6 +983,12 @@ function ShowCarousel({ shows }) {
         el.scrollTop = 0;
       });
     }
+    // Re-enable flip transition after the browser has painted the new state
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        skipFlipTransition.current = false;
+      });
+    });
   };
 
   // Navigate to previous poster with smooth carousel rotation
@@ -1196,6 +1205,7 @@ function ShowCarousel({ shows }) {
             <div style={{
               ...styles.flipCard,
               transform: flippedIndex === item.actualIndex ? 'rotateY(180deg)' : 'rotateY(0deg)',
+              ...(skipFlipTransition.current ? { transition: 'none' } : {}),
             }}>
               {/* Front of card - Poster */}
               <div style={styles.flipCardFront}>
