@@ -764,12 +764,6 @@ export default function TheNaturalOnesWebsite() {
                             sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                             onChange={handleCaptchaChange}
                           />
-                          {/* Overlay that hides default reCAPTCHA styling, keeping checkbox visible */}
-                          <div className="recaptcha-box-overlay">
-                            <div className="recaptcha-checkbox-window"></div>
-                            <span className="recaptcha-custom-label">I am no mere construct</span>
-                            <span className="recaptcha-custom-badge">&#9878;</span>
-                          </div>
                         </div>
                       </div>
 
@@ -3409,52 +3403,6 @@ styleSheet.textContent = `
     border-radius: 8px;
   }
 
-  /* Overlay that covers the ugly reCAPTCHA box, leaving checkbox visible */
-  .recaptcha-box-overlay {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-    overflow: hidden;
-    border-radius: 8px;
-  }
-
-  /* Transparent window over checkbox; its box-shadow fills everything else */
-  .recaptcha-checkbox-window {
-    position: absolute;
-    left: 13px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 4px;
-    box-shadow: 0 0 0 9999px rgba(236, 228, 212, 0.97);
-  }
-
-  /* Custom themed label replacing "I'm not a robot" */
-  .recaptcha-custom-label {
-    position: absolute;
-    left: 56px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Lora', 'Georgia', serif;
-    font-style: italic;
-    font-size: 13px;
-    color: #5c4a3a;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-  }
-
-  /* Decorative badge icon on the right */
-  .recaptcha-custom-badge {
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 22px;
-    color: #c9a227;
-    opacity: 0.5;
-  }
 
   /* Footer hint text */
   .captcha-skin-footer {
