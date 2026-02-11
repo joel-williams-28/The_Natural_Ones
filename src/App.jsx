@@ -64,6 +64,7 @@ export default function TheNaturalOnesWebsite() {
   const [kickstarterError, setKickstarterError] = useState(false);
   const [formStatus, setFormStatus] = useState('idle'); // idle | sending | success | error
   const [showCaptcha, setShowCaptcha] = useState(false);
+  const [captchaVerifying, setCaptchaVerifying] = useState(false);
   const recaptchaRef = useRef(null);
   const contactFormRef = useRef(null);
 
@@ -111,10 +112,20 @@ export default function TheNaturalOnesWebsite() {
   };
 
   const handleCaptchaChange = (value) => {
+    setCaptchaVerifying(false);
     if (value && contactFormRef.current) {
       setFormStatus('idle');
       submitForm(contactFormRef.current, value);
     }
+  };
+
+  const handleVerifyClick = () => {
+    setCaptchaVerifying(true);
+    recaptchaRef.current?.execute();
+  };
+
+  const handleCaptchaError = () => {
+    setCaptchaVerifying(false);
   };
 
   useEffect(() => {
@@ -723,7 +734,7 @@ export default function TheNaturalOnesWebsite() {
                   {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
                 </button>
                 {showCaptcha && (
-                  <div className="recaptcha-overlay" onClick={() => { setShowCaptcha(false); setFormStatus('idle'); }}>
+                  <div className="recaptcha-overlay" onClick={() => { setShowCaptcha(false); setFormStatus('idle'); setCaptchaVerifying(false); }}>
                     <div className="captcha-skin" onClick={(e) => e.stopPropagation()}>
                       {/* Decorative corner flourishes */}
                       <span className="captcha-corner captcha-corner-tl">&#9670;</span>
@@ -747,7 +758,7 @@ export default function TheNaturalOnesWebsite() {
                         <p className="captcha-skin-title">Prove Thy Worth</p>
                       </div>
 
-                      <p className="captcha-skin-subtitle">Complete the challenge below to send your message</p>
+                      <p className="captcha-skin-subtitle">Verify your identity to send your message</p>
 
                       {/* Decorative divider */}
                       <div className="captcha-divider">
@@ -756,15 +767,26 @@ export default function TheNaturalOnesWebsite() {
                         <span className="captcha-divider-line"></span>
                       </div>
 
-                      {/* reCAPTCHA widget (visually integrated) */}
+                      {/* Verify button */}
                       <div className="recaptcha-wrapper">
-                        <div className="recaptcha-skin-box">
-                          <ReCAPTCHA
-                            ref={recaptchaRef}
-                            sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-                            onChange={handleCaptchaChange}
-                          />
-                        </div>
+                        <button
+                          type="button"
+                          className="captcha-verify-btn"
+                          onClick={handleVerifyClick}
+                          disabled={captchaVerifying}
+                        >
+                          {captchaVerifying ? (
+                            <>
+                              <span className="captcha-spinner"></span>
+                              Verifying...
+                            </>
+                          ) : (
+                            <>
+                              <span className="captcha-check-icon">&#10003;</span>
+                              I Am Human
+                            </>
+                          )}
+                        </button>
                       </div>
 
                       {/* Footer hint */}
@@ -772,6 +794,14 @@ export default function TheNaturalOnesWebsite() {
                     </div>
                   </div>
                 )}
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                  size="invisible"
+                  onChange={handleCaptchaChange}
+                  onErrored={handleCaptchaError}
+                  onExpired={handleCaptchaError}
+                />
               </form>
             )}
           </div>
@@ -3375,7 +3405,7 @@ styleSheet.textContent = `
     line-height: 1;
   }
 
-  /* reCAPTCHA widget wrapper */
+  /* Verify button wrapper */
   .recaptcha-wrapper {
     display: flex;
     justify-content: center;
@@ -3383,24 +3413,64 @@ styleSheet.textContent = `
     z-index: 1;
   }
 
-  .recaptcha-skin-box {
-    position: relative;
-    display: inline-block;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid rgba(201, 162, 39, 0.35);
+  .captcha-verify-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 36px;
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #f5f0e8;
+    background: linear-gradient(145deg, #2d5016 0%, #1a3009 100%);
+    border: 2px solid #c9a227;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow:
+      0 4px 16px rgba(26, 15, 8, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
-  .recaptcha-wrapper > div > div > div {
-    border-radius: 8px !important;
-    overflow: hidden;
-    border: none !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
+  .captcha-verify-btn:hover:not(:disabled) {
+    background: linear-gradient(145deg, #3a6a1d 0%, #234010 100%);
+    box-shadow:
+      0 6px 24px rgba(26, 15, 8, 0.4),
+      0 0 12px rgba(201, 162, 39, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
   }
 
-  .recaptcha-wrapper iframe {
-    border-radius: 8px;
+  .captcha-verify-btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow:
+      0 2px 8px rgba(26, 15, 8, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .captcha-verify-btn:disabled {
+    cursor: default;
+    opacity: 0.85;
+  }
+
+  .captcha-check-icon {
+    font-size: 18px;
+    color: #c9a227;
+  }
+
+  .captcha-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid rgba(201, 162, 39, 0.3);
+    border-top-color: #c9a227;
+    border-radius: 50%;
+    animation: captchaSpinnerRotate 0.7s linear infinite;
+  }
+
+  @keyframes captchaSpinnerRotate {
+    to { transform: rotate(360deg); }
   }
 
 
