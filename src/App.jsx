@@ -882,6 +882,7 @@ function ShowCarousel({ shows }) {
   const [dragOffset, setDragOffset] = useState(0);
   const [hasDragged, setHasDragged] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [contentFading, setContentFading] = useState(false);
   const carouselRef = useRef(null);
   const containerRef = useRef(null);
   const animationRef = useRef(null);
@@ -970,19 +971,37 @@ function ShowCarousel({ shows }) {
     animationRef.current = requestAnimationFrame(animate);
   };
 
+  // Cross-fade to a new poster while keeping flipped state
+  const crossFadeToIndex = (newIndex) => {
+    setIsAnimating(true);
+    setContentFading(true);
+    setInfoVisible(false);
+
+    setTimeout(() => {
+      setCurrentIndex(newIndex);
+      setFlippedIndex(newIndex);
+      setContentFading(false);
+      setTimeout(() => {
+        setInfoVisible(true);
+        setIsAnimating(false);
+      }, 50);
+    }, 200);
+  };
+
   // Navigate to previous poster with smooth carousel rotation
   const handlePrev = (keepFlipped = false) => {
     if (isAnimating || isDragging) return;
 
     const newIndex = currentIndex === 0 ? shows.length - 1 : currentIndex - 1;
 
+    if (keepFlipped && flippedIndex !== null) {
+      crossFadeToIndex(newIndex);
+      return;
+    }
+
     // Animate from 0 to full spacing (rotating right)
     animateCarousel(0, spacing, () => {
       setCurrentIndex(newIndex);
-      if (keepFlipped && flippedIndex !== null) {
-        setFlippedIndex(newIndex);
-        setInfoVisible(true);
-      }
     });
   };
 
@@ -992,13 +1011,14 @@ function ShowCarousel({ shows }) {
 
     const newIndex = currentIndex === shows.length - 1 ? 0 : currentIndex + 1;
 
+    if (keepFlipped && flippedIndex !== null) {
+      crossFadeToIndex(newIndex);
+      return;
+    }
+
     // Animate from 0 to negative spacing (rotating left)
     animateCarousel(0, -spacing, () => {
       setCurrentIndex(newIndex);
-      if (keepFlipped && flippedIndex !== null) {
-        setFlippedIndex(newIndex);
-        setInfoVisible(true);
-      }
     });
   };
 
@@ -1071,21 +1091,24 @@ function ShowCarousel({ shows }) {
     setIsDragging(false);
 
     if (Math.abs(currentDragOffset) > threshold) {
-      // Navigate - animate from current drag position to full spacing
+      // Navigate - determine target index
       const newIndex = currentDragOffset > 0
         ? (currentIndex === 0 ? shows.length - 1 : currentIndex - 1)
         : (currentIndex === shows.length - 1 ? 0 : currentIndex + 1);
 
-      const targetOffset = currentDragOffset > 0 ? spacing : -spacing;
+      if (isFlipped) {
+        // When flipped, snap back and cross-fade to avoid flicker
+        offsetRef.current = 0;
+        forceRender();
+        crossFadeToIndex(newIndex);
+      } else {
+        const targetOffset = currentDragOffset > 0 ? spacing : -spacing;
 
-      // Animate from where we dragged to the final position
-      animateCarousel(currentDragOffset, targetOffset, () => {
-        setCurrentIndex(newIndex);
-        if (isFlipped) {
-          setFlippedIndex(newIndex);
-          setInfoVisible(true);
-        }
-      });
+        // Animate from where we dragged to the final position
+        animateCarousel(currentDragOffset, targetOffset, () => {
+          setCurrentIndex(newIndex);
+        });
+      }
     } else if (Math.abs(currentDragOffset) > 5) {
       // Snap back to center with animation (only if we moved a bit)
       animateCarousel(currentDragOffset, 0);
@@ -1186,7 +1209,11 @@ function ShowCarousel({ shows }) {
               </div>
 
               {/* Back of card - Off-white background with border */}
-              <div style={styles.flipCardBack}>
+              <div style={{
+                ...styles.flipCardBack,
+                opacity: flippedIndex === item.actualIndex && contentFading ? 0 : 1,
+                transition: 'opacity 0.2s ease',
+              }}>
                 <PosterBack show={item.show} />
               </div>
             </div>
