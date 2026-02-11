@@ -882,7 +882,6 @@ function ShowCarousel({ shows }) {
   const [dragOffset, setDragOffset] = useState(0);
   const [hasDragged, setHasDragged] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [contentFading, setContentFading] = useState(false);
   const carouselRef = useRef(null);
   const containerRef = useRef(null);
   const animationRef = useRef(null);
@@ -971,27 +970,16 @@ function ShowCarousel({ shows }) {
     animationRef.current = requestAnimationFrame(animate);
   };
 
-  // Cross-fade to a new poster while keeping flipped state
+  // Swap to a new poster while keeping flipped state (no carousel animation)
   const crossFadeToIndex = (newIndex) => {
-    setIsAnimating(true);
-    setContentFading(true);
-    setInfoVisible(false);
-
-    setTimeout(() => {
-      setCurrentIndex(newIndex);
-      setFlippedIndex(newIndex);
-      setContentFading(false);
-      // Reset scroll position of all poster back text areas to top
-      if (containerRef.current) {
-        containerRef.current.querySelectorAll('.poster-back-content').forEach(el => {
-          el.scrollTop = 0;
-        });
-      }
-      setTimeout(() => {
-        setInfoVisible(true);
-        setIsAnimating(false);
-      }, 50);
-    }, 200);
+    setCurrentIndex(newIndex);
+    setFlippedIndex(newIndex);
+    // Reset scroll position of all poster back text areas to top
+    if (containerRef.current) {
+      containerRef.current.querySelectorAll('.poster-back-content').forEach(el => {
+        el.scrollTop = 0;
+      });
+    }
   };
 
   // Navigate to previous poster with smooth carousel rotation
@@ -1215,11 +1203,7 @@ function ShowCarousel({ shows }) {
               </div>
 
               {/* Back of card - Off-white background with border */}
-              <div style={{
-                ...styles.flipCardBack,
-                opacity: flippedIndex === item.actualIndex && contentFading ? 0 : 1,
-                transition: 'opacity 0.2s ease',
-              }}>
+              <div style={styles.flipCardBack}>
                 <PosterBack show={item.show} />
               </div>
             </div>
