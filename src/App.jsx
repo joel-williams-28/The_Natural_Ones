@@ -293,7 +293,7 @@ export default function TheNaturalOnesWebsite() {
             <Logo size={180} />
           </div>
           <h1 className="hero-title" style={styles.heroTitle}>The Natural Ones</h1>
-          <p style={styles.heroSubtitle}>DnD-Inspired Amateur Theatre with a Critical Hit</p>
+          <p style={styles.heroSubtitle}>Amateur Theatre with a Critical Hit</p>
           <div style={styles.heroDivider}>
             <span style={styles.dividerLine}></span>
             <span style={styles.dividerDot}>✦</span>
@@ -330,9 +330,9 @@ export default function TheNaturalOnesWebsite() {
             <div style={styles.aboutText}>
               <p style={{...styles.paragraph, marginBottom: '40px'}}>
                 <span className="drop-cap" style={styles.dropCap}>T</span>he Natural Ones are an
-                Oxfordshire-based performing arts group dedicated to original comedy theatre inspired
-                by Dungeons & Dragons and tabletop roleplaying games. The name is a nod
-                to the most feared roll in tabletop gaming: the natural one on a D20. If you've ever
+                Oxfordshire-based performing arts group dedicated to original comedy theatre. The name is a nod
+                to Dungeons & Dragons and tabletop roleplaying games — specifically,
+                the most feared roll in tabletop gaming: the natural one on a D20. If you've ever
                 played DnD, you know the feeling. Total, catastrophic
                 failure. Your sword shatters. Your spell backfires. You fall off the bridge you were standing
                 perfectly still on.
@@ -362,7 +362,7 @@ export default function TheNaturalOnesWebsite() {
               <p style={styles.paragraph}>
                 Since our sold-out debut in Abingdon in January 2025, we've
                 taken our tabletop RPG musical to the Cheltenham Fringe Festival, MCM
-                London Comic Con, and venues across the country, bringing DnD-inspired live theatre to new audiences everywhere we go. We're currently preparing our newest
+                London Comic Con, and venues across the country. We're currently preparing our newest
                 comedy, <span style={{fontStyle: 'italic'}}>Mystery at Murderingham Manor</span>, and working
                 towards our next great quest: the Edinburgh Fringe Festival in 2026.
               </p>
@@ -375,7 +375,7 @@ export default function TheNaturalOnesWebsite() {
                 aria-label="Meet the Creatives and Cast"
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToSection('cast'); }}
               >
-                <span aria-hidden="true" style={{marginRight: '8px'}}>&#8594;</span> Find out who's bringing our DnD-inspired shows to life: Meet the Creatives & Cast
+                <span aria-hidden="true" style={{marginRight: '8px'}}>&#8594;</span> Find out who's bringing it all to life: Meet the Creatives & Cast
               </div>
             </div>
             <div className="about-card" style={styles.aboutCard}>
@@ -404,7 +404,7 @@ export default function TheNaturalOnesWebsite() {
               <GroupPhoto />
               <div style={styles.statBlock}>
                 <h3 style={styles.statBlockTitle}>The Natural Ones</h3>
-                <div style={styles.statBlockSubtitle}>DnD & Tabletop RPG Theatre Group</div>
+                <div style={styles.statBlockSubtitle}>Comedy Theatre Group</div>
                 <div style={styles.statDivider}></div>
                 <div style={styles.statRow}>
                   <span style={styles.statLabel}>Founded:</span>
@@ -707,7 +707,7 @@ export default function TheNaturalOnesWebsite() {
           <SectionHeader title="Contact" subtitle="Send a Message" />
 
           <p style={styles.contactIntro}>
-            Got a question about our DnD-inspired shows? Want to book our tabletop RPG musical for your venue or event? Think you can help us on our quest to Edinburgh?
+            Got a question about our shows? Want to book our tabletop RPG musical for your venue or event? Think you can help us on our quest to Edinburgh?
             Send us a message via carrier pigeon (or the more reliable methods below).
           </p>
 
@@ -862,7 +862,7 @@ export default function TheNaturalOnesWebsite() {
             <Logo size={50} />
             <span style={styles.footerLogoText}>The Natural Ones</span>
           </div>
-          <p style={styles.footerTagline}>DnD-Inspired Amateur Theatre with a Critical Hit</p>
+          <p style={styles.footerTagline}>Amateur Theatre with a Critical Hit</p>
           <div style={styles.footerDivider}></div>
           <div style={styles.footerLinks}>
             <button
@@ -1765,7 +1765,7 @@ function Logo({ size = 40 }) {
   return (
     <img
       src="/images/logo.png"
-      alt="The Natural Ones logo — DnD-inspired comedy musical theatre group"
+      alt="The Natural Ones logo — comedy theatre group and home of the DnD-inspired tabletop RPG musical"
       style={{ height: size, width: 'auto' }}
       onError={() => setHasError(true)}
     />
