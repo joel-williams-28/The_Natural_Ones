@@ -19,8 +19,8 @@ const showsData = [
     doors: "",
     runtime: "",
     ticketUrl: "#",
-    description: "A comedy adventure where the dice decide the ending!",
-    tagline: "Where the dice decide the ending",
+    description: "A Dungeons & Dragons inspired comedy musical where the D20 decides the ending!",
+    tagline: "A DnD comedy musical where the dice decide the ending",
     backText: ""
   },
   {
@@ -38,8 +38,8 @@ const showsData = [
     doors: "19:00",
     runtime: "Approx. 2hrs - incl. interval",
     ticketUrl: "https://www.ticketsource.co.uk/whats-on/abingdon/unicorn-theatre/mystery-at-murderingham-manor-and-more/e-kqamxo",
-    description: "A tale of one DM's struggle against the chaos of their party.",
-    tagline: "One DM. Five players. Infinite chaos.",
+    description: "A tale of one tabletop RPG Dungeon Master's struggle against the chaos of their party.",
+    tagline: "One Dungeon Master. Five players. Infinite chaos.",
     backText: ""
   }
 ];
@@ -293,7 +293,7 @@ export default function TheNaturalOnesWebsite() {
             <Logo size={180} />
           </div>
           <h1 className="hero-title" style={styles.heroTitle}>The Natural Ones</h1>
-          <p style={styles.heroSubtitle}>Amateur Theatre with a Critical Hit</p>
+          <p style={styles.heroSubtitle}>DnD-Inspired Amateur Theatre with a Critical Hit</p>
           <div style={styles.heroDivider}>
             <span style={styles.dividerLine}></span>
             <span style={styles.dividerDot}>✦</span>
@@ -325,13 +325,15 @@ export default function TheNaturalOnesWebsite() {
       {/* About Section */}
       <section id="about" style={styles.sectionAbout}>
         <div className="section-inner" style={styles.sectionInner}>
-          <SectionHeader title="About Us" subtitle="We Rolled a One. We Kept Playing." />
+          <SectionHeader title="About Us" subtitle="We Rolled a Natural One. We Kept Playing." />
           <div className="about-grid" style={styles.aboutGrid}>
             <div style={styles.aboutText}>
               <p style={{...styles.paragraph, marginBottom: '40px'}}>
                 <span className="drop-cap" style={styles.dropCap}>T</span>he Natural Ones are an
-                Oxfordshire-based performing arts group dedicated to original comedy theatre. The name is a nod
-                to the most feared roll in tabletop gaming: the natural one on a D20. Total, catastrophic
+                Oxfordshire-based performing arts group dedicated to original comedy theatre inspired
+                by Dungeons & Dragons and tabletop roleplaying games. The name is a nod
+                to the most feared roll in tabletop gaming: the natural one on a D20. If you've ever
+                played DnD, you know the feeling. Total, catastrophic
                 failure. Your sword shatters. Your spell backfires. You fall off the bridge you were standing
                 perfectly still on.
               </p>
@@ -343,11 +345,11 @@ export default function TheNaturalOnesWebsite() {
                 Our founder, <strong>James A. Coleman</strong> (scriptwriter, lyricist, director and
                 producer) is both a lifelong musical theatre obsessive and an irredeemable nerd, which really
                 made this whole thing an inevitability. After plenty of time performing, crewing, writing and
-                directing amateur productions, he discovered tabletop role-playing games in his early
+                directing amateur productions, he discovered Dungeons & Dragons and other tabletop role-playing games in his early
                 20s and immediately thought: <span style={{fontStyle: 'italic'}}>this needs to be a
                 musical.</span> Several years of development
                 later, <span style={{fontStyle: 'italic'}}>Tabletop Roll-Playing Game: The
-                Musical</span> (or <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> for short) was born.
+                Musical</span> (or <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> for short) was born — a DnD-inspired comedy musical like nothing else on stage.
               </p>
               <p style={styles.paragraph}>
                 The music comes from <strong>Richard Baker</strong>, an Olivier Award-nominated composer whose
@@ -359,8 +361,8 @@ export default function TheNaturalOnesWebsite() {
               </p>
               <p style={styles.paragraph}>
                 Since our sold-out debut in Abingdon in January 2025, we've
-                taken <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> to the Cheltenham Fringe Festival, MCM
-                London Comic Con, and venues across the country. We're currently preparing our newest
+                taken our tabletop RPG musical to the Cheltenham Fringe Festival, MCM
+                London Comic Con, and venues across the country, bringing DnD-inspired live theatre to new audiences everywhere we go. We're currently preparing our newest
                 comedy, <span style={{fontStyle: 'italic'}}>Mystery at Murderingham Manor</span>, and working
                 towards our next great quest: the Edinburgh Fringe Festival in 2026.
               </p>
@@ -373,7 +375,7 @@ export default function TheNaturalOnesWebsite() {
                 aria-label="Meet the Creatives and Cast"
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToSection('cast'); }}
               >
-                <span aria-hidden="true" style={{marginRight: '8px'}}>&#8594;</span> Find out who's bringing it all to life: Meet the Creatives & Cast
+                <span aria-hidden="true" style={{marginRight: '8px'}}>&#8594;</span> Find out who's bringing our DnD-inspired shows to life: Meet the Creatives & Cast
               </div>
             </div>
             <div className="about-card" style={styles.aboutCard}>
@@ -402,7 +404,7 @@ export default function TheNaturalOnesWebsite() {
               <GroupPhoto />
               <div style={styles.statBlock}>
                 <h3 style={styles.statBlockTitle}>The Natural Ones</h3>
-                <div style={styles.statBlockSubtitle}>Performing Arts Group</div>
+                <div style={styles.statBlockSubtitle}>DnD & Tabletop RPG Theatre Group</div>
                 <div style={styles.statDivider}></div>
                 <div style={styles.statRow}>
                   <span style={styles.statLabel}>Founded:</span>
@@ -433,7 +435,7 @@ export default function TheNaturalOnesWebsite() {
       {/* Show Section */}
       <section id="show" style={styles.sectionShow}>
         <div className="section-inner" style={styles.sectionInner}>
-          <SectionHeader title="The Shows" subtitle="Our Quest Begins" />
+          <SectionHeader title="The Shows" subtitle="Roll for Initiative — Our Quest Begins" />
           <p style={styles.centeredText}>
             Click on a poster to reveal performance details
           </p>
@@ -446,7 +448,7 @@ export default function TheNaturalOnesWebsite() {
         <div className="section-inner" style={styles.sectionInner}>
           {/* Header with D20 divider */}
           <div style={styles.sectionHeader}>
-            <span style={{...styles.headerSubtitle, color: '#c9a227'}}>Meet Your Adventurers</span>
+            <span style={{...styles.headerSubtitle, color: '#c9a227'}}>Meet Your Adventuring Party</span>
             <h2 style={{...styles.headerTitle, color: '#e8dcc4'}}>The Party</h2>
             <div style={styles.headerDivider}>
               <span style={{ width: '80px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(201,169,97,0.6))' }}></span>
@@ -540,7 +542,7 @@ export default function TheNaturalOnesWebsite() {
       {/* Support Section */}
       <section id="support" style={styles.sectionHighlight}>
         <div className="section-inner" style={styles.sectionInner}>
-          <SectionHeader title="Support Our Quest" subtitle="Help Us Reach Edinburgh" />
+          <SectionHeader title="Support Our Quest" subtitle="Help Our DnD Musical Reach Edinburgh" />
 
           {/* Funding Progress - Full Width, Prominent */}
           <div className="supportFundingBar" style={styles.supportFundingBar}>
@@ -613,7 +615,7 @@ export default function TheNaturalOnesWebsite() {
           {/* The Pitch */}
           <div style={styles.supportPitch}>
             <p style={styles.paragraph}>
-              Taking <em>TTRPG:TM</em> to the Edinburgh Fringe is the biggest thing we've ever
+              Taking our DnD-inspired musical <em>TTRPG:TM</em> to the Edinburgh Fringe is the biggest thing we've ever
               attempted, and we can't wait. But the Fringe is one of the most expensive places
               to put on a show. Venue hire, marketing, accommodation, and the general cost of
               keeping a cast fed and upright for a festival run all add up fast. We've been saving
@@ -652,8 +654,8 @@ export default function TheNaturalOnesWebsite() {
               { price: '£15', title: 'Behind the Scenes', desc: 'Exclusive behind-the-scenes footage from three years of development. See how it all comes together.', limited: false },
               { price: '£60', title: 'Meet the Cast', desc: 'Coming to see us live? Get photos with the cast after the show.', limited: false },
               { price: '£100', title: 'Name the Villain', desc: 'Our dastardly antagonist, the Mayor of Sarriar Town, needs a name, and you get to choose it for a live performance.', limited: 'Only 7 available' },
-              { price: '£600', title: 'Roll the D20', desc: 'Come to a live show and roll the dice that decides the fate of our heroes. One available. Yes, really, just one.', limited: 'Only 1 available' },
-              { price: '£600', title: 'Play a One-Shot', desc: 'Play a full tabletop RPG session with members of the cast, in character, on a brand new quest.', limited: 'Only 5 available' },
+              { price: '£600', title: 'Roll the D20', desc: 'Come to a live show and roll the D20 that decides the fate of our heroes — just like in Dungeons & Dragons. One available. Yes, really, just one.', limited: 'Only 1 available' },
+              { price: '£600', title: 'Play a DnD One-Shot', desc: 'Play a full tabletop RPG one-shot session with members of the cast, in character, on a brand new Dungeons & Dragons quest.', limited: 'Only 5 available' },
               { price: '£1,000', title: 'Play the Monster', desc: 'Step on stage in costume and play a creature in the climax of the show. Courage optional.', limited: 'Strictly limited: only 5 available' },
             ].map((tier, i, arr) => (
               <div key={i} className="support-reward-card" style={{...styles.supportRewardCard, ...(i === arr.length - 1 && arr.length % 3 === 1 ? { gridColumn: '2' } : {})}}>
@@ -691,7 +693,7 @@ export default function TheNaturalOnesWebsite() {
               {kickstarterData.isLive ? 'Back Us on Kickstarter' : 'View on Kickstarter'}
             </a>
             <p style={styles.supportClosingCopy}>
-              Every penny goes directly towards getting this show, and this ridiculous, talented
+              Every penny goes directly towards getting this tabletop RPG musical, and this ridiculous, talented
               group of people, to Edinburgh. Back us, follow us, share us, or simply wish us well.
               We'll take all the help we can get.
             </p>
@@ -705,7 +707,7 @@ export default function TheNaturalOnesWebsite() {
           <SectionHeader title="Contact" subtitle="Send a Message" />
 
           <p style={styles.contactIntro}>
-            Got a question? Want to book us for a show? Think you can help us on our quest to Edinburgh?
+            Got a question about our DnD-inspired shows? Want to book our tabletop RPG musical for your venue or event? Think you can help us on our quest to Edinburgh?
             Send us a message via carrier pigeon (or the more reliable methods below).
           </p>
 
@@ -860,7 +862,7 @@ export default function TheNaturalOnesWebsite() {
             <Logo size={50} />
             <span style={styles.footerLogoText}>The Natural Ones</span>
           </div>
-          <p style={styles.footerTagline}>Amateur Theatre with a Critical Hit</p>
+          <p style={styles.footerTagline}>DnD-Inspired Amateur Theatre with a Critical Hit</p>
           <div style={styles.footerDivider}></div>
           <div style={styles.footerLinks}>
             <button
@@ -875,7 +877,7 @@ export default function TheNaturalOnesWebsite() {
             © 2026 The Natural Ones. Oxfordshire, UK. All rights reserved.
           </p>
           <p style={styles.footerNote}>
-            "Tabletop Role-Playing Game: The Musical!" written by James A. Coleman, music by Richard Baker.
+            "Tabletop Role-Playing Game: The Musical!" — a Dungeons & Dragons inspired comedy musical, written by James A. Coleman, music by Richard Baker.
           </p>
         </div>
       </footer>
@@ -898,7 +900,7 @@ function AffiliationsPage({ onNavigateHome }) {
             <span style={styles.headerLine}></span>
           </div>
           <p style={styles.affiliationsIntro}>
-            No adventuring party succeeds alone. These are the talented groups and individuals
+            No adventuring party succeeds alone — any Dungeon Master will tell you that. These are the talented groups and individuals
             we're proud to call allies on this quest.
           </p>
         </div>
@@ -1089,7 +1091,7 @@ function GroupPhoto() {
   return (
     <img
       src="/images/group-photo.jpg"
-      alt="The Natural Ones Theatre Group"
+      alt="The Natural Ones — cast of the DnD-inspired comedy musical Tabletop Role-Playing Game: The Musical"
       style={styles.groupPhoto}
       loading="lazy"
       onError={() => setHasError(true)}
@@ -1124,7 +1126,7 @@ function ShowPoster() {
     <div style={styles.posterFrame}>
       <img
         src="/images/poster.jpg"
-        alt="Tabletop Role-Playing Game: The Musical!"
+        alt="Poster for Tabletop Role-Playing Game: The Musical — a Dungeons and Dragons inspired comedy show"
         style={styles.posterImage}
         loading="lazy"
         onError={() => setHasError(true)}
@@ -1613,7 +1615,7 @@ function PosterCard({ show }) {
   return (
     <img
       src={show.poster}
-      alt={show.title}
+      alt={`Poster for ${show.title} by The Natural Ones tabletop RPG theatre group`}
       style={styles.posterCardImage}
       loading="lazy"
       onError={() => setHasError(true)}
@@ -1648,13 +1650,13 @@ function PosterBack({ show }) {
         <h2 style={{...styles.posterBackTitle, fontFamily: p1Font}}>Tabletop Role-Playing Game: The Musical</h2>
         <p style={{...styles.posterBackSubtitle, fontFamily: p1Font}}><strong>Script by James A. Coleman | Music by Richard Baker</strong></p>
         <div style={styles.posterBackBodyWrap}>
-          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Six friends. One quest. Absolutely no plan.</p>
-          <p style={{...styles.posterBackBody, fontFamily: p1Font}}><em>TTRPG</em> is a brand new musical comedy about a group of tabletop role-playing gamers whose evening of swords, sorcery and questionable decision-making goes about as well as you'd expect when nobody reads the rules properly.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Six friends. One quest. Absolutely no plan. One D20 to rule them all.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}><em>TTRPG</em> is a brand new Dungeons & Dragons inspired musical comedy about a group of tabletop role-playing gamers whose evening of swords, sorcery and questionable decision-making goes about as well as you'd expect when nobody reads the rules properly.</p>
           <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Meet the gang: there's a monk with a drinking problem, a princess who knows suspiciously little about her own religion, a cleric whose views on other races could politely be described as <em>robust</em>, a halfling who just wanted a nice simple dragon fight, and a ranger whose approach to diplomacy is best described as "indiscriminate."</p>
           <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Oh, and a Dungeon Master who is absolutely, definitely, completely in control of the situation.</p>
           <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Together, they'll face treacherous villains, impossible puzzles, questionable laundry, and the greatest enemy of all: each other. There will be looting. There will be ballads. There will be at least one character death that is entirely avoidable and absolutely deserved.</p>
-          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Featuring original songs, a story that could go in <em>any</em> direction, and a finale that puts the fate of our heroes squarely in the hands of someone who almost certainly cannot be trusted with it. <em>TTRPG</em> is a love letter to friendship, imagination, and the fine art of rolling a one at the worst possible moment.</p>
-          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>No experience with tabletop games required. No experience with functioning adult relationships required either, but it helps.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Featuring original songs, a story that could go in <em>any</em> direction, and a finale that puts the fate of our heroes squarely in the hands of someone who almost certainly cannot be trusted with it. <em>TTRPG</em> is a love letter to DnD, tabletop RPG culture, friendship, imagination, and the fine art of rolling a natural one at the worst possible moment.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>No experience with Dungeons & Dragons or tabletop games required. No experience with functioning adult relationships required either, but it helps.</p>
           <p style={{...styles.posterBackBodyBold, fontFamily: p1Font}}>You don't need to know the rules. Neither do they.</p>
         </div>
       </div>
@@ -1763,7 +1765,7 @@ function Logo({ size = 40 }) {
   return (
     <img
       src="/images/logo.png"
-      alt="The Natural Ones Logo"
+      alt="The Natural Ones logo — DnD-inspired comedy musical theatre group"
       style={{ height: size, width: 'auto' }}
       onError={() => setHasError(true)}
     />
