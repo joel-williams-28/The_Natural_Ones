@@ -281,35 +281,25 @@ export default function TheNaturalOnesWebsite() {
           <div className="about-grid" style={styles.aboutGrid}>
             <div style={styles.aboutText}>
               <p style={{...styles.paragraph, marginBottom: '40px'}}>
-                <span className="drop-cap" style={styles.dropCap}>E</span>very great adventure starts somewhere. Ours started with
-                a name that didn't stick.
-              </p>
-              <p style={styles.paragraph}>
-                The Natural Ones began life as <span style={{fontStyle: 'italic'}}>A Box of Frogs</span> — which,
-                in hindsight, was less a name and more a description of our rehearsal process. After a few
-                iterations (none of which we'll be sharing, for legal and dignity reasons), we landed
-                on <strong>The Natural Ones</strong>: a nod to the most feared roll in tabletop gaming, the
-                dreaded natural one on a D20. For the uninitiated, a natural one means total, catastrophic
+                <span className="drop-cap" style={styles.dropCap}>T</span>he Natural Ones are an
+                Oxfordshire-based performing arts group dedicated to original comedy theatre. The name is a nod
+                to the most feared roll in tabletop gaming: the natural one on a D20. Total, catastrophic
                 failure. Your sword shatters. Your spell backfires. You fall off the bridge you were standing
                 perfectly still on.
               </p>
               <p style={styles.paragraph}>
-                We thought it suited us rather well.
+                We went through a few other names first (none of which we'll be sharing, for legal and dignity
+                reasons). We thought it suited us rather well.
               </p>
               <p style={styles.paragraph}>
-                <strong>The Natural Ones</strong> are an Oxfordshire-based performing arts group made up of a
-                brilliant selection of weirdos who all happen to be brilliant singers and actors
-                too. We're dedicated to original comedy theatre — the kind of shows where the scripts are new,
-                the laughs are genuine, and the props budget is optimistic at best.
-              </p>
-              <p style={styles.paragraph}>
-                Our founder, <strong>James A. Coleman</strong> — scriptwriter, lyricist, director and
-                producer — is both a lifelong musical theatre obsessive and an irredeemable nerd, which really
-                made this whole thing an inevitability. After years of performing, crewing, writing and directing
-                amateur productions across the country, he discovered tabletop role-playing games in his early
+                Our founder, <strong>James A. Coleman</strong> (scriptwriter, lyricist, director and
+                producer) is both a lifelong musical theatre obsessive and an irredeemable nerd, which really
+                made this whole thing an inevitability. After plenty of time performing, crewing, writing and
+                directing amateur productions, he discovered tabletop role-playing games in his early
                 20s and immediately thought: <span style={{fontStyle: 'italic'}}>this needs to be a
-                musical.</span> Six years of development later — which is either dedication or stubbornness
-                depending on who you ask — <span style={{fontStyle: 'italic'}}>Tabletop Role-Playing Game: The Musical!</span> was born.
+                musical.</span> Several years of development
+                later, <span style={{fontStyle: 'italic'}}>Tabletop Roll-Playing Game: The
+                Musical</span> (or <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> for short) was born.
               </p>
               <p style={styles.paragraph}>
                 The music comes from <strong>Richard Baker</strong>, an Olivier Award-nominated composer whose
@@ -320,25 +310,18 @@ export default function TheNaturalOnesWebsite() {
                 him to bring the show's mad songs and scenes to life.
               </p>
               <p style={styles.paragraph}>
-                First assembled to perform <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> in Abingdon in
-                2025, the group launched with a sold-out debut in January of that year before taking the show to
-                the Cheltenham Fringe Festival and performing extracts at MCM London Comic Con — where we had a
-                fantastic time and still managed to feel pretty out of place despite the surroundings. We're currently
-                preparing our newest comedy, <span style={{fontStyle: 'italic'}}>Mystery at Murderingham
-                Manor</span>, while also performing <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> in
-                venues across the country and working towards our next great quest: the Edinburgh Fringe Festival
-                in 2026.
-              </p>
-              <p style={styles.paragraph}>
-                We're a group of fledgling artists with big ambitions, questionable judgement, and an unreasonable
-                fondness for puns. If that sounds like your sort of thing, we'd love to have you along for the ride.
+                Since our sold-out debut in Abingdon in January 2025, we've
+                taken <span style={{fontStyle: 'italic'}}>TTRPG:TM</span> to the Cheltenham Fringe Festival, MCM
+                London Comic Con, and venues across the country. We're currently preparing our newest
+                comedy, <span style={{fontStyle: 'italic'}}>Mystery at Murderingham Manor</span>, and working
+                towards our next great quest: the Edinburgh Fringe Festival in 2026.
               </p>
               <div style={styles.aboutDivider}></div>
               <div
                 style={styles.meetCastLink}
                 onClick={() => scrollToSection('cast')}
               >
-                <span style={{marginRight: '8px'}}>&#8594;</span> Meet the Creatives & Cast
+                <span style={{marginRight: '8px'}}>&#8594;</span> Find out who's bringing it all to life: Meet the Creatives & Cast
               </div>
             </div>
             <div className="about-card" style={styles.aboutCard}>
@@ -461,13 +444,13 @@ export default function TheNaturalOnesWebsite() {
           <div className="cast-member-grid" style={styles.castMemberGrid}>
             {[
               { name: 'Mollie Iwanczak', photo: 'member4.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Mollie has been doing theatre since she was in secondary school, throughout university and then into her adult life. She met her lovely castmates in a local theatre group (and Sreya at a water park) and has never looked back!</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Her favourite shows she's been in are <em>Rent</em>, <em>Chitty Chitty Bang Bang</em>, <em>9 to 5</em> and <em>Guys and Dolls</em>.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>This show has mixed her love of TTRPGs and musicals and they have the best fun doing these performances. She could honestly pinch herself that this is such a huge part of her life now.</p><p style={{ textAlign: 'justify', margin: 0 }}>Hope you enjoy our shows!</p></> },
-              { name: 'Caroline Dorgan', photo: 'member5.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Caroline found her way to The Natural Ones via Abingdon Operatic Society, where she met this wonderful bunch of silly, talented, theatre-loving humans and was honoured to be asked to stick around.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>She's only been performing for the last few years, but she's wasted no time — she's already had a lot of fun playing General Cartwright in <em>Guys and Dolls</em> and is currently deep in rehearsals as Mrs Potts in <em>Beauty and the Beast</em> — getting a good <em>"handle"</em> on the role, she says, and no, she will not apologise for that.</p><p style={{ textAlign: 'justify', margin: 0 }}>Caroline has loved theatre since childhood and grew up going to many shows with her parents, so joining a group of enthusiastic, slightly nerdy, very loveable performers feels exactly right. She's finally found her people.</p></> },
+              { name: 'Caroline Dorgan', photo: 'member5.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Caroline found her way to The Natural Ones via Abingdon Operatic Society, where she met this wonderful bunch of silly, talented, theatre-loving humans and was honoured to be asked to stick around.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>She's only been performing for the last few years, but she's wasted no time. She's already had a lot of fun playing General Cartwright in <em>Guys and Dolls</em> and is currently deep in rehearsals as Mrs Potts in <em>Beauty and the Beast</em>, getting a good <em>"handle"</em> on the role, she says, and no, she will not apologise for that.</p><p style={{ textAlign: 'justify', margin: 0 }}>Caroline has loved theatre since childhood and grew up going to many shows with her parents, so joining a group of enthusiastic, slightly nerdy, very loveable performers feels exactly right. She's finally found her people.</p></> },
               { name: 'Matthew Edwards', photo: 'member6.jpg', bio: 'Bio coming soon.' },
-              { name: 'Jake Furness', photo: 'member7.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Jake was recruited to The Natural Ones when James told him he had a part that was <em>"a bit of a dick"</em> and thought Jake would be perfect for it. He's still not sure whether that was a compliment.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Jake trained in ballet, tap and modern dance from the age of six, earning junior associate scholarships from both the Royal Ballet and the British Ballet Organisation. He appeared in professional pantomimes in Coventry as a child and teenager, before moving into musical theatre with Coventry Youth Operatic Group and later with Stratford-upon-Avon. He then took what he describes as an <em>"extended intermission"</em> from the stage — spanning many, many years — before deciding he rather missed it and returning to amateur dramatics with Abingdon Operatic Society.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Since then, Jake has thrown himself into choreography with the Society and is looking forward to serving as principal choreographer for their upcoming production of <em>Come From Away</em>.</p><p style={{ textAlign: 'justify', margin: 0 }}>Jake is delighted to be back doing what he loves, thrilled to be part of The Natural Ones, and only mildly concerned about what it says about him that James's first thought for <em>"a bit of a dick"</em> was to come straight to him.</p></> },
+              { name: 'Jake Furness', photo: 'member7.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Jake was recruited to The Natural Ones when James told him he had a part that was <em>"a bit of a dick"</em> and thought Jake would be perfect for it. He's still not sure whether that was a compliment.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Jake trained in ballet, tap and modern dance from the age of six, earning junior associate scholarships from both the Royal Ballet and the British Ballet Organisation. He appeared in professional pantomimes in Coventry as a child and teenager, before moving into musical theatre with Coventry Youth Operatic Group and later with Stratford-upon-Avon. He then took what he describes as an <em>"extended intermission"</em> from the stage, spanning many, many years, before deciding he rather missed it and returning to amateur dramatics with Abingdon Operatic Society.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>Since then, Jake has thrown himself into choreography with the Society and is looking forward to serving as principal choreographer for their upcoming production of <em>Come From Away</em>.</p><p style={{ textAlign: 'justify', margin: 0 }}>Jake is delighted to be back doing what he loves, thrilled to be part of The Natural Ones, and only mildly concerned about what it says about him that James's first thought for <em>"a bit of a dick"</em> was to come straight to him.</p></> },
               { name: 'Zo\u00eb Harper', photo: 'member8.jpg', bio: 'Bio coming soon.' },
               { name: 'Nicki Rochford', photo: 'member9.jpg', bio: 'Bio coming soon.' },
               { name: 'Kyran Pritchard', photo: 'member10.jpg', bio: 'Bio coming soon.' },
-              { name: 'Sreya Rao', photo: 'member11.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>After meeting Mollie through a mutual friend (at a water park, of all places!) and then getting to know the rest of the troupe through a musical theatre group, Sreya was delighted to become part of The Natural Ones.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>She has been acting in community groups for about 20 years, including plays, musicals, and pantos, and she sings with a chamber choir. Favourite roles include Puck in <em>A Midsummer Night's Dream</em>, Marianne in <em>Sense &amp; Sensibility</em>, Margaret in <em>Dear Brutus</em>, and Cis in <em>The Magistrate</em>. She's also had the pleasure of playing many parts in stage adaptations of Terry Pratchett's Discworld series, written and directed by Stephen Briggs — including donning a big bushy beard as Cheery Littlebottom, the dwarf!</p><p style={{ textAlign: 'justify', margin: 0 }}>The best thing about theatre, she says, is working with people from all walks of life and how it's a mix of serious and silly — though The Natural Ones are heavy on the silly!</p></> },
+              { name: 'Sreya Rao', photo: 'member11.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>After meeting Mollie through a mutual friend (at a water park, of all places!) and then getting to know the rest of the troupe through a musical theatre group, Sreya was delighted to become part of The Natural Ones.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>She has been acting in community groups for about 20 years, including plays, musicals, and pantos, and she sings with a chamber choir. Favourite roles include Puck in <em>A Midsummer Night's Dream</em>, Marianne in <em>Sense &amp; Sensibility</em>, Margaret in <em>Dear Brutus</em>, and Cis in <em>The Magistrate</em>. She's also had the pleasure of playing many parts in stage adaptations of Terry Pratchett's Discworld series, written and directed by Stephen Briggs, including donning a big bushy beard as Cheery Littlebottom, the dwarf!</p><p style={{ textAlign: 'justify', margin: 0 }}>The best thing about theatre, she says, is working with people from all walks of life and how it's a mix of serious and silly, though The Natural Ones are heavy on the silly!</p></> },
               { name: 'Daniel Robert', photo: 'member12.jpg', bio: 'Bio coming soon.' },
               { name: 'Rebekah Tennyson', photo: 'member13.jpg', bio: 'Bio coming soon.' },
               { name: 'Cate Welmers', photo: 'member14.jpg', bio: 'Bio coming soon.' },
@@ -579,14 +562,14 @@ export default function TheNaturalOnesWebsite() {
           <div style={styles.supportPitch}>
             <p style={styles.paragraph}>
               Taking <em>TTRPG:TM</em> to the Edinburgh Fringe is the biggest thing we've ever
-              attempted — and we can't wait. But the Fringe is one of the most expensive places
+              attempted, and we can't wait. But the Fringe is one of the most expensive places
               to put on a show. Venue hire, marketing, accommodation, and the general cost of
               keeping a cast fed and upright for a festival run all add up fast. We've been saving
               and fundraising for months, but we need your help to get us over the line.
             </p>
             <p style={styles.paragraph}>
-              Our Kickstarter is live now, and every pledge — whether it's a fiver or something
-              altogether more ambitious — gets us closer to Edinburgh and keeps our dreams (and our
+              Our Kickstarter is live now, and every pledge, whether it's a fiver or something
+              altogether more ambitious, gets us closer to Edinburgh and keeps our dreams (and our
               cast) alive.
             </p>
           </div>
@@ -616,10 +599,10 @@ export default function TheNaturalOnesWebsite() {
               { price: '£5', title: 'Support the Show', desc: 'A social media shout-out and our eternal, undying gratitude. We mean that. We will be grateful forever. It might get weird.', limited: false },
               { price: '£15', title: 'Behind the Scenes', desc: 'Exclusive behind-the-scenes footage from three years of development. See how it all comes together.', limited: false },
               { price: '£60', title: 'Meet the Cast', desc: 'Coming to see us live? Get photos with the cast after the show.', limited: false },
-              { price: '£100', title: 'Name the Villain', desc: 'Our dastardly antagonist, the Mayor of Sarriar Town, needs a name — and you get to choose it for a live performance.', limited: 'Only 7 available' },
-              { price: '£600', title: 'Roll the D20', desc: 'Come to a live show and roll the dice that decides the fate of our heroes. One available — yes, really, just one.', limited: 'Only 1 available' },
+              { price: '£100', title: 'Name the Villain', desc: 'Our dastardly antagonist, the Mayor of Sarriar Town, needs a name, and you get to choose it for a live performance.', limited: 'Only 7 available' },
+              { price: '£600', title: 'Roll the D20', desc: 'Come to a live show and roll the dice that decides the fate of our heroes. One available. Yes, really, just one.', limited: 'Only 1 available' },
               { price: '£600', title: 'Play a One-Shot', desc: 'Play a full tabletop RPG session with members of the cast, in character, on a brand new quest.', limited: 'Only 5 available' },
-              { price: '£1,000', title: 'Play the Monster', desc: 'Step on stage in costume and play a creature in the climax of the show. Courage optional.', limited: 'Strictly limited — only 5 available' },
+              { price: '£1,000', title: 'Play the Monster', desc: 'Step on stage in costume and play a creature in the climax of the show. Courage optional.', limited: 'Strictly limited: only 5 available' },
             ].map((tier, i, arr) => (
               <div key={i} className="support-reward-card" style={{...styles.supportRewardCard, ...(i === arr.length - 1 && arr.length % 3 === 1 ? { gridColumn: '2' } : {})}}>
 
@@ -633,7 +616,7 @@ export default function TheNaturalOnesWebsite() {
             ))}
           </div>
           <p style={styles.supportRewardsCta}>
-            These are just a few of the rewards available —{' '}
+            These are just a few of the rewards available:{' '}
             <a
               href="https://www.kickstarter.com/projects/1310830097/tabletop-role-playing-game-the-musical-at-the-fringe"
               target="_blank"
@@ -656,8 +639,8 @@ export default function TheNaturalOnesWebsite() {
               {kickstarterData.isLive ? 'Back Us on Kickstarter' : 'View on Kickstarter'}
             </a>
             <p style={styles.supportClosingCopy}>
-              Every penny goes directly towards getting this show — and this ridiculous, talented
-              group of people — to Edinburgh. Back us, follow us, share us, or simply wish us well.
+              Every penny goes directly towards getting this show, and this ridiculous, talented
+              group of people, to Edinburgh. Back us, follow us, share us, or simply wish us well.
               We'll take all the help we can get.
             </p>
           </div>
@@ -902,6 +885,7 @@ function ShowCarousel({ shows }) {
   const carouselRef = useRef(null);
   const containerRef = useRef(null);
   const animationRef = useRef(null);
+  const skipFlipTransition = useRef(false);
 
   // Use ref for animated offset to ensure synchronous updates with index changes
   const offsetRef = useRef(0);
@@ -987,19 +971,40 @@ function ShowCarousel({ shows }) {
     animationRef.current = requestAnimationFrame(animate);
   };
 
+  // Swap to a new poster while keeping flipped state (no carousel animation)
+  const crossFadeToIndex = (newIndex) => {
+    // Disable flip transition so the card never visually unflips during the swap
+    skipFlipTransition.current = true;
+    setCurrentIndex(newIndex);
+    setFlippedIndex(newIndex);
+    // Reset scroll position of all poster back text areas to top
+    if (containerRef.current) {
+      containerRef.current.querySelectorAll('.poster-back-content').forEach(el => {
+        el.scrollTop = 0;
+      });
+    }
+    // Re-enable flip transition after the browser has painted the new state
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        skipFlipTransition.current = false;
+      });
+    });
+  };
+
   // Navigate to previous poster with smooth carousel rotation
   const handlePrev = (keepFlipped = false) => {
     if (isAnimating || isDragging) return;
 
     const newIndex = currentIndex === 0 ? shows.length - 1 : currentIndex - 1;
 
+    if (keepFlipped && flippedIndex !== null) {
+      crossFadeToIndex(newIndex);
+      return;
+    }
+
     // Animate from 0 to full spacing (rotating right)
     animateCarousel(0, spacing, () => {
       setCurrentIndex(newIndex);
-      if (keepFlipped && flippedIndex !== null) {
-        setFlippedIndex(newIndex);
-        setInfoVisible(true);
-      }
     });
   };
 
@@ -1009,13 +1014,14 @@ function ShowCarousel({ shows }) {
 
     const newIndex = currentIndex === shows.length - 1 ? 0 : currentIndex + 1;
 
+    if (keepFlipped && flippedIndex !== null) {
+      crossFadeToIndex(newIndex);
+      return;
+    }
+
     // Animate from 0 to negative spacing (rotating left)
     animateCarousel(0, -spacing, () => {
       setCurrentIndex(newIndex);
-      if (keepFlipped && flippedIndex !== null) {
-        setFlippedIndex(newIndex);
-        setInfoVisible(true);
-      }
     });
   };
 
@@ -1052,6 +1058,13 @@ function ShowCarousel({ shows }) {
   // Mouse/touch drag handling
   const handleDragStart = (e) => {
     if (isAnimating) return;
+
+    // If a card is flipped and the touch/click started inside the poster-back-content,
+    // let the browser handle it natively (allows scrolling the text on mobile)
+    if (flippedIndex !== null && e.target.closest('.poster-back-content')) {
+      return;
+    }
+
     setIsDragging(true);
     setHasDragged(false);
     setStartX(e.type === 'touchstart' ? e.touches[0].clientX : e.clientX);
@@ -1081,21 +1094,24 @@ function ShowCarousel({ shows }) {
     setIsDragging(false);
 
     if (Math.abs(currentDragOffset) > threshold) {
-      // Navigate - animate from current drag position to full spacing
+      // Navigate - determine target index
       const newIndex = currentDragOffset > 0
         ? (currentIndex === 0 ? shows.length - 1 : currentIndex - 1)
         : (currentIndex === shows.length - 1 ? 0 : currentIndex + 1);
 
-      const targetOffset = currentDragOffset > 0 ? spacing : -spacing;
+      if (isFlipped) {
+        // When flipped, snap back and cross-fade to avoid flicker
+        offsetRef.current = 0;
+        forceRender();
+        crossFadeToIndex(newIndex);
+      } else {
+        const targetOffset = currentDragOffset > 0 ? spacing : -spacing;
 
-      // Animate from where we dragged to the final position
-      animateCarousel(currentDragOffset, targetOffset, () => {
-        setCurrentIndex(newIndex);
-        if (isFlipped) {
-          setFlippedIndex(newIndex);
-          setInfoVisible(true);
-        }
-      });
+        // Animate from where we dragged to the final position
+        animateCarousel(currentDragOffset, targetOffset, () => {
+          setCurrentIndex(newIndex);
+        });
+      }
     } else if (Math.abs(currentDragOffset) > 5) {
       // Snap back to center with animation (only if we moved a bit)
       animateCarousel(currentDragOffset, 0);
@@ -1189,9 +1205,15 @@ function ShowCarousel({ shows }) {
             <div style={{
               ...styles.flipCard,
               transform: flippedIndex === item.actualIndex ? 'rotateY(180deg)' : 'rotateY(0deg)',
+              ...(skipFlipTransition.current ? { transition: 'none' } : {}),
             }}>
               {/* Front of card - Poster */}
-              <div style={styles.flipCardFront}>
+              <div style={{
+                ...styles.flipCardFront,
+                ...(skipFlipTransition.current && flippedIndex === item.actualIndex
+                  ? { visibility: 'hidden' }
+                  : {}),
+              }}>
                 <PosterCard show={item.show} />
               </div>
 
@@ -1203,6 +1225,28 @@ function ShowCarousel({ shows }) {
           </div>
         ))}
       </div>
+
+      {/* Mobile navigation arrows - visible when a poster is flipped */}
+      {flippedIndex !== null && (
+        <>
+          <div
+            className="carousel-nav-prev"
+            onClick={(e) => { e.stopPropagation(); handlePrev(true); }}
+            onTouchStart={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            &#8249;
+          </div>
+          <div
+            className="carousel-nav-next"
+            onClick={(e) => { e.stopPropagation(); handleNext(true); }}
+            onTouchStart={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            &#8250;
+          </div>
+        </>
+      )}
 
       {/* Info box that pops in when flipped - to the right of poster */}
       <div className="info-popup" style={{
@@ -1320,7 +1364,7 @@ function PosterBack({ show }) {
           <p style={styles.posterBackBody}>We should mention that we're operating on a bit of a reduced budget. The script calls for a dentist's chair, but those are expensive, so we'll be using a regular chair. The script also calls for real actors, but those are expensive too, so you'll have to make do with us.</p>
           <p style={styles.posterBackBody}><strong>Act Two</strong> is our one-act play, <em>Mystery at Murderingham Manor</em>, in which the world-renowned detective Harold Parsons is called to a country estate to investigate a suspicious death. Someone has been murdered. Then someone else has been murdered. Then, through what we can only describe as a remarkable lack of professional caution, someone else is also murdered. In fairness, three murders is quite a lot. You'd think people would start being more careful.</p>
           <p style={styles.posterBackBody}>We can tell you that the play features a lord, a lady, a butler, a nun, a cousin, and a detective. We can tell you that not all of them are what they seem. We can tell you that at least one of them did it. We cannot, however, tell you who, or how, or why, because frankly we're not entirely sure the characters know either.</p>
-          <p style={styles.posterBackBody}>What we <em>can</em> promise is an evening of laughs, surprises, at least one dramatic gasp, and a twist you almost certainly won't see coming — partly because it's very clever, and partly because there's a power cut.</p>
+          <p style={styles.posterBackBody}>What we <em>can</em> promise is an evening of laughs, surprises, at least one dramatic gasp, and a twist you almost certainly won't see coming, partly because it's very clever, and partly because there's a power cut.</p>
           <p style={styles.posterBackBodyBold}>Come for the mystery. Stay for the music. Leave before anyone asks you to help move the body.</p>
         </div>
       </div>
@@ -1338,8 +1382,8 @@ function PosterBack({ show }) {
           <p style={{...styles.posterBackBody, fontFamily: p1Font}}><em>TTRPG</em> is a brand new musical comedy about a group of tabletop role-playing gamers whose evening of swords, sorcery and questionable decision-making goes about as well as you'd expect when nobody reads the rules properly.</p>
           <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Meet the gang: there's a monk with a drinking problem, a princess who knows suspiciously little about her own religion, a cleric whose views on other races could politely be described as <em>robust</em>, a halfling who just wanted a nice simple dragon fight, and a ranger whose approach to diplomacy is best described as "indiscriminate."</p>
           <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Oh, and a Dungeon Master who is absolutely, definitely, completely in control of the situation.</p>
-          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Together, they'll face treacherous villains, impossible puzzles, questionable laundry, and the greatest enemy of all — each other. There will be looting. There will be ballads. There will be at least one character death that is entirely avoidable and absolutely deserved.</p>
-          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Featuring original songs, a story that could go in <em>any</em> direction, and a finale that puts the fate of our heroes squarely in the hands of someone who almost certainly cannot be trusted with it — <em>TTRPG</em> is a love letter to friendship, imagination, and the fine art of rolling a one at the worst possible moment.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Together, they'll face treacherous villains, impossible puzzles, questionable laundry, and the greatest enemy of all: each other. There will be looting. There will be ballads. There will be at least one character death that is entirely avoidable and absolutely deserved.</p>
+          <p style={{...styles.posterBackBody, fontFamily: p1Font}}>Featuring original songs, a story that could go in <em>any</em> direction, and a finale that puts the fate of our heroes squarely in the hands of someone who almost certainly cannot be trusted with it. <em>TTRPG</em> is a love letter to friendship, imagination, and the fine art of rolling a one at the worst possible moment.</p>
           <p style={{...styles.posterBackBody, fontFamily: p1Font}}>No experience with tabletop games required. No experience with functioning adult relationships required either, but it helps.</p>
           <p style={{...styles.posterBackBodyBold, fontFamily: p1Font}}>You don't need to know the rules. Neither do they.</p>
         </div>
@@ -1357,9 +1401,8 @@ function PosterBack({ show }) {
 // Shield Fallback SVG - shows initials inside a shield shape
 function ShieldFallback({ name, size = 140 }) {
   const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-  const s = size;
   return (
-    <svg width={s} height={s} viewBox="0 0 100 100" style={{ display: 'block' }}>
+    <svg width="100%" height="100%" viewBox="0 0 100 100" style={{ display: 'block' }}>
       <path d="M50 8 L82 22 C82 22 84 58 50 90 C16 58 18 22 18 22 Z"
         fill="rgba(60,50,30,0.6)" stroke="rgba(201,169,97,0.35)" strokeWidth="1.5" />
       <text x="50" y="56" textAnchor="middle" fontFamily="'Cinzel', serif"
@@ -1374,8 +1417,8 @@ function CreativePhoto({ src, name }) {
 
   if (hasError) {
     return (
-      <div style={styles.creativePhotoFallback}>
-        <ShieldFallback name={name} size={140} />
+      <div className="creative-photo-fallback-wrap" style={styles.creativePhotoFallback}>
+        <ShieldFallback name={name} />
       </div>
     );
   }
@@ -1397,8 +1440,8 @@ function CastPhoto({ src, name }) {
 
   if (hasError) {
     return (
-      <div style={styles.castPhotoFallback}>
-        <ShieldFallback name={name} size={100} />
+      <div className="cast-photo-fallback-wrap" style={styles.castPhotoFallback}>
+        <ShieldFallback name={name} />
       </div>
     );
   }
@@ -1421,7 +1464,7 @@ function ModalPhoto({ src, name }) {
   if (hasError) {
     return (
       <div className="cast-modal-photo" style={styles.castModalPhotoFallback}>
-        <ShieldFallback name={name} size={260} />
+        <ShieldFallback name={name} />
       </div>
     );
   }
@@ -1996,6 +2039,7 @@ const styles = {
     height: '100%',
     transformStyle: 'preserve-3d',
     transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+    willChange: 'transform',
   },
   flipCardFront: {
     position: 'absolute',
@@ -3288,6 +3332,12 @@ styleSheet.textContent = `
     box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
   }
 
+  /* Carousel navigation arrows - hidden on desktop */
+  .carousel-nav-prev,
+  .carousel-nav-next {
+    display: none;
+  }
+
   /* Flip card perspective fix */
   .flip-card-container {
     perspective: 1200px;
@@ -3389,6 +3439,9 @@ styleSheet.textContent = `
     /* Poster back content - tighter on tablet */
     .poster-back-content {
       padding: 28px 24px !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      touch-action: pan-y !important;
     }
 
     /* Cast modal - adjust for tablet */
@@ -3497,6 +3550,38 @@ styleSheet.textContent = `
       aspect-ratio: 625 / 879;
     }
 
+    /* Carousel navigation arrows on mobile */
+    .carousel-nav-prev,
+    .carousel-nav-next {
+      display: flex !important;
+      position: absolute;
+      top: calc(min(calc(100vw - 40px), 340px) * 879 / 625 / 2 - 20px);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(45, 24, 16, 0.85);
+      border: 1.5px solid rgba(201, 169, 97, 0.4);
+      color: rgba(201, 169, 97, 0.9);
+      font-size: 24px;
+      line-height: 1;
+      align-items: center;
+      justify-content: center;
+      z-index: 26;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .carousel-nav-prev {
+      left: 4px;
+    }
+    .carousel-nav-next {
+      right: 4px;
+    }
+    .carousel-nav-prev:active,
+    .carousel-nav-next:active {
+      background: rgba(45, 24, 16, 1);
+      border-color: rgba(201, 169, 97, 0.7);
+    }
+
     /* Info popup - flow below the poster on mobile */
     .info-popup {
       position: relative !important;
@@ -3514,6 +3599,8 @@ styleSheet.textContent = `
     .poster-back-content {
       padding: 20px 16px !important;
       overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      touch-action: pan-y !important;
     }
     .poster-back-content h2 {
       font-size: 16px !important;
@@ -3613,12 +3700,14 @@ styleSheet.textContent = `
       height: auto !important;
     }
     /* Creative photos - slightly smaller on mobile */
-    .creative-photo {
+    .creative-photo,
+    .creative-photo-fallback-wrap {
       width: 120px !important;
       height: 120px !important;
     }
     /* Cast photos - slightly smaller on mobile */
-    .cast-photo {
+    .cast-photo,
+    .cast-photo-fallback-wrap {
       width: 80px !important;
       height: 80px !important;
     }
@@ -3639,7 +3728,8 @@ styleSheet.textContent = `
       grid-template-columns: repeat(3, 1fr) !important;
       gap: 12px 8px !important;
     }
-    .cast-photo {
+    .cast-photo,
+    .cast-photo-fallback-wrap {
       width: 70px !important;
       height: 70px !important;
     }
