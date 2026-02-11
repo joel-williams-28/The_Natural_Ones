@@ -46,6 +46,7 @@ const showsData = [
 
 // Fantasy tabletop-inspired website for The Natural Ones Theatre Group
 export default function TheNaturalOnesWebsite() {
+  const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'affiliations'
   const [activeSection, setActiveSection] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -199,55 +200,91 @@ export default function TheNaturalOnesWebsite() {
   }, []);
 
   const scrollToSection = (sectionId) => {
-    setActiveSection(sectionId);
     setMenuOpen(false);
+    if (currentPage !== 'home') {
+      setCurrentPage('home');
+      setActiveSection(sectionId);
+      // Wait for home page to render before scrolling
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+      return;
+    }
+    setActiveSection(sectionId);
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const navigateToPage = (page) => {
+    setMenuOpen(false);
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <div style={styles.container}>
       {/* Parchment texture overlay */}
-      <div style={styles.textureOverlay}></div>
+      <div style={styles.textureOverlay} aria-hidden="true"></div>
       
       {/* Navigation */}
-      <nav className="site-nav" style={{
-        ...styles.nav,
-        backgroundColor: scrolled ? 'rgba(26, 15, 8, 0.95)' : 'transparent',
-        boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.4)' : 'none'
-      }}>
-        <div className="nav-logo" style={styles.navLogo} onClick={() => scrollToSection('home')}>
-          {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
-          <Logo size={40} />
-          <span className="nav-logo-text" style={styles.navLogoText}>The Natural Ones</span>
-        </div>
-
-        <button className="menu-toggle" style={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)}>
-          <span style={styles.menuBar}></span>
-          <span style={styles.menuBar}></span>
-          <span style={styles.menuBar}></span>
-        </button>
-
-        <ul className={`nav-links${menuOpen ? ' nav-links-open' : ''}`} style={{
-          ...styles.navLinks,
-          ...(menuOpen ? styles.navLinksOpen : {})
+      <header>
+        <nav className="site-nav" aria-label="Main navigation" style={{
+          ...styles.nav,
+          backgroundColor: scrolled ? 'rgba(26, 15, 8, 0.95)' : 'transparent',
+          boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.4)' : 'none'
         }}>
-          {['home', 'about', 'show', 'cast', 'support', 'contact'].map((item) => (
-            <li key={item}>
+          <div className="nav-logo" style={styles.navLogo} onClick={() => scrollToSection('home')} role="button" tabIndex={0} aria-label="Go to home section" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToSection('home'); }}>
+            {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
+            <Logo size={40} />
+            <span className="nav-logo-text" style={styles.navLogoText}>The Natural Ones</span>
+          </div>
+
+          <button className="menu-toggle" style={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation menu" aria-expanded={menuOpen}>
+            <span style={styles.menuBar} aria-hidden="true"></span>
+            <span style={styles.menuBar} aria-hidden="true"></span>
+            <span style={styles.menuBar} aria-hidden="true"></span>
+          </button>
+
+          <ul className={`nav-links${menuOpen ? ' nav-links-open' : ''}`} style={{
+            ...styles.navLinks,
+            ...(menuOpen ? styles.navLinksOpen : {})
+          }}>
+            {['home', 'about', 'show', 'cast', 'support', 'contact'].map((item) => (
+              <li key={item}>
+                <button
+                  className="nav-link-btn"
+                  style={{
+                    ...styles.navLink,
+                    color: currentPage === 'home' && activeSection === item ? '#c9a227' : '#e8dcc4'
+                  }}
+                  onClick={() => scrollToSection(item)}
+                  aria-current={currentPage === 'home' && activeSection === item ? 'true' : undefined}
+                >
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                </button>
+              </li>
+            ))}
+            <li key="affiliates">
               <button
                 className="nav-link-btn"
                 style={{
                   ...styles.navLink,
-                  color: activeSection === item ? '#c9a227' : '#e8dcc4'
+                  color: currentPage === 'affiliations' ? '#c9a227' : '#e8dcc4'
                 }}
-                onClick={() => scrollToSection(item)}
+                onClick={() => navigateToPage('affiliations')}
+                aria-current={currentPage === 'affiliations' ? 'true' : undefined}
               >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
+                Affiliates
               </button>
             </li>
-          ))}
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      </header>
 
+      <main id="main-content">
+      {currentPage === 'affiliations' ? (
+        <AffiliationsPage onNavigateHome={() => scrollToSection('home')} />
+      ) : (
+      <>
       {/* Hero Section */}
       <section id="home" style={styles.hero}>
         <div className="hero-content" style={styles.heroContent}>
@@ -280,7 +317,7 @@ export default function TheNaturalOnesWebsite() {
             <button style={styles.primaryButton} onClick={() => scrollToSection('about')}>
               Scroll To Adventure
             </button>
-            <div style={styles.scrollArrow}>↓</div>
+            <div style={styles.scrollArrow} aria-hidden="true">↓</div>
           </div>
         </div>
       </section>
@@ -331,8 +368,12 @@ export default function TheNaturalOnesWebsite() {
               <div
                 style={styles.meetCastLink}
                 onClick={() => scrollToSection('cast')}
+                role="button"
+                tabIndex={0}
+                aria-label="Meet the Creatives and Cast"
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToSection('cast'); }}
               >
-                <span style={{marginRight: '8px'}}>&#8594;</span> Find out who's bringing it all to life: Meet the Creatives & Cast
+                <span aria-hidden="true" style={{marginRight: '8px'}}>&#8594;</span> Find out who's bringing it all to life: Meet the Creatives & Cast
               </div>
             </div>
             <div className="about-card" style={styles.aboutCard}>
@@ -428,7 +469,7 @@ export default function TheNaturalOnesWebsite() {
               { name: 'Sreya Rao', role: 'Treasurer', photo: 'member11.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>After meeting Mollie through a mutual friend (at a water park, of all places!) and then getting to know the rest of the troupe through a musical theatre group, I was delighted to become part of The Natural Ones.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>I have been acting in community groups for about 20 years, including plays, musicals, and pantos, and I sing with a chamber choir. Favourite roles include Puck in <em>A Midsummer Night&#39;s Dream</em>, Marianne in <em>Sense &amp; Sensibility</em>, Margaret in <em>Dear Brutus</em>, and Cis in <em>The Magistrate</em>. I&#39;ve also had the pleasure of playing many parts in stage adaptations of Terry Pratchett&#39;s Discworld series, written and directed by Stephen Briggs - including donning a big bushy beard as Cheery Littlebottom, the dwarf!</p><p style={{ textAlign: 'justify', margin: 0 }}>The best thing about theatre is working with people from all walks of life and how it&#39;s a mix of serious and silly - though we are heavy on the silly!</p></>, flavour: 'Guardian of the guild vault. Every gold piece accounted for.' },
               { name: 'Emma Coleman-Williams', role: 'Producer / Company Secretary', photo: 'member3.jpg', bio: 'Bio coming soon.', flavour: 'Keeper of the coin purse. Master strategist.' },
             ].map((member, index) => (
-              <div key={index} className="creative-card" style={{ animation: `fadeSlideUp 0.7s ease-out ${index * 0.15}s both` }} onClick={() => setSelectedMember(member)}>
+              <div key={index} className="creative-card" style={{ animation: `fadeSlideUp 0.7s ease-out ${index * 0.15}s both` }} onClick={() => setSelectedMember(member)} role="button" tabIndex={0} aria-label={`View biography of ${member.name}, ${member.role}`} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedMember(member); }}>
                 {/* Corner ornaments */}
                 <span className="corner-tl" /><span className="corner-tr" />
                 <span className="corner-bl" /><span className="corner-br" />
@@ -467,7 +508,7 @@ export default function TheNaturalOnesWebsite() {
               { name: 'Cate Welmers', photo: 'member14.jpg', bio: 'Bio coming soon.' },
               { name: 'Joel Williams', photo: 'member15.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
-              <div key={index} className="cast-member-item" style={{ animation: `fadeSlideUp 0.5s ease-out ${0.3 + index * 0.07}s both` }} onClick={() => setSelectedMember(member)}>
+              <div key={index} className="cast-member-item" style={{ animation: `fadeSlideUp 0.5s ease-out ${0.3 + index * 0.07}s both` }} onClick={() => setSelectedMember(member)} role="button" tabIndex={0} aria-label={`View biography of ${member.name}`} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedMember(member); }}>
                 <CastPhoto src={`/images/cast/${member.photo}`} name={member.name} />
                 <h3 className="cast-member-name">{member.name}</h3>
               </div>
@@ -479,9 +520,9 @@ export default function TheNaturalOnesWebsite() {
 
       {/* Cast Member Modal */}
       {selectedMember && (
-        <div style={styles.castModalOverlay} onClick={() => setSelectedMember(null)}>
+        <div style={styles.castModalOverlay} onClick={() => setSelectedMember(null)} role="dialog" aria-modal="true" aria-label={`${selectedMember.name} biography`}>
           <div className="cast-modal-content" style={styles.castModalContent} onClick={(e) => e.stopPropagation()}>
-            <button style={styles.castModalClose} onClick={() => setSelectedMember(null)}>✕</button>
+            <button style={styles.castModalClose} onClick={() => setSelectedMember(null)} aria-label="Close biography">✕</button>
             <div className="cast-modal-layout" style={styles.castModalLayout}>
               <div style={styles.castModalPhotoWrap}>
                 <ModalPhoto src={`/images/cast/${selectedMember.photo}`} name={selectedMember.name} />
@@ -711,15 +752,15 @@ export default function TheNaturalOnesWebsite() {
                 <p style={{ display: 'none' }}><input name="bot-field" /></p>
                 <div style={styles.formGroup}>
                   <label style={styles.formLabel} htmlFor="contact-name">Your Name</label>
-                  <input id="contact-name" type="text" name="name" required style={styles.formInput} placeholder="Adventurer name..." />
+                  <input id="contact-name" type="text" name="name" required aria-required="true" autoComplete="name" style={styles.formInput} placeholder="Adventurer name..." />
                 </div>
                 <div style={styles.formGroup}>
                   <label style={styles.formLabel} htmlFor="contact-email">Your Email</label>
-                  <input id="contact-email" type="email" name="email" required style={styles.formInput} placeholder="your@email.com" />
+                  <input id="contact-email" type="email" name="email" required aria-required="true" autoComplete="email" style={styles.formInput} placeholder="your@email.com" />
                 </div>
                 <div style={styles.formGroup}>
                   <label style={styles.formLabel} htmlFor="contact-message">Message</label>
-                  <textarea id="contact-message" name="message" required style={styles.formTextarea} rows={5} placeholder="Your message..."></textarea>
+                  <textarea id="contact-message" name="message" required aria-required="true" style={styles.formTextarea} rows={5} placeholder="Your message..."></textarea>
                 </div>
                 <div style={styles.formCheckboxGroup}>
                   <label style={styles.formCheckboxLabel} htmlFor="contact-mailing-list">
@@ -728,7 +769,7 @@ export default function TheNaturalOnesWebsite() {
                   </label>
                 </div>
                 {formStatus === 'error' && (
-                  <p style={styles.formErrorText}>Something went wrong. Please try again.</p>
+                  <p style={styles.formErrorText} role="alert">Something went wrong. Please try again.</p>
                 )}
                 <button type="submit" style={styles.submitButton} disabled={formStatus === 'sending'}>
                   {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
@@ -808,6 +849,10 @@ export default function TheNaturalOnesWebsite() {
         </div>
       </section>
 
+      </>
+      )}
+      </main>
+
       {/* Footer */}
       <footer className="site-footer" style={styles.footer}>
         <div style={styles.footerContent}>
@@ -817,6 +862,15 @@ export default function TheNaturalOnesWebsite() {
           </div>
           <p style={styles.footerTagline}>Amateur Theatre with a Critical Hit</p>
           <div style={styles.footerDivider}></div>
+          <div style={styles.footerLinks}>
+            <button
+              className="footer-link-btn"
+              style={styles.footerLinkButton}
+              onClick={() => navigateToPage('affiliations')}
+            >
+              Our Affiliates
+            </button>
+          </div>
           <p style={styles.footerCopy}>
             © 2026 The Natural Ones. Oxfordshire, UK. All rights reserved.
           </p>
@@ -825,6 +879,145 @@ export default function TheNaturalOnesWebsite() {
           </p>
         </div>
       </footer>
+    </div>
+  );
+}
+
+// Affiliations & Associations Page
+function AffiliationsPage({ onNavigateHome }) {
+  return (
+    <div className="affiliations-page">
+      {/* Hero banner */}
+      <section style={styles.affiliationsHero}>
+        <div style={styles.affiliationsHeroInner}>
+          <span style={styles.affiliationsSubtitle}>Our Allies & Companions</span>
+          <h1 style={styles.affiliationsTitle}>Affiliations & Associations</h1>
+          <div style={styles.headerDivider}>
+            <span style={styles.headerLine}></span>
+            <span style={{...styles.headerDot, color: '#c9a227'}}>⚔</span>
+            <span style={styles.headerLine}></span>
+          </div>
+          <p style={styles.affiliationsIntro}>
+            No adventuring party succeeds alone. These are the talented groups and individuals
+            we're proud to call allies on this quest.
+          </p>
+        </div>
+      </section>
+
+      {/* Vocalize Show Choir Feature */}
+      <section className="affiliate-section" style={styles.affiliateSection}>
+        <div className="section-inner" style={styles.sectionInner}>
+
+          {/* Affiliate Card: Vocalize */}
+          <div className="affiliate-card" style={styles.affiliateCard}>
+            {/* Corner ornaments */}
+            <span className="corner-tl" /><span className="corner-tr" />
+            <span className="corner-bl" /><span className="corner-br" />
+
+            <div className="affiliate-card-header" style={styles.affiliateCardHeader}>
+              {/* Music note icon */}
+              <svg style={styles.affiliateIcon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+              </svg>
+              <div>
+                <h2 style={styles.affiliateCardTitle}>Vocalize Show Choir</h2>
+                <p style={styles.affiliateCardRole}>Collaboration Partner</p>
+              </div>
+            </div>
+
+            <div style={styles.affiliateCardDivider}></div>
+
+            <div style={styles.affiliateCardBody}>
+              <p style={styles.affiliateCardText}>
+                <span style={styles.affiliateDropCap}>W</span>e're thrilled to be joining forces with
+                {' '}<strong>Vocalize Show Choir</strong>, a vibrant, auditioned ensemble based right here
+                in Oxfordshire. While Vocalize's community choirs welcome everyone regardless of experience,
+                the Show Choir is something special: a dedicated group of singers who bring musical theatre
+                and popular songs to life with real performance flair, complete with movement and choreography.
+              </p>
+
+              <p style={styles.affiliateCardText}>
+                Rehearsing weekly in Didcot during term time, the Show Choir is built for people who love
+                to perform and aren't afraid to throw themselves into it. Whether it's a soaring
+                West End number or a pop anthem reimagined with theatrical energy, this group brings
+                the drama in the best possible way.
+              </p>
+
+              <div className="affiliate-highlight" style={styles.affiliateHighlight}>
+                <div className="affiliate-highlight-inner" style={styles.affiliateHighlightInner}>
+                  <svg style={{ width: '24px', height: '24px', flexShrink: 0, color: '#c9a227' }} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                  <p style={styles.affiliateHighlightText}>
+                    We're delighted to have Vocalize Show Choir joining us for our production
+                    of <em>Mystery at Murderingham Manor, and More...</em>, performing a selection of
+                    show songs in between our sketches, bringing their vocal power and performance
+                    polish to the stage.
+                  </p>
+                </div>
+              </div>
+
+              <p style={styles.affiliateCardText}>
+                If you're a singer looking for something with a bit more bite, or you've ever wanted to
+                combine your love of musical theatre with the thrill of live ensemble performance,
+                Vocalize Show Choir might be exactly the quest you've been waiting for.
+              </p>
+            </div>
+
+            <div style={styles.affiliateCardDivider}></div>
+
+            {/* Founder section */}
+            <div style={styles.affiliateFounder}>
+              <div style={styles.affiliateFounderBadge}>
+                <svg style={{ width: '20px', height: '20px', color: '#c9a227' }} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                </svg>
+              </div>
+              <div style={styles.affiliateFounderInfo}>
+                <h3 style={styles.affiliateFounderName}>Sarah Louise Chitty</h3>
+                <p style={styles.affiliateFounderRole}>Founder & Musical Director</p>
+                <p style={styles.affiliateFounderBio}>
+                  A graduate of Southampton University with a BA in Music, Sarah specialises in solo musical theatre
+                  singing and ensemble performance across classical and popular styles. She has served as musical
+                  director for five different choirs and runs her own adult and youth theatre groups
+                  from her music studio in Grove, Wantage. Sarah also teaches singing at Didcot Girls' School
+                  and conducts the Vocalize community choirs that meet weekly in Didcot and Grove.
+                </p>
+              </div>
+            </div>
+
+            <div style={styles.affiliateCardDivider}></div>
+
+            {/* CTA */}
+            <div style={styles.affiliateCtaWrap}>
+              <a
+                href="https://www.vocalizechoir.co.uk/showchoir"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="affiliate-cta-button"
+                style={styles.affiliateCtaButton}
+              >
+                Visit Vocalize Show Choir
+                <span style={{ marginLeft: '8px' }} aria-hidden="true">→</span>
+              </a>
+              <p style={styles.affiliateCtaNote}>vocalizechoir.co.uk</p>
+            </div>
+          </div>
+
+          {/* Back to home */}
+          <div style={styles.affiliateBackWrap}>
+            <button
+              style={styles.affiliateBackButton}
+              onClick={onNavigateHome}
+              className="affiliate-back-btn"
+            >
+              <span aria-hidden="true" style={{ marginRight: '8px' }}>←</span>
+              Back to Main Page
+            </button>
+          </div>
+
+        </div>
+      </section>
     </div>
   );
 }
@@ -898,6 +1091,7 @@ function GroupPhoto() {
       src="/images/group-photo.jpg"
       alt="The Natural Ones Theatre Group"
       style={styles.groupPhoto}
+      loading="lazy"
       onError={() => setHasError(true)}
     />
   );
@@ -932,6 +1126,7 @@ function ShowPoster() {
         src="/images/poster.jpg"
         alt="Tabletop Role-Playing Game: The Musical!"
         style={styles.posterImage}
+        loading="lazy"
         onError={() => setHasError(true)}
       />
     </div>
@@ -1300,6 +1495,10 @@ function ShowCarousel({ shows }) {
             onClick={(e) => { e.stopPropagation(); handlePrev(true); }}
             onTouchStart={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
+            role="button"
+            aria-label="Previous show"
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation(); handlePrev(true); } }}
           >
             &#8249;
           </div>
@@ -1308,6 +1507,10 @@ function ShowCarousel({ shows }) {
             onClick={(e) => { e.stopPropagation(); handleNext(true); }}
             onTouchStart={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
+            role="button"
+            aria-label="Next show"
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation(); handleNext(true); } }}
           >
             &#8250;
           </div>
@@ -1412,6 +1615,7 @@ function PosterCard({ show }) {
       src={show.poster}
       alt={show.title}
       style={styles.posterCardImage}
+      loading="lazy"
       onError={() => setHasError(true)}
     />
   );
@@ -1495,6 +1699,7 @@ function CreativePhoto({ src, name }) {
       alt={name}
       className="creative-photo"
       style={styles.creativePhoto}
+      loading="lazy"
       onError={() => setHasError(true)}
     />
   );
@@ -1518,6 +1723,7 @@ function CastPhoto({ src, name }) {
       alt={name}
       className="cast-photo"
       style={styles.castPhoto}
+      loading="lazy"
       onError={() => setHasError(true)}
     />
   );
@@ -3012,6 +3218,250 @@ const styles = {
     margin: 0,
   },
 
+  // Affiliations Page
+  affiliationsHero: {
+    minHeight: '50vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    padding: '120px 20px 60px 20px',
+    background: `
+      radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
+      linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
+    `,
+    position: 'relative',
+  },
+  affiliationsHeroInner: {
+    maxWidth: '700px',
+  },
+  affiliationsSubtitle: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '14px',
+    letterSpacing: '4px',
+    textTransform: 'uppercase',
+    color: '#c9a227',
+    display: 'block',
+    marginBottom: '8px',
+  },
+  affiliationsTitle: {
+    fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
+    fontSize: 'clamp(28px, 5vw, 48px)',
+    fontWeight: 'bold',
+    color: '#e8dcc4',
+    margin: '0 0 16px 0',
+    letterSpacing: '2px',
+  },
+  affiliationsIntro: {
+    fontSize: '18px',
+    color: '#a08060',
+    lineHeight: 1.8,
+    marginTop: '24px',
+    fontStyle: 'italic',
+  },
+
+  affiliateSection: {
+    padding: '80px 20px 100px 20px',
+    background: '#f5ede0',
+    color: '#2d1810',
+  },
+
+  affiliateCard: {
+    position: 'relative',
+    maxWidth: '800px',
+    margin: '0 auto',
+    padding: '48px 40px',
+    background: 'linear-gradient(165deg, rgba(245,237,224,0.95) 0%, rgba(232,220,196,0.95) 100%)',
+    border: '1px solid rgba(201,169,97,0.3)',
+    boxShadow: '0 8px 32px rgba(0,0,0,0.08), 0 0 0 1px rgba(201,169,97,0.1)',
+  },
+
+  affiliateCardHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '20px',
+    marginBottom: '8px',
+  },
+  affiliateIcon: {
+    width: '48px',
+    height: '48px',
+    color: '#3d6b1e',
+    flexShrink: 0,
+    padding: '10px',
+    background: 'rgba(61, 107, 30, 0.08)',
+    borderRadius: '50%',
+    border: '1.5px solid rgba(61, 107, 30, 0.2)',
+  },
+  affiliateCardTitle: {
+    fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
+    fontSize: 'clamp(22px, 4vw, 32px)',
+    fontWeight: 'bold',
+    color: '#2d1810',
+    margin: '0 0 4px 0',
+    letterSpacing: '1px',
+  },
+  affiliateCardRole: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '12px',
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    color: '#8b6914',
+    margin: 0,
+  },
+  affiliateCardDivider: {
+    height: '1px',
+    background: 'linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.4), transparent)',
+    margin: '28px 0',
+  },
+  affiliateCardBody: {
+    lineHeight: 1.8,
+  },
+  affiliateCardText: {
+    fontSize: '17px',
+    marginBottom: '20px',
+    lineHeight: 1.8,
+    textAlign: 'justify',
+    color: '#2d1810',
+  },
+  affiliateDropCap: {
+    float: 'left',
+    fontFamily: "'Cinzel Decorative', serif",
+    fontSize: '72px',
+    lineHeight: '54px',
+    paddingTop: '6px',
+    paddingRight: '12px',
+    color: '#3d6b1e',
+  },
+
+  affiliateHighlight: {
+    margin: '28px 0',
+    padding: '24px',
+    background: 'rgba(61, 107, 30, 0.06)',
+    border: '1px solid rgba(61, 107, 30, 0.2)',
+    borderLeft: '3px solid #3d6b1e',
+  },
+  affiliateHighlightInner: {
+    display: 'flex',
+    gap: '16px',
+    alignItems: 'flex-start',
+  },
+  affiliateHighlightText: {
+    fontSize: '16px',
+    lineHeight: 1.7,
+    color: '#2d1810',
+    margin: 0,
+    fontStyle: 'italic',
+  },
+
+  affiliateFounder: {
+    display: 'flex',
+    gap: '20px',
+    alignItems: 'flex-start',
+  },
+  affiliateFounderBadge: {
+    width: '48px',
+    height: '48px',
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'rgba(45, 24, 16, 0.06)',
+    borderRadius: '50%',
+    border: '1.5px solid rgba(201,169,97,0.3)',
+  },
+  affiliateFounderInfo: {
+    flex: 1,
+  },
+  affiliateFounderName: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '18px',
+    fontWeight: 700,
+    color: '#2d1810',
+    margin: '0 0 4px 0',
+    letterSpacing: '1px',
+  },
+  affiliateFounderRole: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '11px',
+    letterSpacing: '3px',
+    textTransform: 'uppercase',
+    color: '#8b6914',
+    margin: '0 0 12px 0',
+  },
+  affiliateFounderBio: {
+    fontSize: '16px',
+    lineHeight: 1.7,
+    color: '#4a3f35',
+    margin: 0,
+  },
+
+  affiliateCtaWrap: {
+    textAlign: 'center',
+    marginTop: '8px',
+  },
+  affiliateCtaButton: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    fontFamily: "'Cinzel', serif",
+    fontSize: '14px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+    padding: '16px 36px',
+    backgroundColor: '#3d6b1e',
+    color: '#e8dcc4',
+    border: '2px solid #c9a227',
+    cursor: 'pointer',
+    textDecoration: 'none',
+    transition: 'all 0.3s ease',
+  },
+  affiliateCtaNote: {
+    fontSize: '12px',
+    color: '#a08060',
+    marginTop: '12px',
+    letterSpacing: '1px',
+  },
+
+  affiliateBackWrap: {
+    textAlign: 'center',
+    marginTop: '48px',
+  },
+  affiliateBackButton: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    fontFamily: "'Cinzel', serif",
+    fontSize: '13px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+    padding: '12px 28px',
+    backgroundColor: 'transparent',
+    color: '#8b6914',
+    border: '1px solid rgba(201, 162, 39, 0.4)',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+
+  // Footer links
+  footerLinks: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '24px',
+    marginBottom: '20px',
+  },
+  footerLinkButton: {
+    background: 'none',
+    border: 'none',
+    fontFamily: "'Cinzel', serif",
+    fontSize: '13px',
+    letterSpacing: '2px',
+    textTransform: 'uppercase',
+    color: '#c9a227',
+    cursor: 'pointer',
+    padding: '4px 8px',
+    transition: 'all 0.3s ease',
+    opacity: 0.7,
+  },
+
   // Footer
   footer: {
     background: `
@@ -3065,8 +3515,8 @@ const styles = {
 // Add CSS animation keyframes via style injection
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
-  @import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poiret+One&display=swap');
-  
+  /* Google Fonts loaded via <link> in index.html for faster LCP */
+
   @keyframes float {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
     50% { transform: translateY(-10px) rotate(3deg); }
@@ -3569,6 +4019,61 @@ styleSheet.textContent = `
     cursor: grabbing;
   }
 
+  /* Footer link hover */
+  .footer-link-btn:hover {
+    opacity: 1 !important;
+    text-shadow: 0 0 8px rgba(201, 162, 39, 0.4);
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Affiliate CTA hover */
+  .affiliate-cta-button:hover {
+    background-color: #4a8024 !important;
+    box-shadow: 0 4px 16px rgba(201, 162, 39, 0.3);
+    transform: translateY(-2px);
+  }
+  .affiliate-back-btn:hover {
+    border-color: rgba(201, 162, 39, 0.7) !important;
+    color: #c9a227 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(201, 162, 39, 0.15);
+  }
+
+  /* Affiliate card corners - reuse creative-card corners */
+  .affiliate-card {
+    position: relative;
+  }
+  .affiliate-card .corner-tl,
+  .affiliate-card .corner-tr,
+  .affiliate-card .corner-bl,
+  .affiliate-card .corner-br {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+  }
+  .affiliate-card .corner-tl {
+    top: 8px; left: 8px;
+    border-top: 1.5px solid rgba(201,169,97,0.3);
+    border-left: 1.5px solid rgba(201,169,97,0.3);
+  }
+  .affiliate-card .corner-tr {
+    top: 8px; right: 8px;
+    border-top: 1.5px solid rgba(201,169,97,0.3);
+    border-right: 1.5px solid rgba(201,169,97,0.3);
+  }
+  .affiliate-card .corner-bl {
+    bottom: 8px; left: 8px;
+    border-bottom: 1.5px solid rgba(201,169,97,0.3);
+    border-left: 1.5px solid rgba(201,169,97,0.3);
+  }
+  .affiliate-card .corner-br {
+    bottom: 8px; right: 8px;
+    border-bottom: 1.5px solid rgba(201,169,97,0.3);
+    border-right: 1.5px solid rgba(201,169,97,0.3);
+  }
+
   /* =============================================
      TABLET BREAKPOINT (max-width: 1023px)
      ============================================= */
@@ -3908,6 +4413,18 @@ styleSheet.textContent = `
     }
     .contactFormInner {
       max-width: 100% !important;
+    }
+
+    /* --- Affiliations page --- */
+    .affiliate-card {
+      padding: 28px 20px !important;
+    }
+    .affiliate-card-header {
+      flex-direction: column !important;
+      text-align: center !important;
+    }
+    .affiliations-page .affiliate-section {
+      padding: 40px 12px 60px 12px !important;
     }
 
     /* --- Footer --- */
