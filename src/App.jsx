@@ -724,8 +724,39 @@ export default function TheNaturalOnesWebsite() {
                 </button>
                 {showCaptcha && (
                   <div className="recaptcha-overlay" onClick={() => { setShowCaptcha(false); setFormStatus('idle'); }}>
-                    <div className="recaptcha-popup" onClick={(e) => e.stopPropagation()}>
-                      <p className="recaptcha-popup-label">One last step...</p>
+                    <div className="captcha-skin" onClick={(e) => e.stopPropagation()}>
+                      {/* Decorative corner flourishes */}
+                      <span className="captcha-corner captcha-corner-tl">&#9670;</span>
+                      <span className="captcha-corner captcha-corner-tr">&#9670;</span>
+                      <span className="captcha-corner captcha-corner-bl">&#9670;</span>
+                      <span className="captcha-corner captcha-corner-br">&#9670;</span>
+
+                      {/* Header with shield icon */}
+                      <div className="captcha-skin-header">
+                        <svg className="captcha-shield-icon" width="28" height="28" viewBox="0 0 100 120" fill="none">
+                          <path d="M50 5 L90 25 L90 65 Q90 95 50 115 Q10 95 10 65 L10 25 Z" fill="url(#shieldGrad)" stroke="#c9a227" strokeWidth="4"/>
+                          <path d="M50 20 L75 35 L75 60 Q75 82 50 100 Q25 82 25 60 L25 35 Z" fill="none" stroke="#c9a227" strokeWidth="1.5" opacity="0.5"/>
+                          <text x="50" y="72" textAnchor="middle" fill="#c9a227" fontSize="36" fontFamily="serif" fontWeight="bold">&#10003;</text>
+                          <defs>
+                            <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#2d5016"/>
+                              <stop offset="100%" stopColor="#1a3009"/>
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <p className="captcha-skin-title">Prove Thy Worth</p>
+                      </div>
+
+                      <p className="captcha-skin-subtitle">Complete the challenge below to send your message</p>
+
+                      {/* Decorative divider */}
+                      <div className="captcha-divider">
+                        <span className="captcha-divider-line"></span>
+                        <span className="captcha-divider-diamond">&#9670;</span>
+                        <span className="captcha-divider-line"></span>
+                      </div>
+
+                      {/* reCAPTCHA widget (visually integrated) */}
                       <div className="recaptcha-wrapper">
                         <ReCAPTCHA
                           ref={recaptchaRef}
@@ -733,6 +764,9 @@ export default function TheNaturalOnesWebsite() {
                           onChange={handleCaptchaChange}
                         />
                       </div>
+
+                      {/* Footer hint */}
+                      <p className="captcha-skin-footer">Click outside to cancel</p>
                     </div>
                   </div>
                 )}
@@ -3219,47 +3253,153 @@ styleSheet.textContent = `
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(45, 24, 16, 0.25);
-    backdrop-filter: blur(2px);
+    background: rgba(26, 15, 8, 0.55);
+    backdrop-filter: blur(4px);
     border-radius: 12px;
     z-index: 10;
     animation: overlayFadeIn 0.3s ease-out;
   }
 
-  .recaptcha-popup {
-    background: linear-gradient(145deg, #f5f0e8, #ece4d4);
-    border: 1px solid rgba(201, 162, 39, 0.4);
-    border-radius: 10px;
-    padding: 24px 28px 20px;
-    box-shadow: 0 8px 32px rgba(45, 24, 16, 0.2), 0 0 0 1px rgba(201, 162, 39, 0.1);
-    animation: popupScaleIn 0.3s ease-out;
+  /* CAPTCHA Visual Skin / Wrapper */
+  .captcha-skin {
+    position: relative;
+    background:
+      linear-gradient(145deg, #f5f0e8 0%, #ece4d4 40%, #e2d6c0 100%);
+    border: 2px solid #c9a227;
+    border-radius: 14px;
+    padding: 28px 32px 20px;
+    box-shadow:
+      0 12px 48px rgba(26, 15, 8, 0.35),
+      0 0 0 1px rgba(201, 162, 39, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(139, 105, 20, 0.1);
+    animation: popupScaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     text-align: center;
+    max-width: 360px;
   }
 
-  .recaptcha-popup-label {
-    font-family: 'Cinzel', serif;
-    font-size: 14px;
-    letter-spacing: 1.5px;
+  /* Parchment texture overlay */
+  .captcha-skin::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(139, 105, 20, 0.015) 3px,
+        rgba(139, 105, 20, 0.015) 4px
+      );
+    pointer-events: none;
+  }
+
+  /* Inner border glow */
+  .captcha-skin::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(201, 162, 39, 0.15);
+    border-radius: 10px;
+    pointer-events: none;
+  }
+
+  /* Corner diamond flourishes */
+  .captcha-corner {
+    position: absolute;
+    color: #c9a227;
+    font-size: 10px;
+    line-height: 1;
+    opacity: 0.7;
+  }
+  .captcha-corner-tl { top: 8px; left: 10px; }
+  .captcha-corner-tr { top: 8px; right: 10px; }
+  .captcha-corner-bl { bottom: 8px; left: 10px; }
+  .captcha-corner-br { bottom: 8px; right: 10px; }
+
+  /* Header section */
+  .captcha-skin-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .captcha-shield-icon {
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 2px rgba(26, 15, 8, 0.3));
+  }
+
+  .captcha-skin-title {
+    font-family: 'Cinzel Decorative', 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: #8b6914;
-    margin: 0 0 16px 0;
+    color: #2d1810;
+    margin: 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
   }
 
+  .captcha-skin-subtitle {
+    font-family: 'Lora', 'Georgia', serif;
+    font-size: 12.5px;
+    font-style: italic;
+    color: #6b5a4e;
+    margin: 0 0 12px 0;
+    letter-spacing: 0.3px;
+  }
+
+  /* Decorative divider */
+  .captcha-divider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto 16px;
+    max-width: 200px;
+  }
+
+  .captcha-divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c9a227, transparent);
+  }
+
+  .captcha-divider-diamond {
+    color: #c9a227;
+    font-size: 7px;
+    line-height: 1;
+  }
+
+  /* reCAPTCHA widget wrapper */
   .recaptcha-wrapper {
     display: flex;
     justify-content: center;
+    position: relative;
+    z-index: 1;
   }
 
   .recaptcha-wrapper > div > div {
-    border-radius: 6px !important;
+    border-radius: 8px !important;
     overflow: hidden;
-    border: 1px solid rgba(201, 162, 39, 0.3) !important;
-    background-color: rgba(45, 24, 16, 0.04) !important;
-    box-shadow: none !important;
+    border: 1px solid rgba(201, 162, 39, 0.35) !important;
+    background-color: rgba(245, 240, 232, 0.6) !important;
+    box-shadow: inset 0 1px 3px rgba(45, 24, 16, 0.08) !important;
   }
 
   .recaptcha-wrapper iframe {
-    border-radius: 6px;
+    border-radius: 8px;
+  }
+
+  /* Footer hint text */
+  .captcha-skin-footer {
+    font-family: 'Lora', 'Georgia', serif;
+    font-size: 10.5px;
+    color: #a0917e;
+    margin: 12px 0 0 0;
+    letter-spacing: 0.3px;
   }
 
   @keyframes overlayFadeIn {
@@ -3270,11 +3410,11 @@ styleSheet.textContent = `
   @keyframes popupScaleIn {
     from {
       opacity: 0;
-      transform: scale(0.9);
+      transform: scale(0.88) translateY(8px);
     }
     to {
       opacity: 1;
-      transform: scale(1);
+      transform: scale(1) translateY(0);
     }
   }
 
