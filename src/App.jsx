@@ -1035,6 +1035,13 @@ function ShowCarousel({ shows }) {
   // Mouse/touch drag handling
   const handleDragStart = (e) => {
     if (isAnimating) return;
+
+    // If a card is flipped and the touch/click started inside the poster-back-content,
+    // let the browser handle it natively (allows scrolling the text on mobile)
+    if (flippedIndex !== null && e.target.closest('.poster-back-content')) {
+      return;
+    }
+
     setIsDragging(true);
     setHasDragged(false);
     setStartX(e.type === 'touchstart' ? e.touches[0].clientX : e.clientX);
@@ -3372,6 +3379,10 @@ styleSheet.textContent = `
     /* Poster back content - tighter on tablet */
     .poster-back-content {
       padding: 28px 24px !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior: contain !important;
+      touch-action: pan-y !important;
     }
 
     /* Cast modal - adjust for tablet */
@@ -3497,6 +3508,9 @@ styleSheet.textContent = `
     .poster-back-content {
       padding: 20px 16px !important;
       overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior: contain !important;
+      touch-action: pan-y !important;
     }
     .poster-back-content h2 {
       font-size: 16px !important;
