@@ -758,11 +758,19 @@ export default function TheNaturalOnesWebsite() {
 
                       {/* reCAPTCHA widget (visually integrated) */}
                       <div className="recaptcha-wrapper">
-                        <ReCAPTCHA
-                          ref={recaptchaRef}
-                          sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-                          onChange={handleCaptchaChange}
-                        />
+                        <div className="recaptcha-skin-box">
+                          <ReCAPTCHA
+                            ref={recaptchaRef}
+                            sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                            onChange={handleCaptchaChange}
+                          />
+                          {/* Overlay that hides default reCAPTCHA styling, keeping checkbox visible */}
+                          <div className="recaptcha-box-overlay">
+                            <div className="recaptcha-checkbox-window"></div>
+                            <span className="recaptcha-custom-label">I am no mere construct</span>
+                            <span className="recaptcha-custom-badge">&#9878;</span>
+                          </div>
+                        </div>
                       </div>
 
                       {/* Footer hint */}
@@ -3381,16 +3389,71 @@ styleSheet.textContent = `
     z-index: 1;
   }
 
-  .recaptcha-wrapper > div > div {
+  .recaptcha-skin-box {
+    position: relative;
+    display: inline-block;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(201, 162, 39, 0.35);
+  }
+
+  .recaptcha-wrapper > div > div > div {
     border-radius: 8px !important;
     overflow: hidden;
-    border: 1px solid rgba(201, 162, 39, 0.35) !important;
-    background-color: rgba(245, 240, 232, 0.6) !important;
-    box-shadow: inset 0 1px 3px rgba(45, 24, 16, 0.08) !important;
+    border: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
   }
 
   .recaptcha-wrapper iframe {
     border-radius: 8px;
+  }
+
+  /* Overlay that covers the ugly reCAPTCHA box, leaving checkbox visible */
+  .recaptcha-box-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  /* Transparent window over checkbox; its box-shadow fills everything else */
+  .recaptcha-checkbox-window {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 9999px rgba(236, 228, 212, 0.97);
+  }
+
+  /* Custom themed label replacing "I'm not a robot" */
+  .recaptcha-custom-label {
+    position: absolute;
+    left: 56px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Lora', 'Georgia', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #5c4a3a;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+
+  /* Decorative badge icon on the right */
+  .recaptcha-custom-badge {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: #c9a227;
+    opacity: 0.5;
   }
 
   /* Footer hint text */
