@@ -776,6 +776,11 @@ export default function TheNaturalOnesWebsite() {
                 <button type="submit" style={styles.submitButton} disabled={formStatus === 'sending'}>
                   {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
                 </button>
+                <p className="recaptcha-branding">
+                  This site is protected by reCAPTCHA and the Google{' '}
+                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and{' '}
+                  <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a> apply.
+                </p>
                 {showCaptcha && (
                   <div className="recaptcha-overlay" onClick={() => { setShowCaptcha(false); setFormStatus('idle'); setCaptchaVerifying(false); }}>
                     <div className="captcha-skin" onClick={(e) => e.stopPropagation()}>
@@ -3728,6 +3733,29 @@ styleSheet.textContent = `
   #contact-mailing-list:hover {
     border-color: rgba(201, 162, 39, 0.6);
     background-color: rgba(45, 24, 16, 0.08);
+  }
+
+  /* Hide the floating reCAPTCHA badge (branding is shown inline instead) */
+  .grecaptcha-badge {
+    visibility: hidden !important;
+  }
+
+  .recaptcha-branding {
+    font-family: 'Lora', 'Georgia', serif;
+    font-size: 11px;
+    color: #a0917e;
+    text-align: center;
+    margin: 10px 0 0 0;
+    line-height: 1.5;
+  }
+
+  .recaptcha-branding a {
+    color: #c9a227;
+    text-decoration: underline;
+  }
+
+  .recaptcha-branding a:hover {
+    color: #e0be4a;
   }
 
   /* reCAPTCHA popup overlay */
