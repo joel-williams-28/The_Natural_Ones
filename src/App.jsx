@@ -1347,9 +1347,8 @@ function PosterBack({ show }) {
 // Shield Fallback SVG - shows initials inside a shield shape
 function ShieldFallback({ name, size = 140 }) {
   const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-  const s = size;
   return (
-    <svg width={s} height={s} viewBox="0 0 100 100" style={{ display: 'block' }}>
+    <svg width="100%" height="100%" viewBox="0 0 100 100" style={{ display: 'block' }}>
       <path d="M50 8 L82 22 C82 22 84 58 50 90 C16 58 18 22 18 22 Z"
         fill="rgba(60,50,30,0.6)" stroke="rgba(201,169,97,0.35)" strokeWidth="1.5" />
       <text x="50" y="56" textAnchor="middle" fontFamily="'Cinzel', serif"
@@ -1364,8 +1363,8 @@ function CreativePhoto({ src, name }) {
 
   if (hasError) {
     return (
-      <div style={styles.creativePhotoFallback}>
-        <ShieldFallback name={name} size={140} />
+      <div className="creative-photo-fallback-wrap" style={styles.creativePhotoFallback}>
+        <ShieldFallback name={name} />
       </div>
     );
   }
@@ -1387,8 +1386,8 @@ function CastPhoto({ src, name }) {
 
   if (hasError) {
     return (
-      <div style={styles.castPhotoFallback}>
-        <ShieldFallback name={name} size={100} />
+      <div className="cast-photo-fallback-wrap" style={styles.castPhotoFallback}>
+        <ShieldFallback name={name} />
       </div>
     );
   }
@@ -1411,7 +1410,7 @@ function ModalPhoto({ src, name }) {
   if (hasError) {
     return (
       <div className="cast-modal-photo" style={styles.castModalPhotoFallback}>
-        <ShieldFallback name={name} size={260} />
+        <ShieldFallback name={name} />
       </div>
     );
   }
@@ -3610,12 +3609,14 @@ styleSheet.textContent = `
       height: auto !important;
     }
     /* Creative photos - slightly smaller on mobile */
-    .creative-photo {
+    .creative-photo,
+    .creative-photo-fallback-wrap {
       width: 120px !important;
       height: 120px !important;
     }
     /* Cast photos - slightly smaller on mobile */
-    .cast-photo {
+    .cast-photo,
+    .cast-photo-fallback-wrap {
       width: 80px !important;
       height: 80px !important;
     }
@@ -3636,7 +3637,8 @@ styleSheet.textContent = `
       grid-template-columns: repeat(3, 1fr) !important;
       gap: 12px 8px !important;
     }
-    .cast-photo {
+    .cast-photo,
+    .cast-photo-fallback-wrap {
       width: 70px !important;
       height: 70px !important;
     }
