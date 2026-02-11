@@ -1208,7 +1208,12 @@ function ShowCarousel({ shows }) {
               ...(skipFlipTransition.current ? { transition: 'none' } : {}),
             }}>
               {/* Front of card - Poster */}
-              <div style={styles.flipCardFront}>
+              <div style={{
+                ...styles.flipCardFront,
+                ...(skipFlipTransition.current && flippedIndex === item.actualIndex
+                  ? { visibility: 'hidden' }
+                  : {}),
+              }}>
                 <PosterCard show={item.show} />
               </div>
 
@@ -2034,6 +2039,7 @@ const styles = {
     height: '100%',
     transformStyle: 'preserve-3d',
     transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+    willChange: 'transform',
   },
   flipCardFront: {
     position: 'absolute',
