@@ -1194,6 +1194,28 @@ function ShowCarousel({ shows }) {
         ))}
       </div>
 
+      {/* Mobile navigation arrows - visible when a poster is flipped */}
+      {flippedIndex !== null && (
+        <>
+          <div
+            className="carousel-nav-prev"
+            onClick={(e) => { e.stopPropagation(); handlePrev(true); }}
+            onTouchStart={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            &#8249;
+          </div>
+          <div
+            className="carousel-nav-next"
+            onClick={(e) => { e.stopPropagation(); handleNext(true); }}
+            onTouchStart={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            &#8250;
+          </div>
+        </>
+      )}
+
       {/* Info box that pops in when flipped - to the right of poster */}
       <div className="info-popup" style={{
         ...styles.infoPopup,
@@ -3277,6 +3299,12 @@ styleSheet.textContent = `
     box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
   }
 
+  /* Carousel navigation arrows - hidden on desktop */
+  .carousel-nav-prev,
+  .carousel-nav-next {
+    display: none;
+  }
+
   /* Flip card perspective fix */
   .flip-card-container {
     perspective: 1200px;
@@ -3380,7 +3408,6 @@ styleSheet.textContent = `
       padding: 28px 24px !important;
       overflow-y: auto !important;
       -webkit-overflow-scrolling: touch !important;
-      overscroll-behavior: contain !important;
       touch-action: pan-y !important;
     }
 
@@ -3490,6 +3517,38 @@ styleSheet.textContent = `
       aspect-ratio: 625 / 879;
     }
 
+    /* Carousel navigation arrows on mobile */
+    .carousel-nav-prev,
+    .carousel-nav-next {
+      display: flex !important;
+      position: absolute;
+      top: calc(min(calc(100vw - 40px), 340px) * 879 / 625 / 2 - 20px);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(45, 24, 16, 0.85);
+      border: 1.5px solid rgba(201, 169, 97, 0.4);
+      color: rgba(201, 169, 97, 0.9);
+      font-size: 24px;
+      line-height: 1;
+      align-items: center;
+      justify-content: center;
+      z-index: 26;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .carousel-nav-prev {
+      left: 4px;
+    }
+    .carousel-nav-next {
+      right: 4px;
+    }
+    .carousel-nav-prev:active,
+    .carousel-nav-next:active {
+      background: rgba(45, 24, 16, 1);
+      border-color: rgba(201, 169, 97, 0.7);
+    }
+
     /* Info popup - flow below the poster on mobile */
     .info-popup {
       position: relative !important;
@@ -3508,7 +3567,6 @@ styleSheet.textContent = `
       padding: 20px 16px !important;
       overflow-y: auto !important;
       -webkit-overflow-scrolling: touch !important;
-      overscroll-behavior: contain !important;
       touch-action: pan-y !important;
     }
     .poster-back-content h2 {
