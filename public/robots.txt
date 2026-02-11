@@ -1,0 +1,8 @@
+# robots.txt for The Natural Ones Theatre Group
+# https://thenaturalonestheatre.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://thenaturalonestheatre.com/sitemap.xml

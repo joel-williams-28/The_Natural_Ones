@@ -207,47 +207,51 @@ export default function TheNaturalOnesWebsite() {
   return (
     <div style={styles.container}>
       {/* Parchment texture overlay */}
-      <div style={styles.textureOverlay}></div>
+      <div style={styles.textureOverlay} aria-hidden="true"></div>
       
       {/* Navigation */}
-      <nav className="site-nav" style={{
-        ...styles.nav,
-        backgroundColor: scrolled ? 'rgba(26, 15, 8, 0.95)' : 'transparent',
-        boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.4)' : 'none'
-      }}>
-        <div className="nav-logo" style={styles.navLogo} onClick={() => scrollToSection('home')}>
-          {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
-          <Logo size={40} />
-          <span className="nav-logo-text" style={styles.navLogoText}>The Natural Ones</span>
-        </div>
-
-        <button className="menu-toggle" style={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)}>
-          <span style={styles.menuBar}></span>
-          <span style={styles.menuBar}></span>
-          <span style={styles.menuBar}></span>
-        </button>
-
-        <ul className={`nav-links${menuOpen ? ' nav-links-open' : ''}`} style={{
-          ...styles.navLinks,
-          ...(menuOpen ? styles.navLinksOpen : {})
+      <header>
+        <nav className="site-nav" aria-label="Main navigation" style={{
+          ...styles.nav,
+          backgroundColor: scrolled ? 'rgba(26, 15, 8, 0.95)' : 'transparent',
+          boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.4)' : 'none'
         }}>
-          {['home', 'about', 'show', 'cast', 'support', 'contact'].map((item) => (
-            <li key={item}>
-              <button
-                className="nav-link-btn"
-                style={{
-                  ...styles.navLink,
-                  color: activeSection === item ? '#c9a227' : '#e8dcc4'
-                }}
-                onClick={() => scrollToSection(item)}
-              >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
+          <div className="nav-logo" style={styles.navLogo} onClick={() => scrollToSection('home')} role="button" tabIndex={0} aria-label="Go to home section" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToSection('home'); }}>
+            {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
+            <Logo size={40} />
+            <span className="nav-logo-text" style={styles.navLogoText}>The Natural Ones</span>
+          </div>
 
+          <button className="menu-toggle" style={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation menu" aria-expanded={menuOpen}>
+            <span style={styles.menuBar} aria-hidden="true"></span>
+            <span style={styles.menuBar} aria-hidden="true"></span>
+            <span style={styles.menuBar} aria-hidden="true"></span>
+          </button>
+
+          <ul className={`nav-links${menuOpen ? ' nav-links-open' : ''}`} style={{
+            ...styles.navLinks,
+            ...(menuOpen ? styles.navLinksOpen : {})
+          }}>
+            {['home', 'about', 'show', 'cast', 'support', 'contact'].map((item) => (
+              <li key={item}>
+                <button
+                  className="nav-link-btn"
+                  style={{
+                    ...styles.navLink,
+                    color: activeSection === item ? '#c9a227' : '#e8dcc4'
+                  }}
+                  onClick={() => scrollToSection(item)}
+                  aria-current={activeSection === item ? 'true' : undefined}
+                >
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </header>
+
+      <main id="main-content">
       {/* Hero Section */}
       <section id="home" style={styles.hero}>
         <div className="hero-content" style={styles.heroContent}>
@@ -280,7 +284,7 @@ export default function TheNaturalOnesWebsite() {
             <button style={styles.primaryButton} onClick={() => scrollToSection('about')}>
               Scroll To Adventure
             </button>
-            <div style={styles.scrollArrow}>↓</div>
+            <div style={styles.scrollArrow} aria-hidden="true">↓</div>
           </div>
         </div>
       </section>
@@ -331,8 +335,12 @@ export default function TheNaturalOnesWebsite() {
               <div
                 style={styles.meetCastLink}
                 onClick={() => scrollToSection('cast')}
+                role="button"
+                tabIndex={0}
+                aria-label="Meet the Creatives and Cast"
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToSection('cast'); }}
               >
-                <span style={{marginRight: '8px'}}>&#8594;</span> Find out who's bringing it all to life: Meet the Creatives & Cast
+                <span aria-hidden="true" style={{marginRight: '8px'}}>&#8594;</span> Find out who's bringing it all to life: Meet the Creatives & Cast
               </div>
             </div>
             <div className="about-card" style={styles.aboutCard}>
@@ -428,7 +436,7 @@ export default function TheNaturalOnesWebsite() {
               { name: 'Sreya Rao', role: 'Treasurer', photo: 'member11.jpg', bio: <><p style={{ textAlign: 'justify', marginBottom: '1em' }}>After meeting Mollie through a mutual friend (at a water park, of all places!) and then getting to know the rest of the troupe through a musical theatre group, I was delighted to become part of The Natural Ones.</p><p style={{ textAlign: 'justify', marginBottom: '1em' }}>I have been acting in community groups for about 20 years, including plays, musicals, and pantos, and I sing with a chamber choir. Favourite roles include Puck in <em>A Midsummer Night&#39;s Dream</em>, Marianne in <em>Sense &amp; Sensibility</em>, Margaret in <em>Dear Brutus</em>, and Cis in <em>The Magistrate</em>. I&#39;ve also had the pleasure of playing many parts in stage adaptations of Terry Pratchett&#39;s Discworld series, written and directed by Stephen Briggs - including donning a big bushy beard as Cheery Littlebottom, the dwarf!</p><p style={{ textAlign: 'justify', margin: 0 }}>The best thing about theatre is working with people from all walks of life and how it&#39;s a mix of serious and silly - though we are heavy on the silly!</p></>, flavour: 'Guardian of the guild vault. Every gold piece accounted for.' },
               { name: 'Emma Coleman-Williams', role: 'Producer / Company Secretary', photo: 'member3.jpg', bio: 'Bio coming soon.', flavour: 'Keeper of the coin purse. Master strategist.' },
             ].map((member, index) => (
-              <div key={index} className="creative-card" style={{ animation: `fadeSlideUp 0.7s ease-out ${index * 0.15}s both` }} onClick={() => setSelectedMember(member)}>
+              <div key={index} className="creative-card" style={{ animation: `fadeSlideUp 0.7s ease-out ${index * 0.15}s both` }} onClick={() => setSelectedMember(member)} role="button" tabIndex={0} aria-label={`View biography of ${member.name}, ${member.role}`} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedMember(member); }}>
                 {/* Corner ornaments */}
                 <span className="corner-tl" /><span className="corner-tr" />
                 <span className="corner-bl" /><span className="corner-br" />
@@ -467,7 +475,7 @@ export default function TheNaturalOnesWebsite() {
               { name: 'Cate Welmers', photo: 'member14.jpg', bio: 'Bio coming soon.' },
               { name: 'Joel Williams', photo: 'member15.jpg', bio: 'Bio coming soon.' },
             ].map((member, index) => (
-              <div key={index} className="cast-member-item" style={{ animation: `fadeSlideUp 0.5s ease-out ${0.3 + index * 0.07}s both` }} onClick={() => setSelectedMember(member)}>
+              <div key={index} className="cast-member-item" style={{ animation: `fadeSlideUp 0.5s ease-out ${0.3 + index * 0.07}s both` }} onClick={() => setSelectedMember(member)} role="button" tabIndex={0} aria-label={`View biography of ${member.name}`} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedMember(member); }}>
                 <CastPhoto src={`/images/cast/${member.photo}`} name={member.name} />
                 <h3 className="cast-member-name">{member.name}</h3>
               </div>
@@ -479,9 +487,9 @@ export default function TheNaturalOnesWebsite() {
 
       {/* Cast Member Modal */}
       {selectedMember && (
-        <div style={styles.castModalOverlay} onClick={() => setSelectedMember(null)}>
+        <div style={styles.castModalOverlay} onClick={() => setSelectedMember(null)} role="dialog" aria-modal="true" aria-label={`${selectedMember.name} biography`}>
           <div className="cast-modal-content" style={styles.castModalContent} onClick={(e) => e.stopPropagation()}>
-            <button style={styles.castModalClose} onClick={() => setSelectedMember(null)}>✕</button>
+            <button style={styles.castModalClose} onClick={() => setSelectedMember(null)} aria-label="Close biography">✕</button>
             <div className="cast-modal-layout" style={styles.castModalLayout}>
               <div style={styles.castModalPhotoWrap}>
                 <ModalPhoto src={`/images/cast/${selectedMember.photo}`} name={selectedMember.name} />
@@ -711,15 +719,15 @@ export default function TheNaturalOnesWebsite() {
                 <p style={{ display: 'none' }}><input name="bot-field" /></p>
                 <div style={styles.formGroup}>
                   <label style={styles.formLabel} htmlFor="contact-name">Your Name</label>
-                  <input id="contact-name" type="text" name="name" required style={styles.formInput} placeholder="Adventurer name..." />
+                  <input id="contact-name" type="text" name="name" required aria-required="true" autoComplete="name" style={styles.formInput} placeholder="Adventurer name..." />
                 </div>
                 <div style={styles.formGroup}>
                   <label style={styles.formLabel} htmlFor="contact-email">Your Email</label>
-                  <input id="contact-email" type="email" name="email" required style={styles.formInput} placeholder="your@email.com" />
+                  <input id="contact-email" type="email" name="email" required aria-required="true" autoComplete="email" style={styles.formInput} placeholder="your@email.com" />
                 </div>
                 <div style={styles.formGroup}>
                   <label style={styles.formLabel} htmlFor="contact-message">Message</label>
-                  <textarea id="contact-message" name="message" required style={styles.formTextarea} rows={5} placeholder="Your message..."></textarea>
+                  <textarea id="contact-message" name="message" required aria-required="true" style={styles.formTextarea} rows={5} placeholder="Your message..."></textarea>
                 </div>
                 <div style={styles.formCheckboxGroup}>
                   <label style={styles.formCheckboxLabel} htmlFor="contact-mailing-list">
@@ -728,7 +736,7 @@ export default function TheNaturalOnesWebsite() {
                   </label>
                 </div>
                 {formStatus === 'error' && (
-                  <p style={styles.formErrorText}>Something went wrong. Please try again.</p>
+                  <p style={styles.formErrorText} role="alert">Something went wrong. Please try again.</p>
                 )}
                 <button type="submit" style={styles.submitButton} disabled={formStatus === 'sending'}>
                   {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
@@ -807,6 +815,8 @@ export default function TheNaturalOnesWebsite() {
           </div>
         </div>
       </section>
+
+      </main>
 
       {/* Footer */}
       <footer className="site-footer" style={styles.footer}>
@@ -898,6 +908,7 @@ function GroupPhoto() {
       src="/images/group-photo.jpg"
       alt="The Natural Ones Theatre Group"
       style={styles.groupPhoto}
+      loading="lazy"
       onError={() => setHasError(true)}
     />
   );
@@ -932,6 +943,7 @@ function ShowPoster() {
         src="/images/poster.jpg"
         alt="Tabletop Role-Playing Game: The Musical!"
         style={styles.posterImage}
+        loading="lazy"
         onError={() => setHasError(true)}
       />
     </div>
@@ -1300,6 +1312,10 @@ function ShowCarousel({ shows }) {
             onClick={(e) => { e.stopPropagation(); handlePrev(true); }}
             onTouchStart={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
+            role="button"
+            aria-label="Previous show"
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation(); handlePrev(true); } }}
           >
             &#8249;
           </div>
@@ -1308,6 +1324,10 @@ function ShowCarousel({ shows }) {
             onClick={(e) => { e.stopPropagation(); handleNext(true); }}
             onTouchStart={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
+            role="button"
+            aria-label="Next show"
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation(); handleNext(true); } }}
           >
             &#8250;
           </div>
@@ -1412,6 +1432,7 @@ function PosterCard({ show }) {
       src={show.poster}
       alt={show.title}
       style={styles.posterCardImage}
+      loading="lazy"
       onError={() => setHasError(true)}
     />
   );
@@ -1495,6 +1516,7 @@ function CreativePhoto({ src, name }) {
       alt={name}
       className="creative-photo"
       style={styles.creativePhoto}
+      loading="lazy"
       onError={() => setHasError(true)}
     />
   );
@@ -1518,6 +1540,7 @@ function CastPhoto({ src, name }) {
       alt={name}
       className="cast-photo"
       style={styles.castPhoto}
+      loading="lazy"
       onError={() => setHasError(true)}
     />
   );
@@ -3065,8 +3088,8 @@ const styles = {
 // Add CSS animation keyframes via style injection
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
-  @import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poiret+One&display=swap');
-  
+  /* Google Fonts loaded via <link> in index.html for faster LCP */
+
   @keyframes float {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
     50% { transform: translateY(-10px) rotate(3deg); }
