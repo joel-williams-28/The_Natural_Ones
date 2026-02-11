@@ -949,9 +949,10 @@ function AffiliationsPage({ onNavigateHome }) {
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                   </svg>
                   <p style={styles.affiliateHighlightText}>
-                    Our collaboration with Vocalize Show Choir brings together the theatrical storytelling
-                    of The Natural Ones with the vocal power and performance polish of an ensemble trained
-                    to command a stage. Keep your eyes on us — something exciting is in the works.
+                    We're delighted to have Vocalize Show Choir joining us for our production
+                    of <em>Mystery at Murderingham Manor, and More...</em> — they'll be opening the first
+                    act with a selection of show songs, bringing their vocal power and performance
+                    polish to the stage before we unleash the chaos.
                   </p>
                 </div>
               </div>
