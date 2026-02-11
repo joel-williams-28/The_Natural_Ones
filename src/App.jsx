@@ -950,9 +950,9 @@ function AffiliationsPage({ onNavigateHome }) {
                   </svg>
                   <p style={styles.affiliateHighlightText}>
                     We're delighted to have Vocalize Show Choir joining us for our production
-                    of <em>Mystery at Murderingham Manor, and More...</em> — they'll be opening the first
-                    act with a selection of show songs, bringing their vocal power and performance
-                    polish to the stage before we unleash the chaos.
+                    of <em>Mystery at Murderingham Manor, and More...</em>, performing a selection of
+                    show songs in between our sketches, bringing their vocal power and performance
+                    polish to the stage.
                   </p>
                 </div>
               </div>
