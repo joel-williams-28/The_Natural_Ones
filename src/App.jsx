@@ -981,10 +981,11 @@ function ShowCarousel({ shows }) {
       setCurrentIndex(newIndex);
       setFlippedIndex(newIndex);
       setContentFading(false);
-      // Reset scroll position of poster back text to top
+      // Reset scroll position of all poster back text areas to top
       if (containerRef.current) {
-        const backContent = containerRef.current.querySelector('.poster-back-content');
-        if (backContent) backContent.scrollTop = 0;
+        containerRef.current.querySelectorAll('.poster-back-content').forEach(el => {
+          el.scrollTop = 0;
+        });
       }
       setTimeout(() => {
         setInfoVisible(true);
