@@ -338,7 +338,7 @@ export default function TheNaturalOnesWebsite() {
         />
       )}
 
-      <main id="main-content">
+      <main id="main-content" style={{ flex: 1 }}>
       {currentPage === 'gallery' ? (
         <GalleryPage onNavigateHome={() => scrollToSection('home')} />
       ) : currentPage === 'affiliations' ? (
@@ -2202,6 +2202,8 @@ const styles = {
     backgroundColor: '#1a0f08',
     color: '#e8dcc4',
     minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
     position: 'relative',
     overflowX: 'hidden',
   },
