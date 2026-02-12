@@ -47,7 +47,10 @@ const showsData = [
 
 // Fantasy tabletop-inspired website for The Natural Ones Theatre Group
 export default function TheNaturalOnesWebsite() {
-  const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'affiliations' | 'gallery'
+  const [currentPage, setCurrentPage] = useState(() => {
+    const hash = window.location.hash.replace('#', '');
+    return ['gallery', 'affiliations'].includes(hash) ? hash : 'home';
+  });
   const [activeSection, setActiveSection] = useState('home');
   const [sectionMenuOpen, setSectionMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -69,6 +72,22 @@ export default function TheNaturalOnesWebsite() {
   const [captchaVerifying, setCaptchaVerifying] = useState(false);
   const recaptchaRef = useRef(null);
   const contactFormRef = useRef(null);
+
+  // Sync currentPage with URL hash for refresh/back/forward support
+  useEffect(() => {
+    window.location.hash = currentPage === 'home' ? '' : currentPage;
+  }, [currentPage]);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      const page = ['gallery', 'affiliations'].includes(hash) ? hash : 'home';
+      setCurrentPage(page);
+      window.scrollTo({ top: 0 });
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const submitForm = async (form, recaptchaResponse) => {
     setFormStatus('sending');
