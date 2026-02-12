@@ -2214,9 +2214,9 @@ const styles = {
     left: 0,
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '12px 40px 8px',
+    padding: '16px 40px',
     zIndex: 100,
     transition: 'all 0.3s ease',
     boxSizing: 'border-box',
@@ -2226,7 +2226,6 @@ const styles = {
     alignItems: 'center',
     gap: '12px',
     cursor: 'pointer',
-    marginBottom: '4px',
   },
   navLogoText: {
     fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
@@ -2254,9 +2253,8 @@ const styles = {
     transition: 'color 0.3s ease',
   },
   sectionMenuWrap: {
-    position: 'absolute',
-    right: '40px',
-    top: '14px',
+    position: 'relative',
+    marginLeft: '8px',
   },
   sectionMenuToggle: {
     display: 'flex',
@@ -4787,10 +4785,6 @@ styleSheet.textContent = `
       font-size: 13px !important;
       padding: 8px 12px !important;
     }
-    .section-menu-wrap {
-      right: 24px !important;
-      top: 12px !important;
-    }
 
     /* About grid - stack vertically */
     .about-grid {
@@ -4875,7 +4869,7 @@ styleSheet.textContent = `
 
     /* --- Navigation mobile --- */
     .site-nav {
-      padding: 8px 16px 6px !important;
+      padding: 12px 16px !important;
     }
     .nav-logo-text {
       font-size: 14px !important;
@@ -4885,10 +4879,6 @@ styleSheet.textContent = `
       font-size: 11px !important;
       padding: 6px 8px !important;
       letter-spacing: 0.5px !important;
-    }
-    .section-menu-wrap {
-      right: 16px !important;
-      top: 10px !important;
     }
     .section-dropdown {
       min-width: 160px !important;
