@@ -347,11 +347,10 @@ export default function TheNaturalOnesWebsite() {
       <>
       {/* Hero Section */}
       <section id="home" style={styles.hero}>
+        <div style={styles.heroLogoAbsolute}>
+          <Logo size={180} />
+        </div>
         <div className="hero-content" style={styles.heroContent}>
-          <div style={styles.heroD20Container}>
-            {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
-            <Logo size={180} />
-          </div>
           <h1 className="hero-title" style={styles.heroTitle}>The Natural Ones</h1>
           <p style={styles.heroSubtitle}>Amateur Theatre with a Critical Hit</p>
           <div style={styles.heroDivider}>
@@ -956,10 +955,10 @@ function AffiliationsPage({ onNavigateHome }) {
     <div className="affiliations-page">
       {/* Hero banner */}
       <section style={styles.affiliationsHero}>
+        <div style={styles.heroLogoAbsolute}>
+          <Logo size={180} />
+        </div>
         <div style={styles.affiliationsHeroInner}>
-          <div style={styles.heroD20Container}>
-            <Logo size={180} />
-          </div>
           <span style={styles.affiliationsSubtitle}>Our Allies & Companions</span>
           <h1 style={styles.affiliationsTitle}>Affiliations & Associations</h1>
           <div style={styles.headerDivider}>
@@ -1242,10 +1241,10 @@ function GalleryPage({ onNavigateHome }) {
     return (
       <div className="gallery-page">
         <section style={styles.galleryHero}>
+          <div style={styles.heroLogoAbsolute}>
+            <Logo size={180} />
+          </div>
           <div style={styles.galleryHeroInner}>
-            <div style={styles.heroD20Container}>
-              <Logo size={180} />
-            </div>
             <span style={styles.gallerySubtitle}>From the Archives</span>
             <h1 style={styles.galleryTitle}>The Gallery</h1>
             <div style={styles.headerDivider}>
@@ -1274,10 +1273,10 @@ function GalleryPage({ onNavigateHome }) {
     <div className="gallery-page">
       {/* Hero banner */}
       <section style={styles.galleryHero}>
+        <div style={styles.heroLogoAbsolute}>
+          <Logo size={180} />
+        </div>
         <div style={styles.galleryHeroInner}>
-          <div style={styles.heroD20Container}>
-            <Logo size={180} />
-          </div>
           <span style={styles.gallerySubtitle}>From the Archives</span>
           <h1 style={styles.galleryTitle}>The Gallery</h1>
           <div style={styles.headerDivider}>
@@ -2338,7 +2337,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    padding: '40px 20px 40px 20px',
+    padding: '280px 20px 40px 20px',
     background: `
       radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
       linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
@@ -2350,6 +2349,13 @@ const styles = {
   },
   heroD20Container: {
     marginBottom: '24px',
+  },
+  heroLogoAbsolute: {
+    position: 'absolute',
+    top: '80px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 1,
   },
   d20Animated: {
     animation: 'float 3s ease-in-out infinite',
@@ -3688,7 +3694,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    padding: '120px 20px 60px 20px',
+    padding: '280px 20px 60px 20px',
     background: `
       radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
       linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
@@ -3877,7 +3883,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    padding: '120px 20px 60px 20px',
+    padding: '280px 20px 60px 20px',
     background: `
       radial-gradient(ellipse at center, rgba(61, 107, 30, 0.15) 0%, transparent 70%),
       linear-gradient(180deg, #1a0f08 0%, #2d1810 50%, #1a0f08 100%)
