@@ -3713,7 +3713,8 @@ const styles = {
   },
   galleryContent: {
     padding: '60px 20px 80px 20px',
-    background: '#1a0f08',
+    background: '#f5ede0',
+    color: '#2d1810',
   },
   galleryCategory: {
     marginBottom: '48px',
@@ -3722,14 +3723,14 @@ const styles = {
     fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
     fontSize: 'clamp(20px, 3vw, 28px)',
     fontWeight: 'bold',
-    color: '#c9a227',
+    color: '#2d1810',
     textAlign: 'center',
     margin: '0 0 4px 0',
     letterSpacing: '2px',
   },
   galleryCategoryDivider: {
     height: '1px',
-    background: 'linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.4), transparent)',
+    background: 'linear-gradient(90deg, transparent, rgba(139, 105, 20, 0.5), transparent)',
     margin: '12px auto 28px',
     maxWidth: '200px',
   },
@@ -3744,8 +3745,8 @@ const styles = {
     position: 'relative',
     overflow: 'hidden',
     cursor: 'pointer',
-    border: '1px solid rgba(201, 169, 97, 0.25)',
-    background: 'rgba(45, 24, 16, 0.4)',
+    border: '1px solid rgba(139, 105, 20, 0.25)',
+    background: 'rgba(45, 24, 16, 0.06)',
     transition: 'all 0.3s ease',
     outline: 'none',
   },
@@ -3766,15 +3767,15 @@ const styles = {
   gallerySectionDividerLine: {
     width: '80px',
     height: '1px',
-    background: 'linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.3), transparent)',
+    background: 'linear-gradient(90deg, transparent, rgba(139, 105, 20, 0.4), transparent)',
   },
   gallerySectionDividerDot: {
-    color: 'rgba(201, 162, 39, 0.4)',
+    color: 'rgba(139, 105, 20, 0.5)',
     fontSize: '14px',
   },
   galleryBackSection: {
     padding: '40px 20px 80px',
-    background: '#1a0f08',
+    background: '#f5ede0',
   },
 
   // Lightbox
