@@ -233,12 +233,13 @@ export default function TheNaturalOnesWebsite() {
           backgroundColor: scrolled ? 'rgba(26, 15, 8, 0.95)' : 'transparent',
           boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.4)' : 'none'
         }}>
+          {/* Left: Logo */}
           <div className="nav-logo" style={styles.navLogo} onClick={() => scrollToSection('home')} role="button" tabIndex={0} aria-label="Go to home section" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToSection('home'); }}>
             <Logo size={40} />
             <span className="nav-logo-text" style={styles.navLogoText}>The Natural Ones</span>
           </div>
 
-          {/* Primary page tabs — Gallery | Home | Affiliates */}
+          {/* Center: Page tabs — Gallery | Home | Affiliates */}
           <ul className="nav-page-tabs" style={styles.navPageTabs}>
             <li>
               <button
@@ -281,41 +282,43 @@ export default function TheNaturalOnesWebsite() {
             </li>
           </ul>
 
-          {/* Hamburger menu — section navigation for the Home page */}
-          {currentPage === 'home' && (
-            <div className="section-menu-wrap" style={styles.sectionMenuWrap}>
-              <button
-                className="section-menu-toggle"
-                style={styles.sectionMenuToggle}
-                onClick={() => setSectionMenuOpen(!sectionMenuOpen)}
-                aria-label="Toggle section menu"
-                aria-expanded={sectionMenuOpen}
-              >
-                <span className={`section-menu-bar${sectionMenuOpen ? ' bar-open' : ''}`} style={styles.menuBar} aria-hidden="true"></span>
-                <span className={`section-menu-bar${sectionMenuOpen ? ' bar-open' : ''}`} style={styles.menuBar} aria-hidden="true"></span>
-                <span className={`section-menu-bar${sectionMenuOpen ? ' bar-open' : ''}`} style={styles.menuBar} aria-hidden="true"></span>
-              </button>
+          {/* Right: Hamburger menu — section navigation (Home page only) */}
+          <div className="nav-right-zone" style={styles.navRightZone}>
+            {currentPage === 'home' && (
+              <div className="section-menu-wrap" style={styles.sectionMenuWrap}>
+                <button
+                  className="section-menu-toggle"
+                  style={styles.sectionMenuToggle}
+                  onClick={() => setSectionMenuOpen(!sectionMenuOpen)}
+                  aria-label="Toggle section menu"
+                  aria-expanded={sectionMenuOpen}
+                >
+                  <span className={`section-menu-bar${sectionMenuOpen ? ' bar-open' : ''}`} style={styles.menuBar} aria-hidden="true"></span>
+                  <span className={`section-menu-bar${sectionMenuOpen ? ' bar-open' : ''}`} style={styles.menuBar} aria-hidden="true"></span>
+                  <span className={`section-menu-bar${sectionMenuOpen ? ' bar-open' : ''}`} style={styles.menuBar} aria-hidden="true"></span>
+                </button>
 
-              {sectionMenuOpen && (
-                <div className="section-dropdown" style={styles.sectionDropdown} role="menu">
-                  {['about', 'show', 'cast', 'support', 'contact'].map((item) => (
-                    <button
-                      key={item}
-                      className="section-dropdown-btn"
-                      style={{
-                        ...styles.sectionDropdownBtn,
-                        color: activeSection === item ? '#c9a227' : '#e8dcc4'
-                      }}
-                      onClick={() => scrollToSection(item)}
-                      role="menuitem"
-                    >
-                      {item.charAt(0).toUpperCase() + item.slice(1)}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+                {sectionMenuOpen && (
+                  <div className="section-dropdown" style={styles.sectionDropdown} role="menu">
+                    {['about', 'show', 'cast', 'support', 'contact'].map((item) => (
+                      <button
+                        key={item}
+                        className="section-dropdown-btn"
+                        style={{
+                          ...styles.sectionDropdownBtn,
+                          color: activeSection === item ? '#c9a227' : '#e8dcc4'
+                        }}
+                        onClick={() => scrollToSection(item)}
+                        role="menuitem"
+                      >
+                        {item.charAt(0).toUpperCase() + item.slice(1)}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </nav>
       </header>
 
@@ -2235,12 +2238,21 @@ const styles = {
     letterSpacing: '2px',
   },
   navPageTabs: {
+    position: 'absolute',
+    left: '50%',
+    transform: 'translateX(-50%)',
     display: 'flex',
     gap: '8px',
     listStyle: 'none',
     margin: 0,
     padding: 0,
     alignItems: 'center',
+  },
+  navRightZone: {
+    display: 'flex',
+    alignItems: 'center',
+    minWidth: '48px',
+    justifyContent: 'flex-end',
   },
   navLink: {
     background: 'none',
