@@ -3712,7 +3712,7 @@ const styles = {
     fontStyle: 'italic',
   },
   galleryContent: {
-    padding: '60px 20px 80px 20px',
+    padding: '80px 20px 100px 20px',
     background: '#f5ede0',
     color: '#2d1810',
   },
