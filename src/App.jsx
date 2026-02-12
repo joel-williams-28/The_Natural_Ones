@@ -3025,9 +3025,12 @@ const styles = {
     borderRadius: '8px',
     padding: '0',
     boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
-    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
     zIndex: 25,
     overflow: 'hidden',
+    willChange: 'transform, opacity',
+    backfaceVisibility: 'hidden',
+    WebkitBackfaceVisibility: 'hidden',
   },
   infoPopupHeader: {
     background: 'linear-gradient(135deg, #c9a227, #8b6914)',
@@ -3091,7 +3094,7 @@ const styles = {
     padding: '8px 12px',
     display: 'inline-block',
     marginTop: '4px',
-    transition: 'all 0.3s ease',
+    transition: 'background-color 0.3s ease, color 0.3s ease',
   },
   closeInfoButton: {
     width: '100%',
@@ -3105,7 +3108,7 @@ const styles = {
     borderTop: '1px solid rgba(201, 162, 39, 0.3)',
     color: '#c9a227',
     cursor: 'pointer',
-    transition: 'all 0.3s ease',
+    transition: 'background-color 0.3s ease, color 0.3s ease',
   },
 
   // Cast Section
