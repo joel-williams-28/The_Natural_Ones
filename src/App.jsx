@@ -957,6 +957,9 @@ function AffiliationsPage({ onNavigateHome }) {
       {/* Hero banner */}
       <section style={styles.affiliationsHero}>
         <div style={styles.affiliationsHeroInner}>
+          <div style={styles.heroD20Container}>
+            <Logo size={180} />
+          </div>
           <span style={styles.affiliationsSubtitle}>Our Allies & Companions</span>
           <h1 style={styles.affiliationsTitle}>Affiliations & Associations</h1>
           <div style={styles.headerDivider}>
@@ -1240,6 +1243,9 @@ function GalleryPage({ onNavigateHome }) {
       <div className="gallery-page">
         <section style={styles.galleryHero}>
           <div style={styles.galleryHeroInner}>
+            <div style={styles.heroD20Container}>
+              <Logo size={180} />
+            </div>
             <span style={styles.gallerySubtitle}>From the Archives</span>
             <h1 style={styles.galleryTitle}>The Gallery</h1>
             <div style={styles.headerDivider}>
@@ -1269,6 +1275,9 @@ function GalleryPage({ onNavigateHome }) {
       {/* Hero banner */}
       <section style={styles.galleryHero}>
         <div style={styles.galleryHeroInner}>
+          <div style={styles.heroD20Container}>
+            <Logo size={180} />
+          </div>
           <span style={styles.gallerySubtitle}>From the Archives</span>
           <h1 style={styles.galleryTitle}>The Gallery</h1>
           <div style={styles.headerDivider}>
