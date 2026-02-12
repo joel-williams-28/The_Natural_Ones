@@ -49,7 +49,7 @@ const showsData = [
 export default function TheNaturalOnesWebsite() {
   const [currentPage, setCurrentPage] = useState('home'); // 'home' | 'affiliations' | 'gallery'
   const [activeSection, setActiveSection] = useState('home');
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [sectionMenuOpen, setSectionMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
   const [kickstarterData, setKickstarterData] = useState({
@@ -201,7 +201,7 @@ export default function TheNaturalOnesWebsite() {
   }, []);
 
   const scrollToSection = (sectionId) => {
-    setMenuOpen(false);
+    setSectionMenuOpen(false);
     if (currentPage !== 'home') {
       setCurrentPage('home');
       setActiveSection(sectionId);
@@ -216,7 +216,7 @@ export default function TheNaturalOnesWebsite() {
   };
 
   const navigateToPage = (page) => {
-    setMenuOpen(false);
+    setSectionMenuOpen(false);
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -234,37 +234,26 @@ export default function TheNaturalOnesWebsite() {
           boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.4)' : 'none'
         }}>
           <div className="nav-logo" style={styles.navLogo} onClick={() => scrollToSection('home')} role="button" tabIndex={0} aria-label="Go to home section" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToSection('home'); }}>
-            {/* TO ADD LOGO: Place logo.png in public/images/ folder */}
             <Logo size={40} />
             <span className="nav-logo-text" style={styles.navLogoText}>The Natural Ones</span>
           </div>
 
-          <button className="menu-toggle" style={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation menu" aria-expanded={menuOpen}>
-            <span style={styles.menuBar} aria-hidden="true"></span>
-            <span style={styles.menuBar} aria-hidden="true"></span>
-            <span style={styles.menuBar} aria-hidden="true"></span>
-          </button>
-
-          <ul className={`nav-links${menuOpen ? ' nav-links-open' : ''}`} style={{
-            ...styles.navLinks,
-            ...(menuOpen ? styles.navLinksOpen : {})
-          }}>
-            {['home', 'about', 'show', 'cast', 'support', 'contact'].map((item) => (
-              <li key={item}>
-                <button
-                  className="nav-link-btn"
-                  style={{
-                    ...styles.navLink,
-                    color: currentPage === 'home' && activeSection === item ? '#c9a227' : '#e8dcc4'
-                  }}
-                  onClick={() => scrollToSection(item)}
-                  aria-current={currentPage === 'home' && activeSection === item ? 'true' : undefined}
-                >
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
-                </button>
-              </li>
-            ))}
-            <li key="affiliates">
+          {/* Primary page tabs — always visible */}
+          <ul className="nav-page-tabs" style={styles.navPageTabs}>
+            <li>
+              <button
+                className="nav-link-btn"
+                style={{
+                  ...styles.navLink,
+                  color: currentPage === 'home' ? '#c9a227' : '#e8dcc4'
+                }}
+                onClick={() => scrollToSection('home')}
+                aria-current={currentPage === 'home' ? 'true' : undefined}
+              >
+                Home
+              </button>
+            </li>
+            <li>
               <button
                 className="nav-link-btn"
                 style={{
@@ -277,7 +266,7 @@ export default function TheNaturalOnesWebsite() {
                 Affiliates
               </button>
             </li>
-            <li key="gallery">
+            <li>
               <button
                 className="nav-link-btn"
                 style={{
@@ -291,8 +280,53 @@ export default function TheNaturalOnesWebsite() {
               </button>
             </li>
           </ul>
+
+          {/* Hamburger menu — section navigation for the Home page */}
+          {currentPage === 'home' && (
+            <div className="section-menu-wrap" style={styles.sectionMenuWrap}>
+              <button
+                className="section-menu-toggle"
+                style={styles.sectionMenuToggle}
+                onClick={() => setSectionMenuOpen(!sectionMenuOpen)}
+                aria-label="Toggle section menu"
+                aria-expanded={sectionMenuOpen}
+              >
+                <span className={`section-menu-bar${sectionMenuOpen ? ' bar-open' : ''}`} style={styles.menuBar} aria-hidden="true"></span>
+                <span className={`section-menu-bar${sectionMenuOpen ? ' bar-open' : ''}`} style={styles.menuBar} aria-hidden="true"></span>
+                <span className={`section-menu-bar${sectionMenuOpen ? ' bar-open' : ''}`} style={styles.menuBar} aria-hidden="true"></span>
+              </button>
+
+              {sectionMenuOpen && (
+                <div className="section-dropdown" style={styles.sectionDropdown} role="menu">
+                  {['about', 'show', 'cast', 'support', 'contact'].map((item) => (
+                    <button
+                      key={item}
+                      className="section-dropdown-btn"
+                      style={{
+                        ...styles.sectionDropdownBtn,
+                        color: activeSection === item ? '#c9a227' : '#e8dcc4'
+                      }}
+                      onClick={() => scrollToSection(item)}
+                      role="menuitem"
+                    >
+                      {item.charAt(0).toUpperCase() + item.slice(1)}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </nav>
       </header>
+
+      {/* Close section dropdown when clicking outside */}
+      {sectionMenuOpen && (
+        <div
+          style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 98 }}
+          onClick={() => setSectionMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
       <main id="main-content">
       {currentPage === 'gallery' ? (
@@ -889,16 +923,9 @@ export default function TheNaturalOnesWebsite() {
             <button
               className="footer-link-btn"
               style={styles.footerLinkButton}
-              onClick={() => navigateToPage('affiliations')}
+              onClick={() => scrollToSection('contact')}
             >
-              Our Affiliates
-            </button>
-            <button
-              className="footer-link-btn"
-              style={styles.footerLinkButton}
-              onClick={() => navigateToPage('gallery')}
-            >
-              Gallery
+              Contact Us
             </button>
           </div>
           <p style={styles.footerCopy}>
@@ -2207,15 +2234,13 @@ const styles = {
     color: '#c9a227',
     letterSpacing: '2px',
   },
-  navLinks: {
+  navPageTabs: {
     display: 'flex',
     gap: '8px',
     listStyle: 'none',
     margin: 0,
     padding: 0,
-  },
-  navLinksOpen: {
-    display: 'flex',
+    alignItems: 'center',
   },
   navLink: {
     background: 'none',
@@ -2227,19 +2252,52 @@ const styles = {
     padding: '8px 16px',
     transition: 'color 0.3s ease',
   },
-  menuToggle: {
-    display: 'none',
+  sectionMenuWrap: {
+    position: 'relative',
+    marginLeft: '8px',
+  },
+  sectionMenuToggle: {
+    display: 'flex',
     flexDirection: 'column',
     gap: '4px',
     background: 'none',
-    border: 'none',
+    border: '1px solid rgba(201, 169, 97, 0.3)',
     cursor: 'pointer',
     padding: '8px',
+    borderRadius: '4px',
+    transition: 'all 0.3s ease',
   },
   menuBar: {
-    width: '24px',
+    width: '20px',
     height: '2px',
     backgroundColor: '#c9a227',
+    display: 'block',
+    transition: 'all 0.3s ease',
+  },
+  sectionDropdown: {
+    position: 'absolute',
+    top: 'calc(100% + 8px)',
+    right: 0,
+    background: 'rgba(26, 15, 8, 0.97)',
+    border: '1px solid rgba(201, 169, 97, 0.25)',
+    padding: '8px 0',
+    minWidth: '180px',
+    zIndex: 101,
+    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.5)',
+    animation: 'fadeSlideDown 0.2s ease-out',
+  },
+  sectionDropdownBtn: {
+    display: 'block',
+    width: '100%',
+    background: 'none',
+    border: 'none',
+    fontFamily: "'Cinzel', serif",
+    fontSize: '14px',
+    letterSpacing: '1px',
+    cursor: 'pointer',
+    padding: '10px 24px',
+    textAlign: 'left',
+    transition: 'all 0.2s ease',
   },
   
   // Hero
@@ -4705,34 +4763,27 @@ styleSheet.textContent = `
   /* =============================================
      TABLET BREAKPOINT (max-width: 1023px)
      ============================================= */
+  /* Section dropdown button hover */
+  .section-dropdown-btn:hover {
+    background: rgba(201, 169, 97, 0.08) !important;
+    color: #c9a227 !important;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Section menu toggle hover */
+  .section-menu-toggle:hover {
+    border-color: rgba(201, 169, 97, 0.6) !important;
+    background: rgba(201, 169, 97, 0.06) !important;
+    transform: none;
+    box-shadow: none;
+  }
+
   @media (max-width: 1023px) {
-    /* Navigation - show hamburger, hide horizontal links */
-    .menu-toggle {
-      display: flex !important;
-    }
-    .nav-links {
-      display: none !important;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background-color: rgba(26, 15, 8, 0.97);
-      z-index: 99;
-      padding: 80px 20px 40px;
-      margin: 0;
-    }
-    .nav-links-open {
-      display: flex !important;
-    }
-    .nav-links .nav-link-btn {
-      font-size: 18px !important;
-      padding: 14px 24px !important;
-      min-height: 48px;
+    /* Navigation — compact page tabs on tablet */
+    .nav-page-tabs .nav-link-btn {
+      font-size: 13px !important;
+      padding: 8px 12px !important;
     }
 
     /* About grid - stack vertically */
@@ -4821,38 +4872,16 @@ styleSheet.textContent = `
       padding: 12px 16px !important;
     }
     .nav-logo-text {
-      font-size: 16px !important;
+      font-size: 14px !important;
       letter-spacing: 1px !important;
     }
-    .menu-toggle {
-      display: flex !important;
-      z-index: 101;
+    .nav-page-tabs .nav-link-btn {
+      font-size: 11px !important;
+      padding: 6px 8px !important;
+      letter-spacing: 0.5px !important;
     }
-    .nav-links {
-      display: none !important;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      background-color: rgba(26, 15, 8, 0.98);
-      z-index: 100;
-      padding: 80px 20px 40px;
-      margin: 0;
-    }
-    .nav-links-open {
-      display: flex !important;
-    }
-    .nav-links .nav-link-btn {
-      font-size: 20px !important;
-      padding: 16px 32px !important;
-      min-height: 48px;
-      width: 100%;
-      text-align: center;
+    .section-dropdown {
+      min-width: 160px !important;
     }
 
     /* --- Hero section --- */
