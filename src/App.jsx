@@ -3661,7 +3661,7 @@ const styles = {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    transition: 'all 0.3s ease',
+    transition: 'background-color 0.3s ease, border-color 0.3s ease',
     position: 'relative',
   },
   formSuccessMessage: {
@@ -4398,6 +4398,10 @@ styleSheet.textContent = `
     color: #8b6914;
     font-size: 18px;
     font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   #contact-mailing-list:hover {
     border-color: rgba(201, 162, 39, 0.6);
