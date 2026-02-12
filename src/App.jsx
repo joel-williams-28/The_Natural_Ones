@@ -203,16 +203,23 @@ export default function TheNaturalOnesWebsite() {
   const scrollToSection = (sectionId) => {
     setSectionMenuOpen(false);
     if (currentPage !== 'home') {
+      window.scrollTo({ top: 0 });
       setCurrentPage('home');
       setActiveSection(sectionId);
-      // Wait for home page to render before scrolling
-      setTimeout(() => {
-        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-      }, 50);
+      if (sectionId !== 'home') {
+        // Wait for home page to render before scrolling to a specific section
+        setTimeout(() => {
+          document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+        }, 50);
+      }
       return;
     }
+    if (sectionId === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }
     setActiveSection(sectionId);
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const navigateToPage = (page) => {
