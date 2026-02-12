@@ -217,8 +217,8 @@ export default function TheNaturalOnesWebsite() {
 
   const navigateToPage = (page) => {
     setSectionMenuOpen(false);
+    window.scrollTo({ top: 0 });
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -230,8 +230,8 @@ export default function TheNaturalOnesWebsite() {
       <header>
         <nav className="site-nav" aria-label="Main navigation" style={{
           ...styles.nav,
-          backgroundColor: (scrolled || currentPage !== 'home') ? 'rgba(26, 15, 8, 0.95)' : 'transparent',
-          boxShadow: (scrolled || currentPage !== 'home') ? '0 4px 20px rgba(0,0,0,0.4)' : 'none'
+          backgroundColor: scrolled ? 'rgba(26, 15, 8, 0.95)' : 'transparent',
+          boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.4)' : 'none'
         }}>
           {/* Left: Logo */}
           <div className="nav-logo" style={styles.navLogo} onClick={() => scrollToSection('home')} role="button" tabIndex={0} aria-label="Go to home section" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') scrollToSection('home'); }}>
