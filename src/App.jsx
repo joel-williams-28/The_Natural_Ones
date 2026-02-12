@@ -238,8 +238,21 @@ export default function TheNaturalOnesWebsite() {
             <span className="nav-logo-text" style={styles.navLogoText}>The Natural Ones</span>
           </div>
 
-          {/* Primary page tabs — always visible */}
+          {/* Primary page tabs — Gallery | Home | Affiliates */}
           <ul className="nav-page-tabs" style={styles.navPageTabs}>
+            <li>
+              <button
+                className="nav-link-btn"
+                style={{
+                  ...styles.navLink,
+                  color: currentPage === 'gallery' ? '#c9a227' : '#e8dcc4'
+                }}
+                onClick={() => navigateToPage('gallery')}
+                aria-current={currentPage === 'gallery' ? 'true' : undefined}
+              >
+                Gallery
+              </button>
+            </li>
             <li>
               <button
                 className="nav-link-btn"
@@ -264,19 +277,6 @@ export default function TheNaturalOnesWebsite() {
                 aria-current={currentPage === 'affiliations' ? 'true' : undefined}
               >
                 Affiliates
-              </button>
-            </li>
-            <li>
-              <button
-                className="nav-link-btn"
-                style={{
-                  ...styles.navLink,
-                  color: currentPage === 'gallery' ? '#c9a227' : '#e8dcc4'
-                }}
-                onClick={() => navigateToPage('gallery')}
-                aria-current={currentPage === 'gallery' ? 'true' : undefined}
-              >
-                Gallery
               </button>
             </li>
           </ul>
@@ -2214,9 +2214,9 @@ const styles = {
     left: 0,
     width: '100%',
     display: 'flex',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
     alignItems: 'center',
-    padding: '16px 40px',
+    padding: '12px 40px 8px',
     zIndex: 100,
     transition: 'all 0.3s ease',
     boxSizing: 'border-box',
@@ -2226,6 +2226,7 @@ const styles = {
     alignItems: 'center',
     gap: '12px',
     cursor: 'pointer',
+    marginBottom: '4px',
   },
   navLogoText: {
     fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
@@ -2253,8 +2254,9 @@ const styles = {
     transition: 'color 0.3s ease',
   },
   sectionMenuWrap: {
-    position: 'relative',
-    marginLeft: '8px',
+    position: 'absolute',
+    right: '40px',
+    top: '14px',
   },
   sectionMenuToggle: {
     display: 'flex',
@@ -4785,6 +4787,10 @@ styleSheet.textContent = `
       font-size: 13px !important;
       padding: 8px 12px !important;
     }
+    .section-menu-wrap {
+      right: 24px !important;
+      top: 12px !important;
+    }
 
     /* About grid - stack vertically */
     .about-grid {
@@ -4869,7 +4875,7 @@ styleSheet.textContent = `
 
     /* --- Navigation mobile --- */
     .site-nav {
-      padding: 12px 16px !important;
+      padding: 8px 16px 6px !important;
     }
     .nav-logo-text {
       font-size: 14px !important;
@@ -4879,6 +4885,10 @@ styleSheet.textContent = `
       font-size: 11px !important;
       padding: 6px 8px !important;
       letter-spacing: 0.5px !important;
+    }
+    .section-menu-wrap {
+      right: 16px !important;
+      top: 10px !important;
     }
     .section-dropdown {
       min-width: 160px !important;
