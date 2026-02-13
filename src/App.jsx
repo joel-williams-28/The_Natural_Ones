@@ -4930,18 +4930,37 @@ styleSheet.textContent = `
       padding: 0 8px !important;
     }
 
-    /* --- Navigation mobile --- */
+    /* --- Navigation mobile: stacked layout --- */
     .site-nav {
-      padding: 12px 16px !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      padding: 10px 16px 6px !important;
+    }
+    .nav-logo {
+      width: 100% !important;
+      justify-content: center !important;
+      margin-bottom: 4px !important;
     }
     .nav-logo-text {
-      font-size: 14px !important;
+      font-size: 16px !important;
       letter-spacing: 1px !important;
+    }
+    .nav-page-tabs {
+      position: static !important;
+      transform: none !important;
+      width: 100% !important;
+      justify-content: center !important;
+      order: 3 !important;
     }
     .nav-page-tabs .nav-link-btn {
       font-size: 11px !important;
-      padding: 6px 8px !important;
+      padding: 5px 10px !important;
       letter-spacing: 0.5px !important;
+    }
+    .nav-right-zone {
+      position: absolute !important;
+      top: 10px !important;
+      right: 16px !important;
     }
     .section-dropdown {
       min-width: 160px !important;
@@ -4950,11 +4969,10 @@ styleSheet.textContent = `
     /* --- Hero section --- */
     .hero-section {
       min-height: auto !important;
-      padding: 140px 16px 32px 16px !important;
+      padding: 90px 16px 32px 16px !important;
     }
     .hero-logo-absolute {
-      top: 24px !important;
-      transform: translateX(-50%) scale(0.6) !important;
+      display: none !important;
     }
     .hero-title {
       white-space: normal !important;
@@ -5231,11 +5249,7 @@ styleSheet.textContent = `
      ============================================= */
   @media (max-width: 480px) {
     .hero-section {
-      padding: 120px 12px 24px 12px !important;
-    }
-    .hero-logo-absolute {
-      top: 16px !important;
-      transform: translateX(-50%) scale(0.5) !important;
+      padding: 80px 12px 24px 12px !important;
     }
     .hero-title {
       font-size: clamp(24px, 10vw, 36px) !important;
