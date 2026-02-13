@@ -365,33 +365,33 @@ export default function TheNaturalOnesWebsite() {
       ) : (
       <>
       {/* Hero Section */}
-      <section id="home" style={styles.hero}>
-        <div style={styles.heroLogoAbsolute}>
+      <section id="home" className="hero-section" style={styles.hero}>
+        <div className="hero-logo-absolute" style={styles.heroLogoAbsolute}>
           <Logo size={180} />
         </div>
         <div className="hero-content" style={styles.heroContent}>
           <h1 className="hero-title" style={styles.heroTitle}>The Natural Ones</h1>
-          <p style={styles.heroSubtitle}>Amateur Theatre with a Critical Hit</p>
-          <div style={styles.heroDivider}>
-            <span style={styles.dividerLine}></span>
+          <p className="hero-subtitle" style={styles.heroSubtitle}>Amateur Theatre with a Critical Hit</p>
+          <div className="hero-divider" style={styles.heroDivider}>
+            <span className="divider-line" style={styles.dividerLine}></span>
             <span style={styles.dividerDot}>✦</span>
-            <span style={styles.dividerLine}></span>
+            <span className="divider-line" style={styles.dividerLine}></span>
           </div>
-          <h2 style={styles.heroShowTitle}>Tabletop Role-Playing Game:</h2>
-          <h2 style={styles.heroShowSubtitle}>The Musical!</h2>
-          <div style={styles.heroDivider}>
-            <span style={styles.dividerLine}></span>
-            <span style={{...styles.dividerDot, color: '#c9a227', fontFamily: "'Cinzel Decorative', 'Cinzel', serif", fontSize: '32px'}}>&</span>
-            <span style={styles.dividerLine}></span>
+          <h2 className="hero-show-title" style={styles.heroShowTitle}>Tabletop Role-Playing Game:</h2>
+          <h2 className="hero-show-subtitle" style={styles.heroShowSubtitle}>The Musical!</h2>
+          <div className="hero-divider" style={styles.heroDivider}>
+            <span className="divider-line" style={styles.dividerLine}></span>
+            <span className="hero-ampersand" style={{...styles.dividerDot, color: '#c9a227', fontFamily: "'Cinzel Decorative', 'Cinzel', serif", fontSize: '32px'}}>&</span>
+            <span className="divider-line" style={styles.dividerLine}></span>
           </div>
-          <h2 style={{...styles.heroShowTitle, fontFamily: "'Poiret One', sans-serif"}}>Mystery at Murderingham Manor...</h2>
-          <h2 style={{...styles.heroShowSubtitle, fontFamily: "'Caveat Brush', cursive"}}>And More...</h2>
-          <div style={styles.heroDivider}>
-            <span style={styles.dividerLine}></span>
+          <h2 className="hero-show-title" style={{...styles.heroShowTitle, fontFamily: "'Poiret One', sans-serif"}}>Mystery at Murderingham Manor...</h2>
+          <h2 className="hero-show-subtitle" style={{...styles.heroShowSubtitle, fontFamily: "'Caveat Brush', cursive"}}>And More...</h2>
+          <div className="hero-divider" style={styles.heroDivider}>
+            <span className="divider-line" style={styles.dividerLine}></span>
             <span style={styles.dividerDot}>✦</span>
-            <span style={styles.dividerLine}></span>
+            <span className="divider-line" style={styles.dividerLine}></span>
           </div>
-          <div style={styles.heroButtons}>
+          <div className="hero-buttons" style={styles.heroButtons}>
             <button style={styles.primaryButton} onClick={() => scrollToSection('about')}>
               Scroll To Adventure
             </button>
@@ -4948,13 +4948,48 @@ styleSheet.textContent = `
     }
 
     /* --- Hero section --- */
+    .hero-section {
+      min-height: auto !important;
+      padding: 140px 16px 32px 16px !important;
+    }
+    .hero-logo-absolute {
+      top: 24px !important;
+      transform: translateX(-50%) scale(0.6) !important;
+    }
     .hero-title {
       white-space: normal !important;
       font-size: clamp(28px, 10vw, 48px) !important;
       letter-spacing: 2px !important;
+      margin-bottom: 4px !important;
+    }
+    .hero-subtitle {
+      letter-spacing: 3px !important;
+      margin-bottom: 16px !important;
+      font-size: clamp(11px, 2.5vw, 15px) !important;
     }
     .hero-content {
       padding: 0 8px;
+    }
+    .hero-divider {
+      margin: 16px 0 !important;
+      gap: 10px !important;
+    }
+    .divider-line {
+      width: 60px !important;
+    }
+    .hero-ampersand {
+      font-size: 22px !important;
+    }
+    .hero-show-title {
+      font-size: clamp(16px, 4vw, 24px) !important;
+      letter-spacing: 1px !important;
+    }
+    .hero-show-subtitle {
+      font-size: clamp(22px, 6vw, 36px) !important;
+      margin-bottom: 10px !important;
+    }
+    .hero-buttons {
+      gap: 10px !important;
     }
 
     /* --- About section --- */
@@ -5195,8 +5230,31 @@ styleSheet.textContent = `
      SMALL MOBILE (max-width: 480px)
      ============================================= */
   @media (max-width: 480px) {
+    .hero-section {
+      padding: 120px 12px 24px 12px !important;
+    }
+    .hero-logo-absolute {
+      top: 16px !important;
+      transform: translateX(-50%) scale(0.5) !important;
+    }
     .hero-title {
       font-size: clamp(24px, 10vw, 36px) !important;
+    }
+    .hero-subtitle {
+      letter-spacing: 2px !important;
+      font-size: 11px !important;
+    }
+    .hero-divider {
+      margin: 12px 0 !important;
+    }
+    .divider-line {
+      width: 40px !important;
+    }
+    .hero-show-title {
+      font-size: clamp(14px, 4vw, 20px) !important;
+    }
+    .hero-show-subtitle {
+      font-size: clamp(20px, 6vw, 30px) !important;
     }
     .carousel-track,
     .carousel-slide {
