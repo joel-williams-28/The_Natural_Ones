@@ -4970,11 +4970,17 @@ styleSheet.textContent = `
     .hero-section,
     .page-hero {
       min-height: auto !important;
-      padding: 160px 16px 32px 16px !important;
+      padding: 80px 16px 32px 16px !important;
     }
     .hero-logo-absolute {
-      top: 70px !important;
-      transform: translateX(-50%) scale(0.55) !important;
+      position: static !important;
+      transform: none !important;
+      display: flex !important;
+      justify-content: center !important;
+      margin: 0 auto 16px !important;
+    }
+    .hero-logo-absolute img {
+      height: 100px !important;
     }
     .hero-title {
       white-space: normal !important;
@@ -5252,11 +5258,10 @@ styleSheet.textContent = `
   @media (max-width: 480px) {
     .hero-section,
     .page-hero {
-      padding: 140px 12px 24px 12px !important;
+      padding: 72px 12px 24px 12px !important;
     }
-    .hero-logo-absolute {
-      top: 60px !important;
-      transform: translateX(-50%) scale(0.45) !important;
+    .hero-logo-absolute img {
+      height: 80px !important;
     }
     .hero-title {
       font-size: clamp(24px, 10vw, 36px) !important;
