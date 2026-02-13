@@ -1259,8 +1259,8 @@ function GalleryPage({ onNavigateHome }) {
   if (activeCategories.length === 0) {
     return (
       <div className="gallery-page">
-        <section style={styles.galleryHero}>
-          <div style={styles.heroLogoAbsolute}>
+        <section className="page-hero" style={styles.galleryHero}>
+          <div className="hero-logo-absolute" style={styles.heroLogoAbsolute}>
             <Logo size={180} />
           </div>
           <div style={styles.galleryHeroInner}>
