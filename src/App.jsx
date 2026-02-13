@@ -4923,7 +4923,7 @@ styleSheet.textContent = `
      ============================================= */
   @media (max-width: 768px) {
     /* --- General section spacing --- */
-    #home, #about, #show, #cast, #support, #contact {
+    #about, #show, #cast, #support, #contact {
       padding: 60px 12px !important;
     }
     .section-inner {
@@ -4980,7 +4980,7 @@ styleSheet.textContent = `
       margin: 0 auto 16px !important;
     }
     .hero-logo-absolute img {
-      height: 100px !important;
+      height: 120px !important;
     }
     .hero-title {
       white-space: normal !important;
@@ -5261,7 +5261,7 @@ styleSheet.textContent = `
       padding: 72px 12px 24px 12px !important;
     }
     .hero-logo-absolute img {
-      height: 80px !important;
+      height: 95px !important;
     }
     .hero-title {
       font-size: clamp(24px, 10vw, 36px) !important;
