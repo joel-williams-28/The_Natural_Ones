@@ -973,8 +973,8 @@ function AffiliationsPage({ onNavigateHome }) {
   return (
     <div className="affiliations-page">
       {/* Hero banner */}
-      <section style={styles.affiliationsHero}>
-        <div style={styles.heroLogoAbsolute}>
+      <section className="page-hero" style={styles.affiliationsHero}>
+        <div className="hero-logo-absolute" style={styles.heroLogoAbsolute}>
           <Logo size={180} />
         </div>
         <div style={styles.affiliationsHeroInner}>
@@ -1291,8 +1291,8 @@ function GalleryPage({ onNavigateHome }) {
   return (
     <div className="gallery-page">
       {/* Hero banner */}
-      <section style={styles.galleryHero}>
-        <div style={styles.heroLogoAbsolute}>
+      <section className="page-hero" style={styles.galleryHero}>
+        <div className="hero-logo-absolute" style={styles.heroLogoAbsolute}>
           <Logo size={180} />
         </div>
         <div style={styles.galleryHeroInner}>
@@ -4966,13 +4966,15 @@ styleSheet.textContent = `
       min-width: 160px !important;
     }
 
-    /* --- Hero section --- */
-    .hero-section {
+    /* --- Hero / page hero sections (all pages) --- */
+    .hero-section,
+    .page-hero {
       min-height: auto !important;
-      padding: 90px 16px 32px 16px !important;
+      padding: 160px 16px 32px 16px !important;
     }
     .hero-logo-absolute {
-      display: none !important;
+      top: 70px !important;
+      transform: translateX(-50%) scale(0.55) !important;
     }
     .hero-title {
       white-space: normal !important;
@@ -5248,8 +5250,13 @@ styleSheet.textContent = `
      SMALL MOBILE (max-width: 480px)
      ============================================= */
   @media (max-width: 480px) {
-    .hero-section {
-      padding: 80px 12px 24px 12px !important;
+    .hero-section,
+    .page-hero {
+      padding: 140px 12px 24px 12px !important;
+    }
+    .hero-logo-absolute {
+      top: 60px !important;
+      transform: translateX(-50%) scale(0.45) !important;
     }
     .hero-title {
       font-size: clamp(24px, 10vw, 36px) !important;
